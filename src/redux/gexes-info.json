@@ -1,0 +1,113 @@
+[
+  {
+    "id": 1,
+    "locations": [
+      {
+        "GexId": 6,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Руины НИИ радиологии",
+        "locationLevel": 1
+      },
+      {
+        "GexId": 5,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Исследовательский зверинец",
+        "locationLevel": 1
+      },
+      {
+        "GexId": 19,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Лаборатория",
+        "locationLevel": null
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "locations": [
+      {
+        "GexId": 10,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Угольная шахта",
+        "locationLevel": 2
+      },
+      {
+        "GexId": 5,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Старые каменоломни",
+        "locationLevel": 2
+      },
+      {
+        "GexId": 19,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Кривая гора",
+        "locationLevel": 1
+      },
+      {
+        "GexId": 14,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Гиблое озеро",
+        "locationLevel": 3
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "locations": [
+      {
+        "GexId": 6,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Испытательный полигон",
+        "locationLevel": 2
+      },
+      {
+        "GexId": 3,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Останки онкоцентра",
+        "locationLevel": 1
+      },
+      {
+        "GexId": 19,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Ядовитый лес",
+        "locationLevel": 3
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "locations": [
+      {
+        "GexId": 12,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Кладбище",
+        "locationLevel": 1
+      },
+      {
+        "GexId": 11,
+        "isLocation": true,
+        "isSpecialLocation": false,
+        "locationName": "Железнодорожный вокзал",
+        "locationLevel": 1
+      },
+      {
+        "GexId": 19,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Посёлок",
+        "locationLevel": null
+      }
+    ]
+  }
+]

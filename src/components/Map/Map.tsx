@@ -1,12 +1,12 @@
 import React, {FC} from "react";
-import {IInitialState} from "../redux/map-reducer";
+import {IInitialState} from "../../redux/map-reducer";
 
 type PropsType = {
     map: IInitialState,
     generateMap: () => void,
 }
 
-const Example: FC<PropsType> = ({map, generateMap}) => {
+const Map: FC<PropsType> = ({map, generateMap}) => {
 
     let lastLocation = map.locations[map.locations.length-1]
 
@@ -19,4 +19,4 @@ const Example: FC<PropsType> = ({map, generateMap}) => {
     )
 }
 
-export default Example
+export default Map

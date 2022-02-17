@@ -1,15 +1,15 @@
 import React from 'react';
-import Example from "./Example";
+import Map from "./Map";
 import {connect} from "react-redux";
-import {generateMap} from "../redux/map-reducer";
+import {generateMap} from "../../redux/map-reducer";
 
-class ExampleComponent extends React.Component<any, any>{
+class MapContainer extends React.Component<any, any>{
 
     render() {
         return (
             <div>
-                <Example map={this.props.map}
-                         generateMap={this.props.generateMap}
+                <Map map={this.props.map}
+                     generateMap={this.props.generateMap}
                 />
             </div>
         )
@@ -23,4 +23,4 @@ let mapStateToProps = (store: any) => {
 }
 
 export default connect(mapStateToProps,
-    {generateMap})(ExampleComponent)
+    {generateMap})(MapContainer)

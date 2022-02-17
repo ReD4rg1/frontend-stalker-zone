@@ -9,28 +9,28 @@ export interface IInitialState {
 export interface ILocation {
     locationName: string | null,
     locationID: number,
-    allLocations: Array<IGex>
+    allLocations: Array<IHex>
 }
 
-interface IGex {
-    GexId: number,
+export interface IHex {
+    HexId: number,
     players: Array<any>,
     isActive: boolean,
     isLocation: boolean,
     isSpecialLocation: boolean,
     locationName: string | null,
     locationLevel: number | null,
-    Top: GexSideType,
-    TopLeft: GexSideType,
-    TopRight: GexSideType,
-    Bottom: GexSideType,
-    BottomLeft: GexSideType,
-    BottomRight: GexSideType
+    Top: HexSideType,
+    TopLeft: HexSideType,
+    TopRight: HexSideType,
+    Bottom: HexSideType,
+    BottomLeft: HexSideType,
+    BottomRight: HexSideType
 }
 
-type GexSideType = {
-    moveId: number
-    difficulty: number
+type HexSideType = {
+    moveId: number | null,
+    difficulty: number | null
 }
 
 
@@ -42,7 +42,7 @@ let initialState: IInitialState = {
             locationID: 1,
             allLocations: [
                 {
-                    GexId: 1,
+                    HexId: 1,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -75,7 +75,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 2,
+                    HexId: 2,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -108,7 +108,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 3,
+                    HexId: 3,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -141,7 +141,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 4,
+                    HexId: 4,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -174,7 +174,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 5,
+                    HexId: 5,
                     players: [],
                     isActive: false,
                     isLocation: true,
@@ -207,7 +207,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 6,
+                    HexId: 6,
                     players: [],
                     isActive: false,
                     isLocation: true,
@@ -240,7 +240,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 7,
+                    HexId: 7,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -273,7 +273,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 8,
+                    HexId: 8,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -306,7 +306,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 9,
+                    HexId: 9,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -339,7 +339,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 10,
+                    HexId: 10,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -372,7 +372,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 11,
+                    HexId: 11,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -405,7 +405,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 12,
+                    HexId: 12,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -438,7 +438,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 13,
+                    HexId: 13,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -471,7 +471,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 14,
+                    HexId: 14,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -504,7 +504,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 15,
+                    HexId: 15,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -537,7 +537,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 16,
+                    HexId: 16,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -570,7 +570,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 17,
+                    HexId: 17,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -603,7 +603,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 18,
+                    HexId: 18,
                     players: [],
                     isActive: false,
                     isLocation: false,
@@ -636,7 +636,7 @@ let initialState: IInitialState = {
                     },
                 },
                 {
-                    GexId: 19,
+                    HexId: 19,
                     players: [],
                     isActive: false,
                     isLocation: true,

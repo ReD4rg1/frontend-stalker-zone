@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import ExampleComponent from "./components/ExampleComponent";
+import ExampleComponent from "./components/Map/MapContainer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {connect} from "react-redux";
 

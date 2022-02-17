@@ -1,11 +1,14 @@
-export const getLocationsQueueArray = () => {
+interface IProps {
+    min: number,
+    max: number,
+    length: number,
+    isLocationArray: boolean
+}
+
+export const getLocationsQueueArray = (props: IProps) => {
 
     let locationsArray: Array<number> = []
     let i: number = 0
-
-    const randomIntFromInterval = (min: number, max: number) => {
-        return Math.floor(Math.random() * (max - min + 1) + min)
-    }
 
     const arrayIsNotContainThisNumber = (number: number) => {
 
@@ -18,11 +21,11 @@ export const getLocationsQueueArray = () => {
         return isNotContain
     }
 
-    while (locationsArray.length < 10) {
+    while (locationsArray.length < props.length) {
 
-        let randomNumber = randomIntFromInterval(0, 9)
+        let randomNumber = getRandomIntForInterval(props.min, props.max)
 
-        if (i === 5) {
+        if (i === 5 && props.isLocationArray) {
             locationsArray.push(i)
             i++
         }
@@ -33,4 +36,8 @@ export const getLocationsQueueArray = () => {
     }
 
     return locationsArray
+}
+
+export const getRandomIntForInterval = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }

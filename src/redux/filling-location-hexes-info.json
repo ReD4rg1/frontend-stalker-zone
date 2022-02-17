@@ -3,21 +3,21 @@
     "id": 0,
     "locations": [
       {
-        "GexId": 6,
+        "HexId": 6,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Руины НИИ радиологии",
         "locationLevel": 1
       },
       {
-        "GexId": 5,
+        "HexId": 5,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Исследовательский зверинец",
         "locationLevel": 1
       },
       {
-        "GexId": 19,
+        "HexId": 19,
         "isLocation": true,
         "isSpecialLocation": true,
         "locationName": "Лаборатория",
@@ -29,28 +29,28 @@
     "id": 1,
     "locations": [
       {
-        "GexId": 10,
+        "HexId": 10,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Угольная шахта",
         "locationLevel": 2
       },
       {
-        "GexId": 5,
+        "HexId": 5,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Старые каменоломни",
         "locationLevel": 2
       },
       {
-        "GexId": 19,
+        "HexId": 19,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Кривая гора",
         "locationLevel": 1
       },
       {
-        "GexId": 14,
+        "HexId": 14,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Гиблое озеро",
@@ -62,21 +62,21 @@
     "id": 2,
     "locations": [
       {
-        "GexId": 6,
+        "HexId": 6,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Испытательный полигон",
         "locationLevel": 2
       },
       {
-        "GexId": 3,
+        "HexId": 3,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Останки онкоцентра",
         "locationLevel": 1
       },
       {
-        "GexId": 19,
+        "HexId": 19,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Ядовитый лес",
@@ -88,21 +88,21 @@
     "id": 3,
     "locations": [
       {
-        "GexId": 12,
+        "HexId": 12,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Кладбище",
         "locationLevel": 1
       },
       {
-        "GexId": 11,
+        "HexId": 11,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Железнодорожный вокзал",
         "locationLevel": 1
       },
       {
-        "GexId": 19,
+        "HexId": 19,
         "isLocation": true,
         "isSpecialLocation": true,
         "locationName": "Посёлок",
@@ -114,21 +114,21 @@
     "id": 4,
     "locations": [
       {
-        "GexId": 16,
+        "HexId": 16,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Волчьи холмы",
         "locationLevel": 1
       },
       {
-        "GexId": 3,
+        "HexId": 3,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Речной порт",
         "locationLevel": 1
       },
       {
-        "GexId": 11,
+        "HexId": 11,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Чёртовы мосты",
@@ -137,31 +137,85 @@
     ]
   },
   {
+    "id": 5,
+    "locations": [
+      {
+        "HexId": 13,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр - 1 уровень",
+        "locationLevel": 3
+      },
+      {
+        "HexId": 14,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр - 2 уровень",
+        "locationLevel": 3
+      },
+      {
+        "HexId": 15,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр - 3 уровень",
+        "locationLevel": 3
+      },
+      {
+        "HexId": 16,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр - 4 уровень",
+        "locationLevel": 3
+      },
+      {
+        "HexId": 17,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр - 5 уровень",
+        "locationLevel": 3
+      },
+      {
+        "HexId": 18,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр - 6 уровень",
+        "locationLevel": 3
+      },
+      {
+        "HexId": 19,
+        "isLocation": true,
+        "isSpecialLocation": true,
+        "locationName": "Эпицентр",
+        "locationLevel": null
+      }
+    ]
+  },
+  {
     "id": 6,
     "locations": [
       {
-        "GexId": 1,
+        "HexId": 1,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Заброшенные склады",
         "locationLevel": 1
       },
       {
-        "GexId": 14,
+        "HexId": 14,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Опустевший монастырь",
         "locationLevel": 1
       },
       {
-        "GexId": 15,
+        "HexId": 15,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Логово",
         "locationLevel": 3
       },
       {
-        "GexId": 18,
+        "HexId": 18,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Разрушенный химкомбинат",
@@ -173,28 +227,28 @@
     "id": 7,
     "locations": [
       {
-        "GexId": 5,
+        "HexId": 5,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Могильник отходов",
         "locationLevel": 3
       },
       {
-        "GexId": 9,
+        "HexId": 9,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Метеоритный кратор",
         "locationLevel": 1
       },
       {
-        "GexId": 13,
+        "HexId": 13,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Недостроенный оборонный завод",
         "locationLevel": 2
       },
       {
-        "GexId": 16,
+        "HexId": 16,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Брошенная колония строгого режима",
@@ -206,28 +260,28 @@
     "id": 8,
     "locations": [
       {
-        "GexId": 1,
+        "HexId": 1,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Чёрный провал",
         "locationLevel": 3
       },
       {
-        "GexId": 5,
+        "HexId": 5,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Башня",
         "locationLevel": 1
       },
       {
-        "GexId": 14,
+        "HexId": 14,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Мёртвое ущелье",
         "locationLevel": 1
       },
       {
-        "GexId": 18,
+        "HexId": 18,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Болота",
@@ -239,21 +293,21 @@
     "id": 9,
     "locations": [
       {
-        "GexId": 1,
+        "HexId": 1,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Сверхдальний радар",
         "locationLevel": 2
       },
       {
-        "GexId": 2,
+        "HexId": 2,
         "isLocation": true,
         "isSpecialLocation": false,
         "locationName": "Ракетная шахта",
         "locationLevel": 2
       },
       {
-        "GexId": 19,
+        "HexId": 19,
         "isLocation": true,
         "isSpecialLocation": true,
         "locationName": "Военная база",

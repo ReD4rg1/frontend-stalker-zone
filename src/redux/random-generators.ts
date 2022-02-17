@@ -29,12 +29,13 @@ export const getLocationsQueueArray = (props: IProps) => {
             locationsArray.push(i)
             i++
         }
-        else if (arrayIsNotContainThisNumber(randomNumber) && i !== 5) {
+        else if (arrayIsNotContainThisNumber(randomNumber) && randomNumber !== 5) {
             locationsArray.push(randomNumber)
             i++
         }
     }
 
+    console.log('locationsArray: ', locationsArray)
     return locationsArray
 }
 

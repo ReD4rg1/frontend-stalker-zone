@@ -417,8 +417,8 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
             case 0:
                 newLocation = generateLocationItem({
                     first: null,
-                    second: 1,
-                    third: 4,
+                    second: locationsQueueArray[1],
+                    third: locationsQueueArray[4],
                     fourth: null,
                     fifth: null,
                     sixth: null,
@@ -429,10 +429,10 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
             case 1:
                 newLocation = generateLocationItem({
                     first: null,
-                    second: 2,
-                    third: 5,
-                    fourth: 4,
-                    fifth: 0,
+                    second: locationsQueueArray[2],
+                    third: locationsQueueArray[5],
+                    fourth: locationsQueueArray[4],
+                    fifth: locationsQueueArray[0],
                     sixth: null,
                     locationNumber: locationsQueueArray[1],
                 })
@@ -441,10 +441,10 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
             case 2:
                 newLocation = generateLocationItem({
                     first: null,
-                    second: 3,
-                    third: 6,
-                    fourth: 5,
-                    fifth: 1,
+                    second: locationsQueueArray[3],
+                    third: locationsQueueArray[6],
+                    fourth: locationsQueueArray[5],
+                    fifth: locationsQueueArray[1],
                     sixth: null,
                     locationNumber: locationsQueueArray[2],
                 })
@@ -455,8 +455,8 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     first: null,
                     second: null,
                     third: null,
-                    fourth: 6,
-                    fifth: 2,
+                    fourth: locationsQueueArray[6],
+                    fifth: locationsQueueArray[2],
                     sixth: null,
                     locationNumber: locationsQueueArray[3],
                 })
@@ -464,72 +464,72 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                 break
             case 4:
                 newLocation = generateLocationItem({
-                    first: 1,
-                    second: 5,
-                    third: 7,
+                    first: locationsQueueArray[1],
+                    second: locationsQueueArray[5],
+                    third: locationsQueueArray[7],
                     fourth: null,
                     fifth: null,
-                    sixth: 0,
+                    sixth: locationsQueueArray[0],
                     locationNumber: locationsQueueArray[4],
                 })
                 newMap = {locations: [...newMap.locations, {...newLocation}]}
                 break
             case 5:
                 newLocation = generateLocationItem({
-                    first: 2,
-                    second: 6,
-                    third: 8,
-                    fourth: 7,
-                    fifth: 4,
-                    sixth: 1,
+                    first: locationsQueueArray[2],
+                    second: locationsQueueArray[6],
+                    third: locationsQueueArray[8],
+                    fourth: locationsQueueArray[7],
+                    fifth: locationsQueueArray[4],
+                    sixth: locationsQueueArray[1],
                     locationNumber: locationsQueueArray[5],
                 })
                 newMap = {locations: [...newMap.locations, {...newLocation}]}
                 break
             case 6:
                 newLocation = generateLocationItem({
-                    first: 3,
+                    first: locationsQueueArray[3],
                     second: null,
                     third: null,
-                    fourth: 8,
-                    fifth: 5,
-                    sixth: 2,
+                    fourth: locationsQueueArray[8],
+                    fifth: locationsQueueArray[5],
+                    sixth: locationsQueueArray[2],
                     locationNumber: locationsQueueArray[6],
                 })
                 newMap = {locations: [...newMap.locations, {...newLocation}]}
                 break
             case 7:
                 newLocation = generateLocationItem({
-                    first: 5,
-                    second: 8,
-                    third: 9,
+                    first: locationsQueueArray[5],
+                    second: locationsQueueArray[8],
+                    third: locationsQueueArray[9],
                     fourth: null,
                     fifth: null,
-                    sixth: 4,
+                    sixth: locationsQueueArray[4],
                     locationNumber: locationsQueueArray[7],
                 })
                 newMap = {locations: [...newMap.locations, {...newLocation}]}
                 break
             case 8:
                 newLocation = generateLocationItem({
-                    first: 6,
+                    first: locationsQueueArray[6],
                     second: null,
                     third: null,
-                    fourth: 9,
-                    fifth: 7,
-                    sixth: 5,
+                    fourth: locationsQueueArray[9],
+                    fifth: locationsQueueArray[7],
+                    sixth: locationsQueueArray[5],
                     locationNumber: locationsQueueArray[8],
                 })
                 newMap = {locations: [...newMap.locations, {...newLocation}]}
                 break
             case 9:
                 newLocation = generateLocationItem({
-                    first: 8,
+                    first: locationsQueueArray[8],
                     second: null,
                     third: null,
                     fourth: null,
                     fifth: null,
-                    sixth: 7,
+                    sixth: locationsQueueArray[7],
                     locationNumber: locationsQueueArray[9],
                 })
                 newMap = {locations: [...newMap.locations, {...newLocation}]}

@@ -1,0 +1,95 @@
+.container {
+    display: flex; /* we will talk about this later ... */
+    --s: 120px;  /* size  */
+    --m: 5px;   /* margin */
+    font-size: 0;
+}
+
+.subHex {
+    width: calc(var(--s) + 10px);
+    height: calc(var(--s) * 0.9 + 10px);
+    display: inline-block;
+    font-size: initial; /* we reset the font-size if we want to add some content */
+    clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
+    background-color: black;
+}
+
+.hex {
+    width: var(--s);
+    margin-top: var(--m);
+    height: calc(var(--s) * 0.9);
+    display: inline-block;
+    font-size: initial; /* we reset the font-size if we want to add some content */
+    clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
+    background-color: green;
+    position: relative;
+}
+
+.hex section {
+    padding: 0;
+    margin: 0;
+}
+
+.hex:hover {
+    background-color: darkgreen;
+}
+
+.infoBlock {
+    position: absolute;
+    z-index: 20;
+    top: 40px;
+    left: 15px;
+    font-size: 14px;
+    color: white;
+    line-height: 14px;
+    word-break: break-word;
+    padding-right: 5px;
+}
+
+.infoBlock p {
+    margin: 0;
+}
+
+/*-------------------------SIDES---------------------------*/
+
+.topSide {
+    position: absolute;
+    top: 0;
+    left: 55px;
+    z-index: 10;
+}
+
+.topLeftSide {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.topRightSide {
+    position: absolute;
+    top: 20px;
+    left: 90px;
+    z-index: 10;
+}
+
+.bottomSide {
+    position: absolute;
+    top: 85px;
+    left: 55px;
+    z-index: 10;
+}
+
+.bottomLeftSide {
+    position: absolute;
+    top: 65px;
+    left: 20px;
+    z-index: 10;
+}
+
+.bottomRightSide {
+    position: absolute;
+    top: 65px;
+    left: 90px;
+    z-index: 10;
+}

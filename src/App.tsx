@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import ExampleComponent from "./components/Map/MapContainer";
+import MapContainer from "./components/Map/MapContainer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {connect} from "react-redux";
 
@@ -10,7 +10,7 @@ class App extends Component<any, any> {
         return (
             <BrowserRouter>
                 <div className="App">
-                    <ExampleComponent/>
+                    <MapContainer/>
                 </div>
             </BrowserRouter>
         );

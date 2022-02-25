@@ -1,6 +1,6 @@
 import {IHex, IInitialState, ILocation} from "./map-reducer";
-import * as hexesDifficultyInfo from './kinds-of-hexes.json';
-import * as locationsInfo from './filling-location-hexes-info.json';
+import * as hexesDifficultyInfo from './Objects/Map/kinds-of-hexes.json';
+import * as locationsInfo from './Objects/Map/filling-location-hexes-info.json';
 import {getLocationsQueueArray, getRandomIntForInterval} from "./random-generators";
 
 type PropsType = {
@@ -55,7 +55,7 @@ type CurrentLocationItemType = {
 
 const getRandomHex = (props: IGetRandomHex): IHex => {
 
-    const randomInt: number = getRandomIntForInterval(1, 23)
+    const randomInt: number = getRandomIntForInterval(1, 22)
 
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
@@ -67,38 +67,85 @@ const getRandomHex = (props: IGetRandomHex): IHex => {
         isSpecialLocation: false,
         locationName: null,
         locationLevel: null,
-        Top: {
-            moveId: props.sides.topId,
-            difficulty: hexDifficultyInfoObject.difficulty.top
-        },
-        TopLeft: {
-            moveId: props.sides.topLeftId,
-            difficulty: hexDifficultyInfoObject.difficulty.topLeft
-        },
-        TopRight: {
-            moveId: props.sides.topRightId,
-            difficulty: hexDifficultyInfoObject.difficulty.topRight
-        },
-        Bottom: {
-            moveId: props.sides.bottomId,
-            difficulty: hexDifficultyInfoObject.difficulty.bottom
-        },
-        BottomLeft: {
-            moveId: props.sides.bottomLeftId,
-            difficulty: hexDifficultyInfoObject.difficulty.bottomLeft
-        },
-        BottomRight: {
-            moveId: props.sides.bottomRightId,
-            difficulty: hexDifficultyInfoObject.difficulty.bottomRight
-        }
+        Top: checkEpicenterSide(props.sides.topId, props.HexId, hexDifficultyInfoObject.difficulty.top),
+        TopLeft: checkEpicenterSide(props.sides.topLeftId, props.HexId, hexDifficultyInfoObject.difficulty.topLeft),
+        TopRight: checkEpicenterSide(props.sides.topRightId, props.HexId, hexDifficultyInfoObject.difficulty.topRight),
+        Bottom: checkEpicenterSide(props.sides.bottomId, props.HexId, hexDifficultyInfoObject.difficulty.bottom),
+        BottomLeft: checkEpicenterSide(props.sides.bottomLeftId, props.HexId, hexDifficultyInfoObject.difficulty.bottomLeft),
+        BottomRight: checkEpicenterSide(props.sides.bottomRightId, props.HexId, hexDifficultyInfoObject.difficulty.bottomRight)
     }
 
     return hex
 }
 
+const checkLocationName = (locationName: string) => {
+    let locationNumber: number
+
+    switch (locationName) {
+        case "Эпицентр - 1 уровень":
+            locationNumber = 23
+            break
+        case "Эпицентр - 2 уровень":
+            locationNumber = 24
+            break
+        case "Эпицентр - 3 уровень":
+            locationNumber = 25
+            break
+        case "Эпицентр - 4 уровень":
+            locationNumber = 26
+            break
+        case "Эпицентр - 5 уровень":
+            locationNumber = 27
+            break
+        case "Эпицентр - 6 уровень":
+            locationNumber = 28
+            break
+        case "Эпицентр":
+            locationNumber = 29
+            break
+        default:
+            locationNumber = getRandomIntForInterval(1, 11)
+    }
+
+    return locationNumber
+}
+
+const checkEpicenterSide = (sideId: number | null, hexId: number, defaultDiff: number) => {
+
+    if (hexId !== null && hexId !== ( 15 || 135 || 145 || 155 || 165 || 175 || 185 || 195 )) {
+        switch (sideId) {
+            case 135:
+            case 145:
+            case 155:
+            case 165:
+            case 175:
+            case 185:
+                return {
+                    moveId: sideId,
+                    difficulty: 20
+                }
+            default:
+                return {
+                    moveId: sideId,
+                    difficulty: defaultDiff
+                }
+        }
+    } else if (hexId === 15 && sideId === 135) return {
+        moveId: sideId,
+        difficulty: 6
+    }
+
+
+
+    return {
+        moveId: sideId,
+        difficulty: defaultDiff
+    }
+}
+
 const getHex = (props: IGetHex): IHex => {
 
-    const randomInt: number = getRandomIntForInterval(1, 11)
+    const randomInt: number = checkLocationName(props.locationName)
 
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 

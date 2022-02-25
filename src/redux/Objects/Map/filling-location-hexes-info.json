@@ -150,21 +150,21 @@
         "HexId": 14,
         "isLocation": true,
         "isSpecialLocation": true,
-        "locationName": "Эпицентр - 2 уровень",
+        "locationName": "Эпицентр - 4 уровень",
         "locationLevel": 3
       },
       {
         "HexId": 15,
         "isLocation": true,
         "isSpecialLocation": true,
-        "locationName": "Эпицентр - 3 уровень",
+        "locationName": "Эпицентр - 6 уровень",
         "locationLevel": 3
       },
       {
         "HexId": 16,
         "isLocation": true,
         "isSpecialLocation": true,
-        "locationName": "Эпицентр - 4 уровень",
+        "locationName": "Эпицентр - 3 уровень",
         "locationLevel": 3
       },
       {
@@ -178,7 +178,7 @@
         "HexId": 18,
         "isLocation": true,
         "isSpecialLocation": true,
-        "locationName": "Эпицентр - 6 уровень",
+        "locationName": "Эпицентр - 2 уровень",
         "locationLevel": 3
       },
       {

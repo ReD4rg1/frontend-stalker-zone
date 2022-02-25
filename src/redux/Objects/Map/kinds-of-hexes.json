@@ -267,12 +267,81 @@
   {
     "id": 24,
     "difficulty": {
-      "top": 0,
+      "top": 6,
+      "bottom": 20,
+      "topLeft": 20,
+      "topRight": 20,
+      "bottomLeft": 6,
+      "bottomRight": 20
+    }
+  },
+  {
+    "id": 25,
+    "difficulty": {
+      "top": 20,
       "bottom": 6,
+      "topLeft": 20,
+      "topRight": 6,
+      "bottomLeft": 20,
+      "bottomRight": 20
+    }
+  },
+  {
+    "id": 26,
+    "difficulty": {
+      "top": 6,
+      "bottom": 20,
+      "topLeft": 20,
+      "topRight": 20,
+      "bottomLeft": 20,
+      "bottomRight": 6
+    }
+  },
+  {
+    "id": 27,
+    "difficulty": {
+      "top": 20,
+      "bottom": 20,
       "topLeft": 6,
       "topRight": 6,
-      "bottomLeft": 0,
-      "bottomRight": 0
+      "bottomLeft": 20,
+      "bottomRight": 20
+    }
+  },
+  {
+    "id": 28,
+    "difficulty": {
+      "top": 6,
+      "bottom": 20,
+      "topLeft": 20,
+      "topRight": 20,
+      "bottomLeft": 6,
+      "bottomRight": 20
+    }
+  },
+  {
+    "id": 29,
+    "difficulty": {
+      "top": 20,
+      "bottom": 6,
+      "topLeft": 20,
+      "topRight": 20,
+      "bottomLeft": 6,
+      "bottomRight": 20
+    }
+  },
+
+
+
+  {
+    "id": 30,
+    "difficulty": {
+      "top": 20,
+      "bottom": 20,
+      "topLeft": 20,
+      "topRight": 6,
+      "bottomLeft": 20,
+      "bottomRight": 20
     }
   }
 ]

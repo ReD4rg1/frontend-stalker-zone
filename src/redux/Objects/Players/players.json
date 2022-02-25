@@ -1,0 +1,80 @@
+[
+  {
+    "playerId": 1,
+    "playerName": "Мажор",
+    "playerEffects": {
+      "healBoost": 0,
+      "mapMoveModifier": 0,
+      "damageBoost": 0,
+      "armorBoost": 0,
+      "seedMoney": 1500,
+      "maxHp": 30,
+      "secrecyBoost": 0
+    }
+  },
+  {
+    "playerId": 2,
+    "playerName": "Громобой",
+    "playerEffects": {
+      "healBoost": 0,
+      "mapMoveModifier": 0,
+      "damageBoost": 1,
+      "armorBoost": 0,
+      "seedMoney": 1000,
+      "maxHp": 30,
+      "secrecyBoost": 0
+    }
+  },
+  {
+    "playerId": 3,
+    "playerName": "Носорог",
+    "playerEffects": {
+      "healBoost": 0,
+      "mapMoveModifier": 0,
+      "damageBoost": 0,
+      "armorBoost": 1,
+      "seedMoney": 1000,
+      "maxHp": 30,
+      "secrecyBoost": 0
+    }
+  },
+  {
+    "playerId": 4,
+    "playerName": "Верзила",
+    "playerEffects": {
+      "healBoost": 0,
+      "mapMoveModifier": 0,
+      "damageBoost": 0,
+      "armorBoost": 0,
+      "seedMoney": 1000,
+      "maxHp": 35,
+      "secrecyBoost": 0
+    }
+  },
+  {
+    "playerId": 5,
+    "playerName": "Доктор",
+    "playerEffects": {
+      "healBoost": 2,
+      "mapMoveModifier": 0,
+      "damageBoost": 0,
+      "armorBoost": 0,
+      "seedMoney": 1000,
+      "maxHp": 30,
+      "secrecyBoost": 0
+    }
+  },
+  {
+    "playerId": 6,
+    "playerName": "Шустрый",
+    "playerEffects": {
+      "healBoost": 0,
+      "mapMoveModifier": 0,
+      "damageBoost": 0,
+      "armorBoost": 0,
+      "seedMoney": 1000,
+      "maxHp": 30,
+      "secrecyBoost": 1
+    }
+  }
+]

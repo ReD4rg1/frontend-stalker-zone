@@ -35,7 +35,6 @@ export const getLocationsQueueArray = (props: IProps) => {
         }
     }
 
-    console.log('locationsArray: ', locationsArray)
     return locationsArray
 }
 

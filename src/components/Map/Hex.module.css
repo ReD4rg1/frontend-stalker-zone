@@ -5,14 +5,21 @@
     font-size: 0;
 }
 
+.container section {
+    padding: 0;
+    margin: 0;
+}
+
 .subHex {
     width: calc(var(--s) + 10px);
     height: calc(var(--s) * 0.9 + 10px);
     display: inline-block;
     font-size: initial; /* we reset the font-size if we want to add some content */
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
-    background-color: black;
+    background-color: #00000000;
 }
+
+/*-------------------------HEXES---------------------------*/
 
 .hex {
     width: var(--s);
@@ -21,18 +28,66 @@
     display: inline-block;
     font-size: initial; /* we reset the font-size if we want to add some content */
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
-    background-color: green;
+    background-color: #2d2d2d00;
     position: relative;
-}
-
-.hex section {
-    padding: 0;
-    margin: 0;
+    transition: all 0.15s ease 0s;
 }
 
 .hex:hover {
-    background-color: darkgreen;
+    background-color: #2c2c6c;
 }
+
+.locationHex {
+    width: var(--s);
+    margin-top: var(--m);
+    height: calc(var(--s) * 0.9);
+    display: inline-block;
+    font-size: initial; /* we reset the font-size if we want to add some content */
+    clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
+    background-color: #0e5d0e90;
+    position: relative;
+    transition: all 0.15s ease 0s;
+}
+
+.locationHex:hover {
+    background-color: #249424;
+}
+
+/*-------------------------ACTIVE HEXES---------------------------*/
+
+.activeHex {
+    width: var(--s);
+    margin-top: var(--m);
+    height: calc(var(--s) * 0.9);
+    display: inline-block;
+    font-size: initial; /* we reset the font-size if we want to add some content */
+    clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
+    background-color: #ffe26990;
+    position: relative;
+    transition: all 0.15s ease 0s;
+}
+
+.activeHex:hover {
+    background-color: #ff6c6c;
+}
+
+.activeLocationHex {
+    width: var(--s);
+    margin-top: var(--m);
+    height: calc(var(--s) * 0.9);
+    display: inline-block;
+    font-size: initial; /* we reset the font-size if we want to add some content */
+    clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
+    background-color: #00dc0090;
+    position: relative;
+    transition: all 0.15s ease 0s;
+}
+
+.activeLocationHex:hover {
+    background-color: #99ff00;
+}
+
+/*-------------------------INFO---------------------------*/
 
 .infoBlock {
     position: absolute;
@@ -40,7 +95,8 @@
     top: 40px;
     left: 15px;
     font-size: 14px;
-    color: white;
+    font-weight: 600;
+    color: #ffffff;
     line-height: 14px;
     word-break: break-word;
     padding-right: 5px;

@@ -5,6 +5,10 @@ import {generateMap} from "../../redux/map-reducer";
 
 class MapContainer extends React.Component<any, any>{
 
+    componentDidMount() {
+        this.props.generateMap()
+    }
+
     render() {
         return (
             <div>

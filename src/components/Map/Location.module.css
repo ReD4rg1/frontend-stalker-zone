@@ -4,6 +4,12 @@
     position: relative;
 }
 
+.hexesContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .rowOne {
     display: flex;
     justify-content: center;
@@ -58,4 +64,17 @@
 
 .rowThree article:last-child {
     margin-left: 60px;
+}
+
+/*------------------------------------------------------*/
+
+.imageContainer {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+}
+
+.imageContainer img {
+    width: 520px;
+    height: 590px;
 }

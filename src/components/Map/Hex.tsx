@@ -8,11 +8,16 @@ interface IProps {
 const Hex = (props: IProps) => {
 
     const item = props.data
+    let hexStyle = styles.hex
+
+    if (item.isActive && !item.isLocation) hexStyle = styles.activeHex
+    else if (item.isActive && item.isLocation) hexStyle = styles.activeLocationHex
+    else if (!item.isActive && item.isLocation) hexStyle = styles.locationHex
 
     return (
         <div className={styles.container}>
             <div className={styles.subHex}>
-                <div className={styles.hex}>
+                <div className={hexStyle}>
                     <div className={styles.infoBlock}>
                         <p className={styles.hexId}>{item.locationName}</p>
                         <p className={styles.hexId}>{'Id: ' + item.HexId}</p>

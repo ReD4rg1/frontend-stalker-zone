@@ -1,0 +1,73 @@
+.mapContainer {
+    display: flex;
+    position: relative;
+    --t: 58px;  /* top  */
+    --l: 477px;   /* left */
+    --tLayer: 232px;  /* top  */
+    --lLayer: 96px;   /* left */
+}
+
+.mapFirstLayer {
+    display: flex;
+    position: absolute;
+}
+
+.mapSecondLayer {
+    display: flex;
+    position: absolute;
+    top: calc(var(--tLayer)*2 - 1px);
+    left: calc(var(--lLayer)*2 - 1px);
+}
+
+.mapThirdLayer {
+    display: flex;
+    position: absolute;
+    top: calc(var(--tLayer)*4 - 1px);
+    left: calc(var(--lLayer)*4 - 1px);
+}
+
+.mapFourthLayer {
+    display: flex;
+    position: absolute;
+    top: calc(var(--tLayer)*6 - 1px);
+    left: calc(var(--lLayer)*6 - 1px);
+}
+
+.mapFirstLayer:hover {
+    z-index: 10;
+}
+.mapSecondLayer:hover {
+    z-index: 10;
+}
+.mapThirdLayer:hover {
+    z-index: 10;
+}
+.mapFourthLayer:hover {
+    z-index: 10;
+}
+
+/*-------------------------ITEMS---------------------------*/
+
+.mapFirstItem {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mapSecondItem {
+    position: absolute;
+    top: calc(var(--t));
+    left: calc(var(--l));
+}
+
+.mapThirdItem {
+    position: absolute;
+    top: calc(var(--t)*2);
+    left: calc(var(--l)*2);
+}
+
+.mapFourthItem {
+    position: absolute;
+    top: calc(var(--t)*3);
+    left: calc(var(--l)*3);
+}

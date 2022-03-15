@@ -4,6 +4,7 @@ import MapContainer from "./components/Map/MapContainer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {connect} from "react-redux";
 import PlayerCreateMenuContainer from "./components/PlayerCreateMenu/PlayerCreateMenuContainer";
+import MainMenu from "./components/MainMenu/MainMenu";
 
 class App extends Component<any, any> {
 
@@ -11,8 +12,17 @@ class App extends Component<any, any> {
         return (
             <BrowserRouter>
                 <div className="App">
-                    <PlayerCreateMenuContainer/>
-                    <MapContainer/>
+                    <Routes>
+                        <Route path={"/main_menu"} element={
+                            <MainMenu/>
+                        }/>
+                        <Route path={"/players_create_menu"} element={
+                            <PlayerCreateMenuContainer/>
+                        }/>
+                        <Route path={"/session"} element={
+                            <MapContainer/>
+                        }/>
+                    </Routes>
                 </div>
             </BrowserRouter>
         );

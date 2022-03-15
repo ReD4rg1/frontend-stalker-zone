@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.backgroundImageContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+
+.backgroundImageContainer img {
+    width: 100vw;
+    height: calc(100vh - 4px);
+}
+
+.dropMenuContainer {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background-color: #c9c9c999;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.dropMenuContainer button {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.dropMenuContainer button:disabled {
+    background-color: #989898;
+}
+
+.exampleParent {
+    color: black;
+    display: flex;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.exampleOrigin {
+    flex-basis: 100%;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.exampleDraggable {
+    color: white;
+    background-color: rgba(14, 72, 59, 0.63);
+    font-weight: normal;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.exampleDropzone {
+
+    flex-basis: 100%;
+    flex-grow: 1;
+    padding: 10px;
+}

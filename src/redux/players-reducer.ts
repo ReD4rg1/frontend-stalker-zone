@@ -1,4 +1,4 @@
-import { showInitPlayersInfo } from "./create-players"
+import {createAndAddPlayers, showInitPlayersInfo} from "./create-players"
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
@@ -186,7 +186,10 @@ let initialState: InitialStateType = {
 const playersReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case CREATE_PLAYERS:
-            return state
+            return {
+                ...state,
+                players: createAndAddPlayers(action.players)
+            }
         case SHOW_PLAYERS:
             return {
                 ...state,

@@ -455,7 +455,7 @@ const generateLocationItem = (props: IGenerateLocationItem): ILocation => {
 
 const getGeneratedMap = (props: PropsType): IInitialState => {
 
-    let newMap: IInitialState = props.state
+    let newMap: Array<ILocation> = props.state.locations
     let newLocation: ILocation
 
     for (let i = 0; i < 10; i++) {
@@ -471,7 +471,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: null,
                     locationNumber: locationsQueueArray[0],
                 })
-                newMap = {locations: [{...newLocation}]}
+                newMap = [{...newLocation}]
                 break
             case 1:
                 newLocation = generateLocationItem({
@@ -483,7 +483,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: null,
                     locationNumber: locationsQueueArray[1],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 2:
                 newLocation = generateLocationItem({
@@ -495,7 +495,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: null,
                     locationNumber: locationsQueueArray[2],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 3:
                 newLocation = generateLocationItem({
@@ -507,7 +507,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: null,
                     locationNumber: locationsQueueArray[3],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 4:
                 newLocation = generateLocationItem({
@@ -519,7 +519,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: locationsQueueArray[0],
                     locationNumber: locationsQueueArray[4],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 5:
                 newLocation = generateLocationItem({
@@ -531,7 +531,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: locationsQueueArray[1],
                     locationNumber: locationsQueueArray[5],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 6:
                 newLocation = generateLocationItem({
@@ -543,7 +543,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: locationsQueueArray[2],
                     locationNumber: locationsQueueArray[6],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 7:
                 newLocation = generateLocationItem({
@@ -555,7 +555,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: locationsQueueArray[4],
                     locationNumber: locationsQueueArray[7],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 8:
                 newLocation = generateLocationItem({
@@ -567,7 +567,7 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: locationsQueueArray[5],
                     locationNumber: locationsQueueArray[8],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
             case 9:
                 newLocation = generateLocationItem({
@@ -579,12 +579,17 @@ const getGeneratedMap = (props: PropsType): IInitialState => {
                     sixth: locationsQueueArray[7],
                     locationNumber: locationsQueueArray[9],
                 })
-                newMap = {locations: [...newMap.locations, {...newLocation}]}
+                newMap = [...newMap, {...newLocation}]
                 break
         }
     }
 
-    return newMap
+    return (
+        {
+            locations: [...newMap],
+            mapIsGenerated: true
+        }
+    )
 }
 
 export default getGeneratedMap

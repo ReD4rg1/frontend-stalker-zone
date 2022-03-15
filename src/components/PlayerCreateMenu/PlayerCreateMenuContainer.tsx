@@ -12,7 +12,10 @@ class PlayerCreateMenuContainer extends React.Component<any, any> {
 
     render() {
         return (
-            <PlayerCreateMenu players={this.props.players}/>
+            <PlayerCreateMenu players={this.props.players}
+                              //initialPlayersInfo={this.props.initialPlayersInfo}
+                              createPlayers={this.props.createPlayers}
+            />
         )
     }
 }

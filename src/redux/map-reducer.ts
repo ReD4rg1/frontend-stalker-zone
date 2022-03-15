@@ -4,6 +4,7 @@ const GENERATE_MAP = "GENERATE-MAP"
 
 export interface IInitialState {
     locations: Array<ILocation>
+    mapIsGenerated: boolean
 }
 
 export interface ILocation {
@@ -670,7 +671,8 @@ let initialState: IInitialState = {
                 },
             ]
         }
-    ]
+    ],
+    mapIsGenerated: false
 };
 
 const mapReducer = (state = initialState, action: any): IInitialState => {

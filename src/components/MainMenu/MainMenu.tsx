@@ -28,6 +28,9 @@ const MainMenu = () => {
                     <NavLink to="/players_create_menu" className={({ isActive }) =>  isActive ? `${styles.active}` : ""}>
                         <div className={styles.linkItem}><span>Играть на одном устройстве</span></div>
                     </NavLink>
+                    <NavLink to="/login" className={({ isActive }) =>  isActive ? `${styles.active}` : ""}>
+                        <div className={styles.linkItem}><span>Подключиться к сессии</span></div>
+                    </NavLink>
                 </div>
             </section>
         </div>

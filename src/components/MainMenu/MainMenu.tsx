@@ -1,6 +1,6 @@
 import styles from "./MainMenu.module.css";
 import {NavLink} from "react-router-dom";
-import backgroundImage from "../../assets/img/main-menu/main-menu-background.gif"
+import backgroundImage from "../../assets/img/main-menu/main-menu-background.gif";
 
 const MainMenu = () => {
 

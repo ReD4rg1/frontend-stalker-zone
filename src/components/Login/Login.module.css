@@ -20,6 +20,7 @@
 }
 
 .sectionContainer {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -39,7 +40,7 @@
     margin: 20px;
 }
 
-.container input{
+.container input {
     border-radius: 5px;
     border: none;
     outline: none;
@@ -64,6 +65,18 @@
     background-color: #1c1c1c;
 }
 
+.subButton button {
+    font-size: 18px;
+    font-weight: 600;
+    background-color: gold;
+    color: #1c1c1c;
+}
+
+.subButton button:hover {
+    background-color: #1c1c1c;
+    color: white;
+}
+
 .formInput {
     border-radius: 5px;
 }
@@ -82,4 +95,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.backLinkContainer {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+
+}
+
+.backLinkContainer a {
+    text-decoration: none;
+}
+
+.backLink {
+    font-size: 48px;
+    color: white;
+    transition: all 0.15s ease 0s;
+}
+
+.backLink:hover {
+    font-size: 60px;
+    color: gold;
 }

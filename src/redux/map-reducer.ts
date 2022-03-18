@@ -12,7 +12,6 @@ export interface ILocation {
     locationID: number,
     allLocations: Array<IHex>
 }
-
 export interface IHex {
     HexId: number,
     players: Array<any>,
@@ -34,7 +33,7 @@ type HexSideType = {
     difficulty: number | null
 }
 
-
+type ActionsType = GenerateMapType
 
 let initialState: IInitialState = {
     locations: [
@@ -675,7 +674,7 @@ let initialState: IInitialState = {
     mapIsGenerated: false
 };
 
-const mapReducer = (state = initialState, action: any): IInitialState => {
+const mapReducer = (state = initialState, action: ActionsType): IInitialState => {
     switch (action.type) {
         case GENERATE_MAP:
             return getGeneratedMap({state})

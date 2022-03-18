@@ -2,7 +2,9 @@ import players from "./Objects/Players/players.json"
 import {IPlayer} from "./players-reducer";
 
 export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<IPlayer> => {
-    const resultPlayersArray = playersNumberArray.map((item) => {
+
+    return  playersNumberArray.map((item) => {
+
         return (
             {
                 playerId: players[item-1].playerId,
@@ -41,12 +43,12 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<IP
             }
         )
     })
-
-    return resultPlayersArray
 }
 
 export const showInitPlayersInfo = () => {
-    const playersArray = players.map(item => {
+
+    return players.map(item => {
+
         return (
             {
                 playerId: item.playerId,
@@ -63,6 +65,4 @@ export const showInitPlayersInfo = () => {
             }
         )
     })
-
-    return playersArray
 }

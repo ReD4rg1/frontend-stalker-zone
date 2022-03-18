@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import MapContainer from "./components/Map/MapContainer";
+import MapContainer from "./components/SinglePlayerSession/Map/MapContainer";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {connect} from "react-redux";
-import PlayerCreateMenuContainer from "./components/PlayerCreateMenu/PlayerCreateMenuContainer";
+import PlayerCreateMenuContainer from "./components/SinglePlayerSession/PlayerCreateMenu/PlayerCreateMenuContainer";
 import MainMenu from "./components/MainMenu/MainMenu";
 import LoginContainer from "./components/Login/LoginContainer";
 
@@ -29,7 +29,7 @@ class App extends Component<any, any> {
                     </Routes>
                 </div>
             </BrowserRouter>
-        );
+        )
     }
 }
 
@@ -39,4 +39,4 @@ let mapStateToProps = (store: any) => {
     }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)

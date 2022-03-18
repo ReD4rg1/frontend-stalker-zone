@@ -1,4 +1,4 @@
-import {IHex} from "../../redux/map-reducer";
+import {IHex} from "../../../redux/map-reducer";
 import styles from "./Hex.module.css";
 
 interface IProps {

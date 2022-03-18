@@ -2,7 +2,28 @@ import {Form, Formik, Field} from "formik";
 import * as yup from 'yup';
 import styles from "./Login.module.css"
 
-const LoginForm = () => {
+type ValuesType = {
+    name: string
+    password: string
+    rememberMe: boolean
+}
+type SetStatusObjectType = {
+    messageEmail: string
+    messagePassword: string
+}
+type LoginPropsType = {
+    values: ValuesType,
+    setStatus: (object: SetStatusObjectType) => void,
+    resetForm: () => void,
+    setSubmitting: (submitting: boolean) => void
+}
+interface IProps {
+    login: (props: LoginPropsType) => void
+    signUp: (props: LoginPropsType) => void
+    haveAccount: boolean
+}
+
+const LoginForm = (props: IProps) => {
     return (
         <Formik
             initialValues={{
@@ -12,7 +33,9 @@ const LoginForm = () => {
             }}
             validationSchema={SignInSchema}
             onSubmit={(values, { resetForm, setStatus, setSubmitting }) => {
-
+                props.haveAccount
+                    ? props.login({values, setStatus, resetForm, setSubmitting})
+                    : props.signUp({values, setStatus, resetForm, setSubmitting})
             }}
         >
             {({errors, touched, status}) => (
@@ -31,7 +54,7 @@ const LoginForm = () => {
                         <Field name={'rememberMe'} type={"checkbox"}/> Запомнить меня
                     </div>
                     <div className={styles.formButton}>
-                        <button type="submit">Войти</button>
+                        <button type="submit">{props.haveAccount ? 'Войти' : 'Создать аккаунт'}</button>
                     </div>
                 </Form>
             )}

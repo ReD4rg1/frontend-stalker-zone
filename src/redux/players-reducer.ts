@@ -21,7 +21,6 @@ interface IInitialPlayerInfo {
         secrecyBoost: number
     }
 }
-
 export interface IPlayer {
     playerId: number
     playerName: string
@@ -34,7 +33,6 @@ export interface IPlayer {
     isSkipping: boolean
     inventory: IInventory
 }
-
 interface IInventory {
     helmet: ArmorType | null
     bodyArmor: ArmorType | null
@@ -61,7 +59,6 @@ type PlayerEffectsType = {
     maxHp: number
     secrecyBoost: number
 }
-
 type OrderType = {
     title: string
     description: string
@@ -71,7 +68,6 @@ type OrderType = {
     reward: number
     orderEffect: PlayerEffectsType
 }
-
 type ActiveArtifactType = {
     title: string
     mapMoveEffect: number
@@ -79,26 +75,22 @@ type ActiveArtifactType = {
     count: number
     cost: number
 }
-
 type TeleportType = {
     title: string
     coordinates: number
     cost: number
 }
-
 type OtherItemType = {
     title: string
     effect: number
     cost: number
 }
-
 type HealBoxType = {
     title: string
     healEffect: number
     count: number
     cost: number
 }
-
 type GrenadeType = {
     title: string
     damage: number
@@ -107,25 +99,32 @@ type GrenadeType = {
     count: number
     cost: number
 }
-
 type WeaponModifierType = {
     title: string
     damageModifier: number
     compatibility: Array<string>
     cost: number
 }
-
 type WeaponType = {
     title: string
     damage: number
     damageBoost: number
     cost: number
 }
-
 type ArmorType = {
     title: string
     def: number
     cost: number
+}
+
+type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType
+
+type GeneratePlayerType = {
+    type: typeof CREATE_PLAYERS
+    players: Array<number>
+}
+type ShowInitPlayersInfoType = {
+    type: typeof SHOW_PLAYERS
 }
 
 let initialState: InitialStateType = {
@@ -183,7 +182,7 @@ let initialState: InitialStateType = {
     ]
 }
 
-const playersReducer = (state = initialState, action: any): InitialStateType => {
+const playersReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case CREATE_PLAYERS:
             return {
@@ -200,21 +199,12 @@ const playersReducer = (state = initialState, action: any): InitialStateType => 
     }
 };
 
-type GeneratePlayerType = {
-    type: typeof CREATE_PLAYERS
-    players: Array<number>
-}
-
 export const createPlayers = (players: Array<number>):GeneratePlayerType => (
     {
         type: CREATE_PLAYERS,
         players: players
     }
 )
-
-type ShowInitPlayersInfoType = {
-    type: typeof SHOW_PLAYERS
-}
 
 export const showPlayersInfo = ():ShowInitPlayersInfoType => ({type: SHOW_PLAYERS})
 

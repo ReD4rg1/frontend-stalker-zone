@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {IInitialState} from "../../redux/map-reducer";
+import {IInitialState} from "../../../redux/map-reducer";
 import Location from "./Location";
 import styles from "./Map.module.css";
 
@@ -12,7 +12,7 @@ const Map: FC<PropsType> = ({map, generateMap}) => {
 
     let lastLocation = map.locations[map.locations.length - 1]
 
-    const mapItemsArray = map.locations.map((item, i) => {
+    const mapItemsArray = map.locations.map((item) => {
         const hexesArray = item.allLocations.map(item => {
             return item
         })

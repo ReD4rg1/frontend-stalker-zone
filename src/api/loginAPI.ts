@@ -2,7 +2,6 @@ import axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    // Нужно изменить URL
     baseURL: 'https://localhost:4000/',
     //headers: {'API-KEY': '67e9bc59-d756-4699-841e-f4005ff4fe7c'},
 })
@@ -12,6 +11,13 @@ const authAPI = {
     getAuth() {
         return (
             instance.get(`auth/me`)
+                .then(response => response.data)
+        )
+    },
+
+    signUp(name: string, password: string) {
+        return (
+            instance.post(`auth/sign-up`, {name, password})
                 .then(response => response.data)
         )
     },

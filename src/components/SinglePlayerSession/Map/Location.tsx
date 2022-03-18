@@ -1,16 +1,16 @@
 import Hex from "./Hex";
-import {IHex} from "../../redux/map-reducer";
+import {IHex} from "../../../redux/map-reducer";
 import styles from "./Location.module.css";
-import image0 from "../../assets/img/locations-background/0.png"
-import image1 from "../../assets/img/locations-background/1.png"
-import image2 from "../../assets/img/locations-background/2.png"
-import image3 from "../../assets/img/locations-background/3.png"
-import image4 from "../../assets/img/locations-background/4.png"
-import image5 from "../../assets/img/locations-background/5.png"
-import image6 from "../../assets/img/locations-background/6.png"
-import image7 from "../../assets/img/locations-background/7.png"
-import image8 from "../../assets/img/locations-background/8.png"
-import image9 from "../../assets/img/locations-background/9.png"
+import image0 from "../../../assets/img/locations-background/0.png"
+import image1 from "../../../assets/img/locations-background/1.png"
+import image2 from "../../../assets/img/locations-background/2.png"
+import image3 from "../../../assets/img/locations-background/3.png"
+import image4 from "../../../assets/img/locations-background/4.png"
+import image5 from "../../../assets/img/locations-background/5.png"
+import image6 from "../../../assets/img/locations-background/6.png"
+import image7 from "../../../assets/img/locations-background/7.png"
+import image8 from "../../../assets/img/locations-background/8.png"
+import image9 from "../../../assets/img/locations-background/9.png"
 
 interface IProps {
     data: DataType
@@ -66,7 +66,7 @@ const Location = (props: IProps) => {
     return (
         <section className={styles.container}>
             <div className={styles.imageContainer}>
-                <img src={imageSrc}/>
+                <img src={imageSrc} alt={'#'}/>
             </div>
             <section className={styles.hexesContainer}>
                 <section className={styles.rowOne}>

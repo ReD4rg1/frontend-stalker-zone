@@ -99,7 +99,7 @@ export const signUp = (props: LoginPropsType): ThunkType => {
 export const login = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
-        let response = await authAPI.login(props.values.name, props.values.password, props.values.rememberMe)
+        let response = await authAPI.login(props.values.name, props.values.password)
         if (response.resultCode === 0) {
             dispatch(getAuth());
             props.setSubmitting(false);

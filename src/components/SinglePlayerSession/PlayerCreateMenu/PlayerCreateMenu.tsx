@@ -1,4 +1,4 @@
-import {IPlayer} from "../../../redux/players-reducer";
+import {IInitialPlayerInfo, IPlayer} from "../../../redux/players-reducer";
 import {useState} from "react";
 import styles from "./PlayerCreateMenu.module.css";
 import backgroundImage from "../../../assets/img/main-menu/main-menu-background.jpg";
@@ -11,60 +11,50 @@ interface IProps {
 
 type PlayersType = {
     players: Array<IPlayer>
-    initialPlayersInfo: Array<any>
+    initialPlayersInfo: Array<IInitialPlayerInfo>
+}
+
+const ColumnItem = (props: any) => {
+
+    return (
+        <div/>
+    )
+}
+
+interface IInitialData {
+    players: Array<any>
+    columns: {
+        'column-1': {}
+    }
+    columnOrder: Array<any>
 }
 
 const PlayerCreateMenu = (props: IProps) => {
 
-    const [playersArray, setPlayersArray] = useState<Array<number>>([])
+    const [playersFinalArray, setPlayersFinalArray] = useState<Array<number>>([])
 
-    const onDragStart = (e: any /*DragEvent<HTMLDivElement>*/) => {
-
-        e.dataTransfer.setData('text/plain', e.target.id)
-        e.currentTarget.style.backgroundColor="yellow"
-        e.currentTarget.style.color="black"
+    const initialData: IInitialData = {
+        players: [
+            ...props.players.initialPlayersInfo.map((item, i) => {
+                return {
+                    id: item.playerId,
+                    name: item.playerName,
+                }
+            })
+        ],
+        columns: {
+            'column-1': {
+                id: 'column-1',
+                title: 'Выберите игрока',
+                playersIds: [...props.players.initialPlayersInfo.map(item => {
+                    return item.playerId
+                })]
+            }
+        },
+        columnOrder: ['column-1']
     }
 
-    const onDragEnd = (e: any /*DragEvent<HTMLDivElement>*/) => {
-
-        e.dataTransfer.setData('text/plain', e.target.id)
-        e.currentTarget.style.backgroundColor="rgba(14, 72, 59, 0.63)"
-        e.currentTarget.style.color="white"
-    }
-
-    const onDragOver = (e: any) => {
-
-        e.preventDefault()
-    }
-
-    const onDrop = (e: any) => {
-
-        const id = e
-            .dataTransfer
-            .getData('text')
-
-        setPlayersArray([...playersArray, parseInt(id.split('-')[1])+1])
-
-        const draggableElement = document.getElementById(id)
-        const dropZone = e.target
-        dropZone.appendChild(draggableElement)
-
-        e.dataTransfer.clearData()
-    }
-
-    const playerItems = props.players.initialPlayersInfo.map((item, i) => {
-
-        return (
-            <div id={`draggable-${i}`}
-                 key={i}
-                 className={styles.exampleDraggable}
-                 draggable={true}
-                 onDragStart={(e) => onDragStart(e)}
-                 onDragEnd={(e) => onDragEnd(e)}>
-                {item.playerName}
-            </div>
-        )
-    })
+    console.log('initialData: ', initialData)
 
     return (
         <div className={styles.container}>
@@ -73,22 +63,18 @@ const PlayerCreateMenu = (props: IProps) => {
                 <img src={backgroundImage} alt={"#"}/>
             </section>
             <section className={styles.dropMenuContainer}>
-                <div className={styles.exampleParent}>
-                    <div className={styles.exampleDropzone}
-                         //onDragOver={(e) => onDragOver(e)}
-                         /*onDrop={(e) => onDrop(e)}*/>
-                        Expects
-                        {playerItems}
-                    </div>
-                    <div className={styles.exampleDropzone}
-                         onDragOver={(e) => onDragOver(e)}
-                         onDrop={(e) => onDrop(e)}>
-                        Done
-                    </div>
-                </div>
-                <button disabled={playersArray.length >= 2} onClick={() => {
-                    if (playersArray.length >= 2) props.createPlayers(playersArray)
-                }}>CreatePlayers</button>
+                {initialData.columnOrder.map((columnId: string) => {
+                    // @ts-ignore
+                    const column = initialData.columns[columnId]
+                    console.log('column.playersIds: ', column.playersIds)
+                    const players = column.playersIds.map((playerId: number) => initialData.players[playerId])
+
+                    return <ColumnItem key={column.id} column={column} players={players}/>
+                })}
+                <button disabled={playersFinalArray.length < 2} onClick={() => {
+                    if (playersFinalArray.length >= 2) props.createPlayers(playersFinalArray)
+                }}>CreatePlayers
+                </button>
             </section>
         </div>
     )

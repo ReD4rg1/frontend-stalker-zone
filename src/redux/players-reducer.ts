@@ -8,7 +8,7 @@ type InitialStateType = {
     initialPlayersInfo: Array<IInitialPlayerInfo>
 }
 
-interface IInitialPlayerInfo {
+export interface IInitialPlayerInfo {
     playerId: number,
     playerName: string,
     playerEffects: {

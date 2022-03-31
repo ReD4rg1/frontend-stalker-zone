@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'https://localhost:4000/',
+    baseURL: 'https://localhost:8080/',
     //headers: {'API-KEY': '67e9bc59-d756-4699-841e-f4005ff4fe7c'},
 })
 
@@ -17,14 +17,14 @@ const authAPI = {
 
     signUp(name: string, password: string) {
         return (
-            instance.post(`auth/sign-up`, {name, password})
+            instance.post(`auth/registration`, {name, password})
                 .then(response => response.data)
         )
     },
 
-    login(name: string, password: string, rememberMe: boolean) {
+    login(name: string, password: string) {
         return (
-            instance.post(`auth/login`, {name, password, rememberMe})
+            instance.post(`auth/login`, {name, password})
                 .then(response => response.data)
         )
     },

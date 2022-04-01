@@ -1,18 +1,18 @@
 import authAPI from "../api/loginAPI"
-import {ThunkAction} from "redux-thunk";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { AppStateType } from "./redux-store";
+import {setToken} from "../api/token";
+import {EmptyObject} from "redux";
 
 const SET_USERS_DATA = 'SET-USERS-DATA'
 
 interface IInitialState {
-    userId: number |null
-    name: string | null
+    userName: string | null
     isAuth: boolean,
 }
 
 const initialState: IInitialState = {
-    userId: null,
-    name: null,
+    userName: null,
     isAuth: false,
 }
 
@@ -33,8 +33,7 @@ const authReducer = (state = initialState, action: ActionsType): IInitialState =
 }
 
 type SetUsersDataTypePayloadType = {
-    userId: number,
-    name: string,
+    userName: string,
     isAuth: boolean,
 }
 type SetUsersDataType = {
@@ -46,8 +45,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 export const setUsersData = (payload: SetUsersDataTypePayloadType): SetUsersDataType => ({
     type: SET_USERS_DATA,
     payload: {
-        userId: payload.userId,
-        name: payload.name,
+        userName: payload.userName,
         isAuth: payload.isAuth,
     },
 })
@@ -56,8 +54,8 @@ export const getAuth = (): ThunkType => {
     return (async (dispatch) => {
         let response = await authAPI.getAuth()
         if (response.resultCode === 0) {
-            let {userId, name} = response.data.data
-            dispatch(setUsersData({userId, name, isAuth: true}));
+            let {userName} = response
+            dispatch(setUsersData({userName, isAuth: true}));
         }
     });
 }
@@ -65,7 +63,6 @@ export const getAuth = (): ThunkType => {
 type ValuesType = {
     name: string
     password: string
-    rememberMe: boolean
 }
 type SetStatusObjectType = {
     messageEmail: string
@@ -77,22 +74,36 @@ type LoginPropsType = {
     resetForm: () => void,
     setSubmitting: (submitting: boolean) => void
 }
+type ResponseType = {
+    resultCode: number
+    username?: string
+    token?: string
+    errorMessage?: string
+}
 
-export const signUp = (props: LoginPropsType): ThunkType => {
+const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatch: ThunkDispatch<EmptyObject & AppStateType, unknown, ActionsType>) => {
+    if (response.resultCode === 0) {
+        setToken(response.token ?? '');
+        if (response.username) {
+            dispatch(setUsersData({userName: response.username, isAuth: true}));
+        }
+        props.setSubmitting(false);
+        props.resetForm();
+    } else {
+        props.setSubmitting(false);
+        props.setStatus({
+            messageEmail: response.errorMessage ?? '',
+            messagePassword: response.errorMessage ?? ''
+        });
+    }
+}
+
+export const registration = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
+        console.log('props: ', props)
         let response = await authAPI.signUp(props.values.name, props.values.password)
-        if (response.resultCode === 0) {
-            dispatch(getAuth());
-            props.setSubmitting(false);
-            props.resetForm();
-        } else {
-            props.setSubmitting(false);
-            props.setStatus({
-                messageEmail: response.messages[0],
-                messagePassword: response.messages[1]
-            });
-        }
+        setResponseToken(props, response,dispatch)
     });
 }
 
@@ -100,17 +111,7 @@ export const login = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
         let response = await authAPI.login(props.values.name, props.values.password)
-        if (response.resultCode === 0) {
-            dispatch(getAuth());
-            props.setSubmitting(false);
-            props.resetForm();
-        } else {
-            props.setSubmitting(false);
-            props.setStatus({
-                messageEmail: response.messages[0],
-                messagePassword: response.messages[1]
-            });
-        }
+        setResponseToken(props, response,dispatch)
     });
 }
 

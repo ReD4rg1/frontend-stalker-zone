@@ -6,6 +6,7 @@ const SHOW_PLAYERS = "SHOW-PLAYERS"
 type InitialStateType = {
     players: Array<IPlayer>
     initialPlayersInfo: Array<IInitialPlayerInfo>
+    playersIsReady: boolean
 }
 
 export interface IInitialPlayerInfo {
@@ -179,7 +180,8 @@ let initialState: InitialStateType = {
                 secrecyBoost: 0
             }
         }
-    ]
+    ],
+    playersIsReady: false
 }
 
 const playersReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -187,7 +189,8 @@ const playersReducer = (state = initialState, action: ActionsType): InitialState
         case CREATE_PLAYERS:
             return {
                 ...state,
-                players: createAndAddPlayers(action.players)
+                players: createAndAddPlayers(action.players),
+                playersIsReady: true
             }
         case SHOW_PLAYERS:
             return {

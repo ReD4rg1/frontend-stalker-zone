@@ -3,6 +3,7 @@ import PlayerCreateMenu from "./PlayerCreateMenu";
 import {connect} from "react-redux";
 import {createPlayers, showPlayersInfo} from "../../../redux/players-reducer";
 import {AppStateType} from "../../../redux/redux-store";
+import { Navigate } from "react-router-dom";
 
 
 class PlayerCreateMenuContainer extends React.Component<any, any> {
@@ -12,6 +13,9 @@ class PlayerCreateMenuContainer extends React.Component<any, any> {
     }
 
     render() {
+        if (this.props.players.playersIsReady) {
+            return <Navigate to={"/session"}/>
+        }
         return (
             <PlayerCreateMenu players={this.props.players}
                               createPlayers={this.props.createPlayers}

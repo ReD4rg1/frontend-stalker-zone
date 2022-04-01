@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'https://localhost:8080/',
+    baseURL: 'http://localhost:8080/',
     //headers: {'API-KEY': '67e9bc59-d756-4699-841e-f4005ff4fe7c'},
 })
 

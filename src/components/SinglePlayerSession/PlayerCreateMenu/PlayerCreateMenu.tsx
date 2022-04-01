@@ -1,8 +1,12 @@
 import {IInitialPlayerInfo, IPlayer} from "../../../redux/players-reducer";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styles from "./PlayerCreateMenu.module.css";
 import backgroundImage from "../../../assets/img/main-menu/main-menu-background.jpg";
-
+import {ColumnItem} from "./ColumnItem";
+import {
+    DragDropContext,
+    DropResult
+} from "react-beautiful-dnd";
 
 interface IProps {
     players: PlayersType
@@ -14,47 +18,135 @@ type PlayersType = {
     initialPlayersInfo: Array<IInitialPlayerInfo>
 }
 
-const ColumnItem = (props: any) => {
-
-    return (
-        <div/>
-    )
+interface IPlayers {
+    id: number
+    name: string
 }
 
 interface IInitialData {
-    players: Array<any>
+    players: Array<IPlayers>
     columns: {
-        'column-1': {}
+        [key: string]: {
+            id: string
+            title: string
+            playersIds: Array<number>
+        }
     }
-    columnOrder: Array<any>
+    columnOrder: Array<string>
 }
 
 const PlayerCreateMenu = (props: IProps) => {
 
     const [playersFinalArray, setPlayersFinalArray] = useState<Array<number>>([])
-
-    const initialData: IInitialData = {
-        players: [
-            ...props.players.initialPlayersInfo.map((item, i) => {
-                return {
-                    id: item.playerId,
-                    name: item.playerName,
-                }
-            })
-        ],
+    const [initialData, setInitialData] = useState<IInitialData>({
+        players: [],
         columns: {
             'column-1': {
                 id: 'column-1',
                 title: 'Выберите игрока',
-                playersIds: [...props.players.initialPlayersInfo.map(item => {
-                    return item.playerId
-                })]
+                playersIds: []
+            },
+            'column-2': {
+                id: 'column-2',
+                title: 'Активные игроки',
+                playersIds: []
             }
         },
-        columnOrder: ['column-1']
+        columnOrder: ['column-1', 'column-2']
+    })
+
+    const onDragStart = () => {
+
+    }
+    const onDragUpdate = () => {
+
+    }
+    const onDragEnd = (result: DropResult) => {
+        const {destination, source, draggableId} = result
+
+        if (!destination) {
+            return
+        }
+
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return
+        }
+
+        const start = initialData.columns[source.droppableId]
+        const finish = initialData.columns[destination.droppableId]
+
+        if (start === finish) {
+            const newPlayerIds = Array.from(start.playersIds)
+            newPlayerIds.splice(source.index, 1)
+            newPlayerIds.splice(destination.index, 0, parseInt(draggableId))
+
+            const newColumn = {
+                ...start,
+                playersIds: newPlayerIds
+            }
+
+            setInitialData({
+                ...initialData,
+                columns: {
+                    ...initialData.columns,
+                    [newColumn.id]: newColumn
+                }
+            })
+
+            return
+        }
+
+        const startPlayerIds = Array.from(start.playersIds)
+        startPlayerIds.splice(source.index, 1)
+        const newStart = {
+            ...start,
+            playersIds: startPlayerIds,
+        }
+
+        const finishPlayerIds = Array.from(finish.playersIds)
+        finishPlayerIds.splice(destination.index, 0, parseInt(draggableId))
+        const newFinish = {
+            ...finish,
+            playersIds: finishPlayerIds,
+        }
+        setInitialData({
+            ...initialData,
+            columns: {
+                ...initialData.columns,
+                [newStart.id]: newStart,
+                [newFinish.id]: newFinish
+            }
+        })
+        setPlayersFinalArray(newFinish.playersIds)
     }
 
-    console.log('initialData: ', initialData)
+    useEffect(() => {
+        setInitialData(
+            {
+                ...initialData,
+                players: [
+                    ...props.players.initialPlayersInfo.map((item) => {
+                        return {
+                            id: item.playerId,
+                            name: item.playerName,
+                        }
+                    })
+                ],
+                columns: {
+                    'column-1': {
+                        ...initialData.columns['column-1'],
+                        playersIds: [...props.players.initialPlayersInfo.map(item => item.playerId)]
+                    },
+                    'column-2': {
+                        ...initialData.columns['column-2']
+                    }
+                }
+            }
+        )
+    }, [props])
 
     return (
         <div className={styles.container}>
@@ -63,17 +155,25 @@ const PlayerCreateMenu = (props: IProps) => {
                 <img src={backgroundImage} alt={"#"}/>
             </section>
             <section className={styles.dropMenuContainer}>
-                {initialData.columnOrder.map((columnId: string) => {
-                    // @ts-ignore
-                    const column = initialData.columns[columnId]
-                    console.log('column.playersIds: ', column.playersIds)
-                    const players = column.playersIds.map((playerId: number) => initialData.players[playerId])
 
-                    return <ColumnItem key={column.id} column={column} players={players}/>
-                })}
+                <DragDropContext
+                    onDragStart={() => onDragStart()}
+                    onDragUpdate={() => onDragUpdate()}
+                    onDragEnd={(result) => onDragEnd(result)}
+                >
+                    <div className={styles.dragDropContext}>
+                        {initialData.columnOrder.map((columnId) => {
+                            const column = initialData.columns[columnId]
+                            const players: Array<IPlayers> =
+                                column.playersIds.map((playerId) =>
+                                    initialData.players[playerId-1])
+                            return <ColumnItem key={column.id} column={column} players={players}/>
+                        })}
+                    </div>
+                </DragDropContext>
                 <button disabled={playersFinalArray.length < 2} onClick={() => {
                     if (playersFinalArray.length >= 2) props.createPlayers(playersFinalArray)
-                }}>CreatePlayers
+                }}>{"Начать игру"}
                 </button>
             </section>
         </div>

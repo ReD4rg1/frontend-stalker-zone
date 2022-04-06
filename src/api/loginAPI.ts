@@ -2,8 +2,7 @@ import axios from "axios";
 import {token} from "./token";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/',
-    headers: {'Authorization': `${token}`},
+    baseURL: 'http://localhost:8080/'
 })
 
 const authAPI = {
@@ -16,7 +15,6 @@ const authAPI = {
     },
 
     signUp(username: string, password: string) {
-        console.log(username, password)
         return (
             instance.post(`auth/registration`, {username, password})
                 .then(response => response.data)

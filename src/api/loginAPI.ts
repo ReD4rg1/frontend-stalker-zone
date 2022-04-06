@@ -1,37 +1,36 @@
 import axios from "axios";
+import {token} from "./token";
 
 const instance = axios.create({
-    withCredentials: true,
-    baseURL: 'http://localhost:8080/',
-    //headers: {'API-KEY': '67e9bc59-d756-4699-841e-f4005ff4fe7c'},
+    baseURL: 'http://localhost:8080/'
 })
 
 const authAPI = {
 
     getAuth() {
         return (
-            instance.get(`auth/me`)
+            instance.post(`auth/me`, {token})
                 .then(response => response.data)
         )
     },
 
-    signUp(name: string, password: string) {
+    signUp(username: string, password: string) {
         return (
-            instance.post(`auth/registration`, {name, password})
+            instance.post(`auth/registration`, {username, password})
                 .then(response => response.data)
         )
     },
 
-    login(name: string, password: string) {
+    login(username: string, password: string) {
         return (
-            instance.post(`auth/login`, {name, password})
+            instance.post(`auth/login`, {username, password})
                 .then(response => response.data)
         )
     },
 
     logout() {
         return (
-            instance.delete(`auth/login`)
+            instance.post(`auth/login`)
                 .then(response => response.data)
         )
     },

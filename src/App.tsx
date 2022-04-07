@@ -6,8 +6,16 @@ import {connect} from "react-redux";
 import PlayerCreateMenuContainer from "./components/SinglePlayerSession/PlayerCreateMenu/PlayerCreateMenuContainer";
 import MainMenu from "./components/MainMenu/MainMenu";
 import LoginContainer from "./components/Login/LoginContainer";
+import {initialize} from './redux/app-reducer';
+import {Navigate} from "react-router-dom";
 
 class App extends Component<any, any> {
+
+    componentDidMount() {
+        if (!this.props.app.initialized) {
+            this.props.initialize();
+        }
+    }
 
     render() {
         return (
@@ -26,6 +34,7 @@ class App extends Component<any, any> {
                         <Route path={"/session"} element={
                             <MapContainer/>
                         }/>
+                        <Route path={""} element={<Navigate to={"/main_menu"}/>}/>
                     </Routes>
                 </div>
             </BrowserRouter>
@@ -39,4 +48,4 @@ let mapStateToProps = (store: any) => {
     }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, {initialize})(App)

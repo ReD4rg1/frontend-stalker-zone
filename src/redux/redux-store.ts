@@ -3,6 +3,7 @@ import mapReducer from "./map-reducer";
 import thunkMiddleware from "redux-thunk";
 import playersReducer from "./players-reducer";
 import authReducer from "./auth-reducer";
+import appReducer from "./app-reducer";
 
 type RootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<RootReducerType>
@@ -11,6 +12,7 @@ let rootReducer = combineReducers({
     map: mapReducer,
     players: playersReducer,
     auth: authReducer,
+    app: appReducer,
 })
 
 const composeEnhancers = (window as any)['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose

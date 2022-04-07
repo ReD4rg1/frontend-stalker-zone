@@ -8,7 +8,7 @@ const SET_USERS_DATA = 'SET-USERS-DATA'
 
 interface IInitialState {
     userName: string | null
-    isAuth: boolean,
+    isAuth: boolean
 }
 
 const initialState: IInitialState = {
@@ -101,7 +101,6 @@ const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatc
 export const registration = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
-        console.log('props: ', props)
         let response = await authAPI.signUp(props.values.name, props.values.password)
         setResponseToken(props, response,dispatch)
     });

@@ -15,6 +15,7 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<IP
                 playerActiveOrder: null,
                 playerMoney: players[item-1].playerEffects.seedMoney,
                 isSkipping: false,
+                hisTurn: false,
                 playerEffects: {
                     healBoost: players[item-1].playerEffects.healBoost,
                     mapMoveModifier: players[item-1].playerEffects.mapMoveModifier,

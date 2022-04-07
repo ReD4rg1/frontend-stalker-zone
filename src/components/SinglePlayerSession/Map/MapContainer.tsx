@@ -6,7 +6,7 @@ import {generateMap} from "../../../redux/map-reducer";
 class MapContainer extends React.Component<any, any>{
 
     componentDidMount() {
-        if (this.props.map.mapIsGenerated === false) this.props.generateMap()
+        if (this.props.map.mapIsGenerated === false) this.props.generateMap(this.props.players)
     }
 
     render() {
@@ -22,7 +22,8 @@ class MapContainer extends React.Component<any, any>{
 
 let mapStateToProps = (store: any) => {
     return {
-        map: store.map
+        map: store.map,
+        players: store.players
     }
 }
 

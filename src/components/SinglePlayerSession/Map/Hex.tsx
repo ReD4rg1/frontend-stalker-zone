@@ -21,6 +21,15 @@ const Hex = (props: IProps) => {
                     <div className={styles.infoBlock}>
                         <p className={styles.hexId}>{item.locationName}</p>
                         <p className={styles.hexId}>{'Id: ' + item.HexId}</p>
+                        <section className={styles.players}>
+                            {item.players?.map((player) => {
+                                return (
+                                    <div key={player.playerId} className={player.hisTurn ? styles.player : styles.activePlayer} style={{backgroundColor: `#69b${player.playerId}d5`}}>
+                                        <span className={styles.playerDescription}>{player.playerName}</span>
+                                    </div>
+                                )
+                            })}
+                        </section>
                     </div>
                     <section className={styles.topSide}>
                         <span>{item.Top.difficulty}</span>

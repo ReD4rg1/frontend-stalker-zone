@@ -1,11 +1,15 @@
-import {IHex, IInitialState, ILocation} from "./map-reducer";
+import {IHex, MapInitialState, ILocation} from "./map-reducer";
 import * as hexesDifficultyInfo from './Objects/Map/kinds-of-hexes.json';
 import * as locationsInfo from './Objects/Map/filling-location-hexes-info.json';
 import {getLocationsQueueArray, getRandomIntForInterval} from "./random-generators";
+import {IPlayer} from "./players-reducer";
 
 type PropsType = {
-    state: IInitialState
+    state: MapInitialState
+    players: IPlayer[]
 }
+
+let playersArray: IPlayer[] = []
 
 const locationsQueueArray = getLocationsQueueArray({min: 0, max: 9, length: 10, isLocationArray: true})
 
@@ -59,7 +63,7 @@ const getRandomHex = (props: IGetRandomHex): IHex => {
 
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
-    let hex = {
+    return {
         HexId: props.HexId,
         players: [],
         isActive: false,
@@ -74,8 +78,6 @@ const getRandomHex = (props: IGetRandomHex): IHex => {
         BottomLeft: checkEpicenterSide(props.sides.bottomLeftId, props.HexId, hexDifficultyInfoObject.difficulty.bottomLeft),
         BottomRight: checkEpicenterSide(props.sides.bottomRightId, props.HexId, hexDifficultyInfoObject.difficulty.bottomRight)
     }
-
-    return hex
 }
 
 const checkLocationName = (locationName: string) => {
@@ -149,9 +151,13 @@ const getHex = (props: IGetHex): IHex => {
 
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
-    let hex = {
+    return {
         HexId: props.HexId,
-        players: [],
+        players: props.locationName === 'Посёлок'
+            ? playersArray.map((player) => {
+                return player
+            })
+            : [],
         isActive: false,
         isLocation: props.isLocation,
         isSpecialLocation: props.isSpecialLocation,
@@ -182,8 +188,6 @@ const getHex = (props: IGetHex): IHex => {
             difficulty: hexDifficultyInfoObject.difficulty.bottomRight
         }
     }
-
-    return hex
 }
 
 
@@ -444,19 +448,18 @@ const generateLocationItem = (props: IGenerateLocationItem): ILocation => {
 
     const currentLocationObject = locationsInfo[props.locationNumber]
 
-    const newLocation = {
+    return {
         locationName: null,
         locationID: currentLocationObject.id,
         allLocations: getHexesArray(currentLocationObject.locations,props)
     }
-
-    return newLocation
 }
 
-const getGeneratedMap = (props: PropsType): IInitialState => {
+const getGeneratedMap = (props: PropsType): MapInitialState => {
 
     let newMap: Array<ILocation> = props.state.locations
     let newLocation: ILocation
+    playersArray = [...props.players]
 
     for (let i = 0; i < 10; i++) {
 

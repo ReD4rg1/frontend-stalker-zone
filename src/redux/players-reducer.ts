@@ -1,9 +1,9 @@
-import {createAndAddPlayers, showInitPlayersInfo} from "./create-players"
+import {createAndAddPlayers, showInitPlayersInfo} from "./create-players";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
 
-type InitialStateType = {
+export interface PlayersInitialState {
     players: Array<IPlayer>
     initialPlayersInfo: Array<IInitialPlayerInfo>
     playersIsReady: boolean
@@ -32,6 +32,7 @@ export interface IPlayer {
     playerEffects: PlayerEffectsType
     playerMoney: number
     isSkipping: boolean
+    hisTurn: boolean
     inventory: IInventory
 }
 interface IInventory {
@@ -128,7 +129,7 @@ type ShowInitPlayersInfoType = {
     type: typeof SHOW_PLAYERS
 }
 
-let initialState: InitialStateType = {
+let initialState: PlayersInitialState = {
     players: [
         {
             playerId: 1,
@@ -139,6 +140,7 @@ let initialState: InitialStateType = {
             playerActiveOrder: null,
             playerMoney: 1500,
             isSkipping: false,
+            hisTurn: false,
             playerEffects: {
                 healBoost: 0,
                 mapMoveModifier: 0,
@@ -184,7 +186,7 @@ let initialState: InitialStateType = {
     playersIsReady: false
 }
 
-const playersReducer = (state = initialState, action: ActionsType): InitialStateType => {
+const playersReducer = (state = initialState, action: ActionsType): PlayersInitialState => {
     switch (action.type) {
         case CREATE_PLAYERS:
             return {
@@ -200,7 +202,7 @@ const playersReducer = (state = initialState, action: ActionsType): InitialState
         default:
             return state
     }
-};
+}
 
 export const createPlayers = (players: Array<number>):GeneratePlayerType => (
     {

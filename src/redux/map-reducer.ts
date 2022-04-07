@@ -1,8 +1,10 @@
 import getGeneratedMap from "./generate-map";
+import {IPlayer} from "./players-reducer";
 
 const GENERATE_MAP = "GENERATE-MAP"
+const MOVE_TO = "MOVE-TO"
 
-export interface IInitialState {
+export interface MapInitialState {
     locations: Array<ILocation>
     mapIsGenerated: boolean
 }
@@ -12,9 +14,10 @@ export interface ILocation {
     locationID: number,
     allLocations: Array<IHex>
 }
+
 export interface IHex {
     HexId: number,
-    players: Array<any>,
+    players: Array<IPlayer>,
     isActive: boolean,
     isLocation: boolean,
     isSpecialLocation: boolean,
@@ -35,7 +38,7 @@ type HexSideType = {
 
 type ActionsType = GenerateMapType
 
-let initialState: IInitialState = {
+let initialState: MapInitialState = {
     locations: [
         {
             locationName: 'Лаборатория',
@@ -672,22 +675,46 @@ let initialState: IInitialState = {
         }
     ],
     mapIsGenerated: false
-};
+}
 
-const mapReducer = (state = initialState, action: ActionsType): IInitialState => {
+const mapReducer = (state = initialState, action: ActionsType): MapInitialState => {
     switch (action.type) {
         case GENERATE_MAP:
-            return getGeneratedMap({state})
+            return getGeneratedMap({state, players: action.players})
 
         default:
             return state
     }
-};
+}
 
 type GenerateMapType = {
     type: typeof GENERATE_MAP
+    players: IPlayer[]
 }
 
-export const generateMap = ():GenerateMapType => ({type: GENERATE_MAP})
+interface GenerateMapProps {
+    players: IPlayer[]
+}
+
+export const generateMap = ({players}: GenerateMapProps): GenerateMapType => (
+    {
+        type: GENERATE_MAP,
+        players: players,
+    }
+)
+
+type MoveToType = {
+    type: typeof MOVE_TO
+}
+
+interface MoveToProps {
+
+}
+
+export const moveTo = ({}: MoveToProps): MoveToType => (
+    {
+        type: MOVE_TO,
+    }
+)
 
 export default mapReducer

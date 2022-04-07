@@ -1,10 +1,10 @@
 import React, {FC} from "react";
-import {IInitialState} from "../../../redux/map-reducer";
+import {MapInitialState} from "../../../redux/map-reducer";
 import Location from "./Location";
 import styles from "./Map.module.css";
 
 type PropsType = {
-    map: IInitialState,
+    map: MapInitialState,
     generateMap: () => void,
 }
 

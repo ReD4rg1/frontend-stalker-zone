@@ -1,4 +1,4 @@
-import authAPI from "../api/loginAPI"
+import authAPI from "../api/loginAPI";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { AppStateType } from "./redux-store";
 import {setToken} from "../api/token";
@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action: ActionsType): IInitialState =
             }
 
         default:
-            return state;
+            return state
     }
 }
 
@@ -55,9 +55,9 @@ export const getAuth = (): ThunkType => {
         let response = await authAPI.getAuth()
         if (response.resultCode === 0) {
             let {userName} = response
-            dispatch(setUsersData({userName, isAuth: true}));
+            dispatch(setUsersData({userName, isAuth: true}))
         }
-    });
+    })
 }
 
 type ValuesType = {
@@ -83,18 +83,18 @@ type ResponseType = {
 
 const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatch: ThunkDispatch<EmptyObject & AppStateType, unknown, ActionsType>) => {
     if (response.resultCode === 0) {
-        setToken(response.token ?? '');
+        setToken(response.token ?? '')
         if (response.username) {
-            dispatch(setUsersData({userName: response.username, isAuth: true}));
+            dispatch(setUsersData({userName: response.username, isAuth: true}))
         }
-        props.setSubmitting(false);
-        props.resetForm();
+        props.setSubmitting(false)
+        props.resetForm()
     } else {
-        props.setSubmitting(false);
+        props.setSubmitting(false)
         props.setStatus({
             messageEmail: response.errorMessage ?? '',
             messagePassword: response.errorMessage ?? ''
-        });
+        })
     }
 }
 
@@ -103,7 +103,7 @@ export const registration = (props: LoginPropsType): ThunkType => {
     return (async (dispatch) => {
         let response = await authAPI.signUp(props.values.name, props.values.password)
         setResponseToken(props, response,dispatch)
-    });
+    })
 }
 
 export const login = (props: LoginPropsType): ThunkType => {
@@ -111,7 +111,7 @@ export const login = (props: LoginPropsType): ThunkType => {
     return (async (dispatch) => {
         let response = await authAPI.login(props.values.name, props.values.password)
         setResponseToken(props, response,dispatch)
-    });
+    })
 }
 
 export const logout = (): ThunkType => {
@@ -121,7 +121,7 @@ export const logout = (): ThunkType => {
         if (response.resultCode === 0) {
             dispatch(getAuth());
         }
-    });
+    })
 }
 
-export default authReducer;
+export default authReducer

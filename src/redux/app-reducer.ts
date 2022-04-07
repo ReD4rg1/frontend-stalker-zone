@@ -11,7 +11,7 @@ interface IInitialState {
 
 let initialState: IInitialState = {
     initialized: false,
-};
+}
 
 type ActionsType = InitializedType
 
@@ -43,8 +43,8 @@ export const initialized = (initialized: boolean): InitializedType => ({
 
 export const initialize = () => {
     return ((dispatch: ThunkDispatch<EmptyObject & AppStateType, unknown, ActionsType>) => {
-        dispatch(getAuth()).then(() => dispatch(initialized(true)));
-    });
+        dispatch(getAuth()).then(() => dispatch(initialized(true)))
+    })
 }
 
-export default appReducer;
+export default appReducer

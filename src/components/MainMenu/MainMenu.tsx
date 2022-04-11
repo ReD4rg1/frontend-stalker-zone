@@ -8,7 +8,8 @@ const MainMenu = () => {
     return (
         <div className={styles.container}>
             <section className={styles.imageContainer}>
-                <img src={backgroundImage} alt={'#'}/>
+                {/*<img src={backgroundImage} alt={'#'}/>*/}
+                <div style={{backgroundImage: `${backgroundImage}`, width: '100%', height: '100%'}}/>
             </section>
             <section className={styles.sectionContainer}>
                 <div className={styles.titleContainer}>

@@ -7,12 +7,12 @@ import {EmptyObject} from "redux";
 const SET_USERS_DATA = 'SET-USERS-DATA'
 
 interface IInitialState {
-    userName: string | null
+    username: string | null
     isAuth: boolean
 }
 
 const initialState: IInitialState = {
-    userName: null,
+    username: null,
     isAuth: false,
 }
 
@@ -33,7 +33,7 @@ const authReducer = (state = initialState, action: ActionsType): IInitialState =
 }
 
 type SetUsersDataTypePayloadType = {
-    userName: string,
+    username: string,
     isAuth: boolean,
 }
 type SetUsersDataType = {
@@ -45,7 +45,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 export const setUsersData = (payload: SetUsersDataTypePayloadType): SetUsersDataType => ({
     type: SET_USERS_DATA,
     payload: {
-        userName: payload.userName,
+        username: payload.username,
         isAuth: payload.isAuth,
     },
 })
@@ -54,8 +54,8 @@ export const getAuth = (): ThunkType => {
     return (async (dispatch) => {
         let response = await authAPI.getAuth()
         if (response.resultCode === 0) {
-            let {userName} = response
-            dispatch(setUsersData({userName, isAuth: true}))
+            let {username} = response
+            dispatch(setUsersData({username, isAuth: true}))
         }
     })
 }
@@ -85,7 +85,7 @@ const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatc
     if (response.resultCode === 0) {
         setToken(response.token ?? '')
         if (response.username) {
-            dispatch(setUsersData({userName: response.username, isAuth: true}))
+            dispatch(setUsersData({username: response.username, isAuth: true}))
         }
         props.setSubmitting(false)
         props.resetForm()

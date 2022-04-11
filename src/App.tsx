@@ -8,6 +8,7 @@ import MainMenu from "./components/MainMenu/MainMenu";
 import LoginContainer from "./components/Login/LoginContainer";
 import {initialize} from './redux/app-reducer';
 import {Navigate} from "react-router-dom";
+import SessionStartMenuContainer from './components/MultiplayerSession/SessionStartMenuContainer';
 
 class App extends Component<any, any> {
 
@@ -33,6 +34,9 @@ class App extends Component<any, any> {
                         }/>
                         <Route path={"/session"} element={
                             <MapContainer/>
+                        }/>
+                        <Route path={"/multiplayer"} element={
+                            <SessionStartMenuContainer />
                         }/>
                         <Route path={""} element={<Navigate to={"/main_menu"}/>}/>
                     </Routes>

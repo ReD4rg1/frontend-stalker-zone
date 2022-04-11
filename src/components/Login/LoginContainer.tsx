@@ -5,7 +5,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {login, registration} from "../../redux/auth-reducer";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 
 class LoginContainer extends React.Component<any, any> {
 
@@ -15,6 +15,9 @@ class LoginContainer extends React.Component<any, any> {
     }
 
     render() {
+        if (this.props.auth.isAuth) {
+            return <Navigate to={'/multiplayer'}/>
+        }
 
         return (
             <div className={styles.container}>

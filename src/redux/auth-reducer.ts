@@ -1,24 +1,24 @@
 import authAPI from "../api/loginAPI";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import { AppStateType } from "./redux-store";
-import {setToken} from "../api/token";
+import {getToken, setToken} from "../api/token";
 import {EmptyObject} from "redux";
 
 const SET_USERS_DATA = 'SET-USERS-DATA'
 
-interface IInitialState {
+export interface AuthInitialState {
     username: string | null
     isAuth: boolean
 }
 
-const initialState: IInitialState = {
+const initialState: AuthInitialState = {
     username: null,
     isAuth: false,
 }
 
 type ActionsType = SetUsersDataType
 
-const authReducer = (state = initialState, action: ActionsType): IInitialState => {
+const authReducer = (state = initialState, action: ActionsType): AuthInitialState => {
 
     switch (action.type) {
         case SET_USERS_DATA:
@@ -33,7 +33,7 @@ const authReducer = (state = initialState, action: ActionsType): IInitialState =
 }
 
 type SetUsersDataTypePayloadType = {
-    username: string,
+    username: string | null,
     isAuth: boolean,
 }
 type SetUsersDataType = {
@@ -56,6 +56,9 @@ export const getAuth = (): ThunkType => {
         if (response.resultCode === 0) {
             let {username} = response
             dispatch(setUsersData({username, isAuth: true}))
+        }
+        if (response.resultCode === 1) {
+            dispatch(setUsersData({username: null, isAuth: false}))
         }
     })
 }
@@ -93,7 +96,7 @@ const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatc
         props.setSubmitting(false)
         props.setStatus({
             messageEmail: response.errorMessage ?? '',
-            messagePassword: response.errorMessage ?? ''
+            messagePassword: response.errorMessage ?? '',
         })
     }
 }
@@ -119,7 +122,8 @@ export const logout = (): ThunkType => {
     return (async (dispatch) => {
         let response = await authAPI.logout()
         if (response.resultCode === 0) {
-            dispatch(getAuth());
+            setToken('')
+            dispatch(setUsersData({username: null, isAuth: false}))
         }
     })
 }

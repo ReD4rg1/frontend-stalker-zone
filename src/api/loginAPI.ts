@@ -1,9 +1,11 @@
 import axios from "axios";
-import {token} from "./token";
+import {getToken} from "./token";
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080/'
 })
+
+const token = getToken()
 
 const authAPI = {
 
@@ -30,7 +32,7 @@ const authAPI = {
 
     logout() {
         return (
-            instance.post(`auth/login`)
+            instance.post(`auth/logout`)
                 .then(response => response.data)
         )
     },

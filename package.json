@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stomp/stompjs": "^6.1.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -11,6 +12,9 @@
     "@types/react": "^17.0.39",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.11",
+    "@types/sockjs": "^0.3.33",
+    "@types/sockjs-client": "^1.5.1",
+    "@types/stompjs": "^2.3.5",
     "axios": "^0.26.1",
     "formik": "^2.2.9",
     "react": "^17.0.2",
@@ -21,6 +25,8 @@
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "sockjs": "^0.3.24",
+    "sockjs-client": "^1.6.0",
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

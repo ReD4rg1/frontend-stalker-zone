@@ -6,7 +6,7 @@ const MainMenu = () => {
 
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container}>z
             <section className={styles.imageContainer}>
                 {/*<img src={backgroundImage} alt={'#'}/>*/}
                 <div style={{backgroundImage: `${backgroundImage}`, width: '100%', height: '100%'}}/>

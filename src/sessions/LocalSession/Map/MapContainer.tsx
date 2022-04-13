@@ -1,7 +1,7 @@
 import React from 'react';
 import Map from "./Map";
 import {connect} from "react-redux";
-import {generateMap} from "../../../redux/map-reducer";
+import {generateMap} from "../../../redux/reducers/map-reducer";
 
 class MapContainer extends React.Component<any, any>{
 

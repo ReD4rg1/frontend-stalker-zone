@@ -4,14 +4,14 @@ import LoginForm from "./LoginForm";
 import React from "react";
 import { connect } from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {login, registration} from "../../redux/auth-reducer";
+import {login, registration} from "../../redux/reducers/auth-reducer";
 import {Navigate, NavLink} from "react-router-dom";
 
-class LoginContainer extends React.Component<any, any> {
+class Login extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props)
-        this.state = {haveAccount: false}
+        this.state = {haveAccount: true}
     }
 
     render() {
@@ -58,4 +58,4 @@ let mapStateToProps = (store: AppStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {login, signUp: registration})(LoginContainer)
+export default connect(mapStateToProps, {login, signUp: registration})(Login)

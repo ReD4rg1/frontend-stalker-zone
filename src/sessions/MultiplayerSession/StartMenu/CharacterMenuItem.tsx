@@ -1,5 +1,5 @@
 import styles from "./MenuContainer.module.css";
-import {Character, sendChar} from "../../api/WebSocket/WebSocket";
+import {Character, sendChar} from "../../../api/WebSocket/WebSocket";
 
 interface Props {
     char: Character
@@ -7,7 +7,7 @@ interface Props {
 
 const CharacterMenuItem = ({char}: Props) => {
     return (
-        <div key={char.id} className={styles.char}>
+        <div className={styles.char}>
             <div>
                 <h3>{char.name}</h3>
             </div>

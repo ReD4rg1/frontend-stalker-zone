@@ -1,18 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import {AuthInitialState, logout} from "../../redux/auth-reducer";
+import {AuthInitialState, logout} from "../../redux/reducers/auth-reducer";
 import { AppStateType } from "../../redux/redux-store";
-import Header from "./Header"
+import Content from "./Content"
 
 interface Props {
     auth: AuthInitialState
     logout: () => void
 }
 
-class HeaderContainer extends React.Component<Props, any> {
+class Header extends React.Component<Props, any> {
     render() {
         return (
-            <Header username={this.props.auth.username} logout={this.props.logout}/>
+            <Content username={this.props.auth.username} logout={this.props.logout}/>
         )
     }
 }
@@ -24,4 +24,4 @@ let mapStateToProps = (store: AppStateType) => {
 }
 
 export default connect(mapStateToProps,
-    {logout})(HeaderContainer);
+    {logout})(Header);

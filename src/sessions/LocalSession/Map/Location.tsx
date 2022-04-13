@@ -1,5 +1,5 @@
 import Hex from "./Hex";
-import {IHex} from "../../../redux/map-reducer";
+import {IHex} from "../../../redux/reducers/map-reducer";
 import styles from "./Location.module.css";
 import image0 from "../../../assets/img/locations-background/0.png"
 import image1 from "../../../assets/img/locations-background/1.png"

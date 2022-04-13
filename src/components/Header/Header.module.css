@@ -12,11 +12,12 @@
     align-items: center;
 }
 
-.section div {
+.section h2 {
     margin: 0 10px;
 }
 
 .section button {
+    padding: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

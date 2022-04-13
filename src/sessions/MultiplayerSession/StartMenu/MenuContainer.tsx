@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Character, connect, disconnect, sendChar} from "../../api/WebSocket/WebSocket";
+import {Character, connect, disconnect, sendChar} from "../../../api/WebSocket/WebSocket";
 import CharacterMenuItem from "./CharacterMenuItem";
 
 const MenuContainer = () => {
@@ -22,7 +22,7 @@ const MenuContainer = () => {
         <div>
             <section>
                 {characters.map((char) =>
-                    <CharacterMenuItem char={char}/>
+                    <CharacterMenuItem char={char} key={char.id}/>
                 )}
             </section>
         </div>

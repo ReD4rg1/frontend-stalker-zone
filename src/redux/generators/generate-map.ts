@@ -1,8 +1,8 @@
-import {IHex, MapInitialState, ILocation} from "./map-reducer";
-import * as hexesDifficultyInfo from './Objects/Map/kinds-of-hexes.json';
-import * as locationsInfo from './Objects/Map/filling-location-hexes-info.json';
+import {IHex, MapInitialState, ILocation} from "../reducers/map-reducer";
+import * as hexesDifficultyInfo from '../Objects/Map/kinds-of-hexes.json';
+import * as locationsInfo from '../Objects/Map/filling-location-hexes-info.json';
 import {getLocationsQueueArray, getRandomIntForInterval} from "./random-generators";
-import {IPlayer} from "./players-reducer";
+import {IPlayer} from "../reducers/players-reducer";
 
 type PropsType = {
     state: MapInitialState

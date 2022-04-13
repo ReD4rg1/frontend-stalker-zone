@@ -1,0 +1,28 @@
+.headerContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: black;
+    padding: 20px;
+}
+
+.section {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+}
+
+.section div {
+    margin: 0 10px;
+}
+
+.section button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s ease 0s;
+}
+
+.section button:hover {
+    background-color: #949494;
+}

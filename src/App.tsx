@@ -9,6 +9,7 @@ import LoginContainer from "./components/Login/LoginContainer";
 import {initialize} from './redux/app-reducer';
 import {Navigate} from "react-router-dom";
 import SessionStartMenuContainer from './components/MultiplayerSession/SessionStartMenuContainer';
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 class App extends Component<any, any> {
 
@@ -22,6 +23,9 @@ class App extends Component<any, any> {
         return (
             <BrowserRouter>
                 <div className="App">
+                    <header>
+                        <HeaderContainer/>
+                    </header>
                     <Routes>
                         <Route path={"/main_menu"} element={
                             <MainMenu/>

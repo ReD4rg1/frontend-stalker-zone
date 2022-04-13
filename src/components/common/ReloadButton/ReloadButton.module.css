@@ -1,0 +1,45 @@
+.button {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    max-width: 200px;
+    max-height: 30px;
+    color: white;
+    font-weight: 700;
+    background-color: #691111;
+    cursor: pointer;
+    transition: all 0.15s ease 0s;
+}
+
+.button:hover {
+    background-color: white;
+    color: #691111;
+    border: 1px solid #691111;
+}
+
+/*------------------------INVERT-----------------------------*/
+
+.buttonInvert {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #691111;
+    border-radius: 5px;
+    max-width: 200px;
+    max-height: 30px;
+    color: #691111;
+    font-weight: 700;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.15s ease 0s;
+}
+
+.buttonInvert:hover {
+    background-color: #691111;
+    color: white;
+    border: 1px solid white;
+}

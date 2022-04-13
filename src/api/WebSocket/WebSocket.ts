@@ -1,19 +1,7 @@
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
 import {sort} from "./utils";
-
-interface CharEffect {
-    id: number
-    name: string
-    value: number
-}
-
-export interface Character {
-    id: number
-    name: string
-    available: boolean
-    effectsList: CharEffect[]
-}
+import {Character} from "../../redux/reducers/room-reducer";
 
 interface Props {
     setCharacters: (characters: Character[]) => void

@@ -1,18 +1,20 @@
-import authAPI from "../api/loginAPI";
+import authAPI from "../../api/loginAPI";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
-import { AppStateType } from "./redux-store";
-import {getToken, setToken} from "../api/token";
+import { AppStateType } from "../redux-store";
+import {setToken} from "../../api/token";
 import {EmptyObject} from "redux";
 
 const SET_USERS_DATA = 'SET-USERS-DATA'
 
 export interface AuthInitialState {
     username: string | null
+    userId: number | null
     isAuth: boolean
 }
 
 const initialState: AuthInitialState = {
     username: null,
+    userId: null,
     isAuth: false,
 }
 
@@ -34,6 +36,7 @@ const authReducer = (state = initialState, action: ActionsType): AuthInitialStat
 
 type SetUsersDataTypePayloadType = {
     username: string | null,
+    userId: number | null,
     isAuth: boolean,
 }
 type SetUsersDataType = {
@@ -46,6 +49,7 @@ export const setUsersData = (payload: SetUsersDataTypePayloadType): SetUsersData
     type: SET_USERS_DATA,
     payload: {
         username: payload.username,
+        userId: payload.userId,
         isAuth: payload.isAuth,
     },
 })
@@ -54,11 +58,11 @@ export const getAuth = (): ThunkType => {
     return (async (dispatch) => {
         let response = await authAPI.getAuth()
         if (response.resultCode === 0) {
-            let {username} = response
-            dispatch(setUsersData({username, isAuth: true}))
+            let {username, userId} = response
+            dispatch(setUsersData({username, userId, isAuth: true}))
         }
         if (response.resultCode === 1) {
-            dispatch(setUsersData({username: null, isAuth: false}))
+            dispatch(setUsersData({username: null, userId: null, isAuth: false}))
         }
     })
 }
@@ -80,6 +84,7 @@ type LoginPropsType = {
 type ResponseType = {
     resultCode: number
     username?: string
+    userId?: number
     token?: string
     errorMessage?: string
 }
@@ -87,8 +92,8 @@ type ResponseType = {
 const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatch: ThunkDispatch<EmptyObject & AppStateType, unknown, ActionsType>) => {
     if (response.resultCode === 0) {
         setToken(response.token ?? '')
-        if (response.username) {
-            dispatch(setUsersData({username: response.username, isAuth: true}))
+        if (response.username && response.userId) {
+            dispatch(setUsersData({username: response.username, userId: response.userId, isAuth: true}))
         }
         props.setSubmitting(false)
         props.resetForm()
@@ -105,7 +110,7 @@ export const registration = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
         let response = await authAPI.signUp(props.values.name, props.values.password)
-        setResponseToken(props, response,dispatch)
+        setResponseToken(props, response, dispatch)
     })
 }
 
@@ -113,7 +118,7 @@ export const login = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
         let response = await authAPI.login(props.values.name, props.values.password)
-        setResponseToken(props, response,dispatch)
+        setResponseToken(props, response, dispatch)
     })
 }
 
@@ -123,7 +128,7 @@ export const logout = (): ThunkType => {
         let response = await authAPI.logout()
         if (response.resultCode === 0) {
             setToken('')
-            dispatch(setUsersData({username: null, isAuth: false}))
+            dispatch(setUsersData({username: null, userId: null, isAuth: false}))
         }
     })
 }

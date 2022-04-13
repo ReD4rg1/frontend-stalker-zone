@@ -1,4 +1,4 @@
-import {createAndAddPlayers, showInitPlayersInfo} from "./create-players";
+import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-players";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"

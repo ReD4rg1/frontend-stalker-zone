@@ -1,4 +1,4 @@
-import {IInitialPlayerInfo, IPlayer} from "../../../redux/players-reducer";
+import {IInitialPlayerInfo, IPlayer} from "../../../redux/reducers/players-reducer";
 import {useEffect, useState} from "react";
 import styles from "./PlayerCreateMenu.module.css";
 import backgroundImage from "../../../assets/img/main-menu/main-menu-background.jpg";

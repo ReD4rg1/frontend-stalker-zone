@@ -1,4 +1,4 @@
-import {Character} from "./WebSocket";
+import { Character } from "../../redux/reducers/room-reducer"
 
 export const sort = (characters: Character[]) => characters.sort(
     function (a, b) {

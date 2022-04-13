@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import {AppStateType} from "../../redux/redux-store";
-import {withAuthRedirect} from "../../redirect/withAuthRedirect";
+import {AppStateType} from "../../../redux/redux-store";
+import {withAuthRedirect} from "../../../redirect/withAuthRedirect";
 import MenuContainer from "./MenuContainer";
 
 class SessionStartMenuContainer extends React.Component<any, any> {

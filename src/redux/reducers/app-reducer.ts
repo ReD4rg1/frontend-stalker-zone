@@ -1,7 +1,7 @@
 import {getAuth} from "./auth-reducer";
 import {ThunkDispatch} from "redux-thunk";
 import {EmptyObject} from "redux";
-import {AppStateType} from "./redux-store";
+import {AppStateType} from "../redux-store";
 
 const INIT_SUCCESS = 'INIT-SUCCESS'
 

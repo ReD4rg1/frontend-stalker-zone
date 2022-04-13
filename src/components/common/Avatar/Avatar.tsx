@@ -8,7 +8,7 @@ import art7 from '../../../assets/img/avatar/7.jpeg';
 import art8 from '../../../assets/img/avatar/8.jpeg';
 import art9 from '../../../assets/img/avatar/9.jpeg';
 import art10 from '../../../assets/img/avatar/10.jpeg';
-import {getRandomIntForInterval} from "../../../redux/random-generators";
+import {getRandomIntForInterval} from "../../../redux/generators/random-generators";
 import styles from "./Avatar.module.css";
 
 interface Props {

@@ -1,7 +1,7 @@
 import React from "react";
 import PlayerCreateMenu from "./PlayerCreateMenu";
 import {connect} from "react-redux";
-import {createPlayers, showPlayersInfo} from "../../../redux/players-reducer";
+import {createPlayers, showPlayersInfo} from "../../../redux/reducers/players-reducer";
 import {AppStateType} from "../../../redux/redux-store";
 import { Navigate } from "react-router-dom";
 

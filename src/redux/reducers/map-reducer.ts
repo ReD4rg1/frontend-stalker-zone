@@ -1,4 +1,4 @@
-import getGeneratedMap from "./generate-map";
+import getGeneratedMap from "../generators/generate-map";
 import {IPlayer} from "./players-reducer";
 
 const GENERATE_MAP = "GENERATE-MAP"

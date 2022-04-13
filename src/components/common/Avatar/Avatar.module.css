@@ -1,0 +1,9 @@
+.imageContainer {
+    display: flex;
+    cursor: pointer;
+}
+
+.imageContainer img {
+    border-radius: 50%;
+    object-fit: cover;
+}

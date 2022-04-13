@@ -7,6 +7,7 @@
     max-width: 500px;
     color: white;
     margin: 10px;
+    font-weight: 600;
 }
 
 .char div {
@@ -18,7 +19,6 @@
     border: none;
     height: 30px;
     color: white;
-    font-weight: 600;
     background-color: black;
     cursor: pointer;
     transition: all 0.15s ease 0s;

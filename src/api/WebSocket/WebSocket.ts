@@ -1,5 +1,6 @@
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
+import {sort} from "./utils";
 
 interface CharEffect {
     id: number
@@ -27,7 +28,7 @@ export function connect({setCharacters, setConnected}: Props) {
     stompClient.connect({}, () => {
         setConnected(true)
         stompClient.subscribe('/characters/list', (chars: any) => {
-            setCharacters(JSON.parse(chars.body))
+            setCharacters(sort(JSON.parse(chars.body)))
         })
     })
 }

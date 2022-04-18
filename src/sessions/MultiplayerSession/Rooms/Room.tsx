@@ -1,5 +1,5 @@
 import styles from "./index.module.css";
-import {RoomListType} from "../../../api/roomAPI";
+import {RoomListType} from "../../../api/Rooms/roomAPI";
 import {MaxPlayersCountInSession} from "../../../consts/multiplayerSession";
 import Button from "../../../components/common/ReloadButton/Button";
 import React from "react";

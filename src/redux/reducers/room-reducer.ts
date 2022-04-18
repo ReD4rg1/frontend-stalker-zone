@@ -1,6 +1,6 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
-import roomAPI, {RoomListType} from "../../api/roomAPI";
+import roomAPI, {RoomListType} from "../../api/Rooms/roomAPI";
 
 
 
@@ -27,6 +27,8 @@ type CharEffect = {
 export interface User {
     userId: number
     characterId: number
+    username: string
+    status: boolean
 }
 
 
@@ -35,6 +37,7 @@ export interface RoomInitialState {
     rooms: RoomListType[]
     currentRoom: CurrentRoom
     inSession: boolean
+    readyStatus: boolean
 }
 
 type CurrentRoom = {
@@ -49,6 +52,7 @@ const initialState: RoomInitialState = {
         usersList: [],
     },
     inSession: false,
+    readyStatus: false
 }
 
 

@@ -1,21 +1,32 @@
 import {useEffect, useState} from "react";
-import {connect, disconnect, sendChar} from "../../../api/WebSocket/WebSocket";
-import { Character } from "../../../redux/reducers/room-reducer";
-import CharacterMenuItem from "./CharacterMenuItem";
+import {bindUser, connect, disconnect, getChars} from "../../../api/Rooms/WebSocket/WebSocket";
+import {Character, RoomInitialState, User} from "../../../redux/reducers/room-reducer";
+import CharacterComponent from "./CharacterComponent";
+import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
+import {PlayersInitialState} from "../../../redux/reducers/players-reducer";
+import UserComponent from "./UserComponent";
 
-const MenuContainer = () => {
+interface Props {
+    auth: AuthInitialState
+    players: PlayersInitialState
+    rooms: RoomInitialState
+}
+
+const MenuContainer = ({auth, rooms}: Props) => {
 
     const [characters, setCharacters] = useState<Character[]>([])
+    const [users, setUsers] = useState<User[]>([])
     const [connected, setConnected] = useState(false)
 
     useEffect(() => {
-        connect({setCharacters, setConnected})
+        connect({setCharacters, setConnected, setUsers})
         return () => disconnect()
     }, [])
 
     useEffect(() => {
         if (connected) {
-            sendChar(0)
+            getChars()
+            bindUser(0, 0)
         }
     }, [connected])
 
@@ -23,7 +34,12 @@ const MenuContainer = () => {
         <div>
             <section>
                 {characters.map((char) =>
-                    <CharacterMenuItem char={char} key={char.id}/>
+                    <CharacterComponent char={char} key={char.id} userId={auth.userId} />
+                )}
+            </section>
+            <section>
+                {users.map((user) =>
+                    <UserComponent user={user} key={user.userId} />
                 )}
             </section>
         </div>

@@ -1,12 +1,13 @@
 import styles from "./MenuContainer.module.css";
-import {sendChar} from "../../../api/WebSocket/WebSocket";
+import {bindUser} from "../../../api/Rooms/WebSocket/WebSocket";
 import { Character } from "../../../redux/reducers/room-reducer";
 
 interface Props {
     char: Character
+    userId: number | null
 }
 
-const CharacterMenuItem = ({char}: Props) => {
+const CharacterComponent = ({char, userId}: Props) => {
     return (
         <div className={styles.char}>
             <div>
@@ -16,10 +17,10 @@ const CharacterMenuItem = ({char}: Props) => {
                 {char.available ? "Доступный" : "Недоступный"}
             </div>
             <div>
-                <button onClick={() => sendChar(char.id)}>Смена статуса</button>
+                <button onClick={() => bindUser(char.id, userId)}>Выбрать героя</button>
             </div>
         </div>
     )
 }
 
-export default CharacterMenuItem
+export default CharacterComponent

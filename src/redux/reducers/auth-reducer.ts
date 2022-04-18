@@ -97,6 +97,7 @@ const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatc
         }
         props.setSubmitting(false)
         props.resetForm()
+        document.location.reload()
     } else {
         props.setSubmitting(false)
         props.setStatus({

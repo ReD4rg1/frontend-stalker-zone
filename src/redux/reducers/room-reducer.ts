@@ -28,7 +28,7 @@ export interface User {
     userId: number
     characterId: number
     username: string
-    status: boolean
+    readyStatus: boolean
 }
 
 
@@ -43,6 +43,7 @@ export interface RoomInitialState {
 type CurrentRoom = {
     charactersList: Character[]
     usersList: User[]
+    usersInRoom: string[]
 }
 
 const initialState: RoomInitialState = {
@@ -50,6 +51,7 @@ const initialState: RoomInitialState = {
     currentRoom: {
         charactersList: [],
         usersList: [],
+        usersInRoom: [],
     },
     inSession: false,
     readyStatus: false
@@ -57,7 +59,7 @@ const initialState: RoomInitialState = {
 
 
 
-type ActionsType = SetRoomDataType | SetSessionType | SetCharactersType
+type ActionsType = SetRoomDataType | SetSessionType | SetCharactersType | SetUsersType
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
@@ -78,7 +80,18 @@ const roomReducer = (state = initialState, action: ActionsType): RoomInitialStat
         case SET_CHARACTERS:
             return {
                 ...state,
-                ...action.payload,
+                currentRoom: {
+                    ...state.currentRoom,
+                    charactersList: [...action.payload],
+                }
+            }
+        case SET_USERS:
+            return {
+                ...state,
+                currentRoom: {
+                    ...state.currentRoom,
+                    usersList: [...action.payload],
+                }
             }
         default:
             return state
@@ -149,15 +162,26 @@ export const disconnectFromRoom = ():ThunkType => {
 
 type SetCharactersType = {
     type: typeof SET_CHARACTERS
-    payload: RoomListType[]
+    payload: Character[]
 }
 
-export const SetCharacters = (payload: any): SetCharactersType => (
+export const SetCharacters = (payload: Character[]): SetCharactersType => (
     {
         type: SET_CHARACTERS,
-        payload: {
-            ...payload
-        }
+        payload
+    }
+)
+
+
+type SetUsersType = {
+    type: typeof SET_USERS
+    payload: User[]
+}
+
+export const SetUsers = (payload: User[]): SetUsersType => (
+    {
+        type: SET_USERS,
+        payload
     }
 )
 

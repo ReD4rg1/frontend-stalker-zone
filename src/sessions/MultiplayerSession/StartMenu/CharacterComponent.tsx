@@ -1,5 +1,5 @@
-import styles from "./MenuContainer.module.css";
-import {bindUser} from "../../../api/Rooms/WebSocket/WebSocket";
+import styles from "./index.module.css";
+import {bindUser, getChars} from "../../../api/Rooms/WebSocket/WebSocket";
 import { Character } from "../../../redux/reducers/room-reducer";
 
 interface Props {
@@ -17,7 +17,10 @@ const CharacterComponent = ({char, userId}: Props) => {
                 {char.available ? "Доступный" : "Недоступный"}
             </div>
             <div>
-                <button onClick={() => bindUser(char.id, userId)}>Выбрать героя</button>
+                <button onClick={() => {
+                    getChars(char.id)
+                    bindUser(char.id, userId)
+                }}>Выбрать героя</button>
             </div>
         </div>
     )

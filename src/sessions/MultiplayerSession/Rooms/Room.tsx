@@ -1,8 +1,8 @@
-import styles from "./index.module.css";
 import {RoomListType} from "../../../api/Rooms/roomAPI";
 import {MaxPlayersCountInSession} from "../../../consts/multiplayerSession";
 import Button from "../../../components/common/ReloadButton/Button";
 import React from "react";
+import styles from "./index.module.css";
 
 interface Props {
     room: RoomListType

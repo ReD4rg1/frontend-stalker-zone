@@ -6,29 +6,34 @@ import {withAuthRedirect} from "../../../redirect/withAuthRedirect";
 import MenuContainer from "./MenuContainer";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 import {PlayersInitialState} from "../../../redux/reducers/players-reducer";
-import {RoomInitialState} from "../../../redux/reducers/room-reducer";
+import {Character, RoomInitialState, SetCharacters, SetUsers, User} from "../../../redux/reducers/room-reducer";
+import styles from "./index.module.css";
 
 interface Props {
     auth: AuthInitialState
     players: PlayersInitialState
     rooms: RoomInitialState
+    SetCharacters: (payload: Character[]) => void
+    SetUsers: (payload: User[]) => void
 }
 
 class SessionStartMenuContainer extends React.Component<Props, any> {
     render() {
         return (
-            <div>
-                <div>
-                    Session set ^_^
-                </div>
-                <div>
+            <main>
+                <section className={styles.mainTitle}>
+                    <h2>{"Выберите персонажей"}</h2>
+                </section>
+                <section>
                     <MenuContainer
                         auth={this.props.auth}
                         players={this.props.players}
                         rooms={this.props.rooms}
+                        SetCharacters={this.props.SetCharacters}
+                        SetUsers={this.props.SetUsers}
                     />
-                </div>
-            </div>
+                </section>
+            </main>
         )
     }
 }
@@ -42,6 +47,6 @@ let mapStateToProps = (store: AppStateType) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {}),
+    connect(mapStateToProps, {SetCharacters, SetUsers}),
     withAuthRedirect,
 )(SessionStartMenuContainer) as React.ComponentType

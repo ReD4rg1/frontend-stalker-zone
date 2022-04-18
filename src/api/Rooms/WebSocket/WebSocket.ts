@@ -4,23 +4,23 @@ import {sortChars, sortUsers} from "./utils";
 import {Character, User} from "../../../redux/reducers/room-reducer";
 
 interface Props {
-    setCharacters: (characters: Character[]) => void
-    setUsers: (users: User[]) => void
     setConnected: (status: boolean) => void
+    SetCharacters: (payload: Character[]) => void
+    SetUsers: (payload: User[]) => void
 }
 
 let stompClient: any = null
 
-export function connect({setCharacters, setConnected, setUsers}: Props) {
+export function connect({setConnected, SetUsers, SetCharacters}: Props) {
     const socket = new SockJS('http://localhost:8080/initialization-websocket')
     stompClient = Stomp.over(socket)
     stompClient.connect({}, () => {
         setConnected(true)
         stompClient.subscribe('/characters/list', (chars: any) => {
-            setCharacters(sortChars(JSON.parse(chars.body)))
+            SetCharacters(sortChars(JSON.parse(chars.body)))
         })
         stompClient.subscribe('/users/list', (chars: any) => {
-            setUsers(sortUsers(JSON.parse(chars.body)))
+            SetUsers(sortUsers(JSON.parse(chars.body)))
         })
     })
 }
@@ -31,8 +31,8 @@ export function disconnect() {
     }
 }
 
-export function getChars() {
-    stompClient.send("/app/edit", {}, JSON.stringify({id: 0}))
+export function getChars(id: number) {
+    stompClient.send("/app/edit", {}, JSON.stringify({id}))
 }
 
 export function bindUser(characterId: number, userId: number | null) {

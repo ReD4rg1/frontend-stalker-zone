@@ -1,4 +1,4 @@
-import styles from "./MenuContainer.module.css";
+import styles from "./index.module.css";
 import {toggleReadyStatus} from "../../../api/Rooms/WebSocket/WebSocket";
 import {User} from "../../../redux/reducers/room-reducer";
 
@@ -12,12 +12,12 @@ const UserComponent = ({user}: Props) => {
             <div>
                 <h3>{user.username}</h3>
             </div>
-            <div style={{color: `${user.status ? "green" : "red"}`}}>
-                {user.status ? "Готов" : "Не готов"}
+            <div style={{color: `${user.readyStatus ? "green" : "red"}`}}>
+                {user.readyStatus ? "Готов" : "Не готов"}
             </div>
             <div>
-                <button onClick={() => toggleReadyStatus(user.userId, true)}>
-                    {user.status ? "Готов" : "Не готов"}
+                <button onClick={() => toggleReadyStatus(user.userId, !user.readyStatus)}>
+                    {user.readyStatus ? "Отменить готовность" : "Готов"}
                 </button>
             </div>
         </div>

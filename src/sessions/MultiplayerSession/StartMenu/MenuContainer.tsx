@@ -5,40 +5,40 @@ import CharacterComponent from "./CharacterComponent";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 import {PlayersInitialState} from "../../../redux/reducers/players-reducer";
 import UserComponent from "./UserComponent";
+import styles from "./index.module.css";
 
 interface Props {
     auth: AuthInitialState
     players: PlayersInitialState
     rooms: RoomInitialState
+    SetCharacters: (payload: Character[]) => void
+    SetUsers: (payload: User[]) => void
 }
 
-const MenuContainer = ({auth, rooms}: Props) => {
-
-    const [characters, setCharacters] = useState<Character[]>([])
-    const [users, setUsers] = useState<User[]>([])
+const MenuContainer = ({auth, rooms, SetCharacters, SetUsers}: Props) => {
     const [connected, setConnected] = useState(false)
 
     useEffect(() => {
-        connect({setCharacters, setConnected, setUsers})
+        connect({setConnected, SetCharacters, SetUsers})
         return () => disconnect()
     }, [])
 
     useEffect(() => {
         if (connected) {
-            getChars()
+            getChars(0)
             bindUser(0, 0)
         }
     }, [connected])
 
     return (
-        <div>
+        <div className={styles.mainContainer}>
             <section>
-                {characters.map((char) =>
+                {rooms.currentRoom.charactersList.map((char) =>
                     <CharacterComponent char={char} key={char.id} userId={auth.userId} />
                 )}
             </section>
             <section>
-                {users.map((user) =>
+                {rooms.currentRoom.usersList.map((user) =>
                     <UserComponent user={user} key={user.userId} />
                 )}
             </section>

@@ -3,7 +3,7 @@ import MainMenu from "../components/MainMenu/MainMenu";
 import LoginContainer from "../components/Login";
 import PlayerCreateMenuContainer from "../sessions/LocalSession/PlayerCreateMenu/PlayerCreateMenuContainer";
 import MapContainer from "../sessions/LocalSession/Map/MapContainer";
-import SessionStartMenuContainer from "../sessions/MultiplayerSession/StartMenu/SessionStartMenuContainer";
+import SessionStartMenuContainer from "../sessions/MultiplayerSession/StartMenu";
 import React from "react";
 import Rooms from "../sessions/MultiplayerSession/Rooms";
 

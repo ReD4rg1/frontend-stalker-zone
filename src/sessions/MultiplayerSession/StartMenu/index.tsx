@@ -6,7 +6,14 @@ import {withAuthRedirect} from "../../../redirect/withAuthRedirect";
 import MenuContainer from "./MenuContainer";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 import {PlayersInitialState} from "../../../redux/reducers/players-reducer";
-import {Character, RoomInitialState, SetCharacters, SetUsers, User} from "../../../redux/reducers/room-reducer";
+import {
+    Character, ExitRoom,
+    RoomInitialState,
+    SetCharacters,
+    SetRoomUsers,
+    SetUsers, StartGame,
+    User
+} from "../../../redux/reducers/room-reducer";
 import styles from "./index.module.css";
 
 interface Props {
@@ -15,15 +22,15 @@ interface Props {
     rooms: RoomInitialState
     SetCharacters: (payload: Character[]) => void
     SetUsers: (payload: User[]) => void
+    SetRoomUsers: (payload: string[]) => void
+    ExitRoom: () => void
+    StartGame: () => void
 }
 
 class SessionStartMenuContainer extends React.Component<Props, any> {
     render() {
         return (
             <main>
-                <section className={styles.mainTitle}>
-                    <h2>{"Выберите персонажей"}</h2>
-                </section>
                 <section>
                     <MenuContainer
                         auth={this.props.auth}
@@ -31,6 +38,9 @@ class SessionStartMenuContainer extends React.Component<Props, any> {
                         rooms={this.props.rooms}
                         SetCharacters={this.props.SetCharacters}
                         SetUsers={this.props.SetUsers}
+                        SetRoomUsers={this.props.SetRoomUsers}
+                        ExitRoom={this.props.ExitRoom}
+                        StartGame={this.props.StartGame}
                     />
                 </section>
             </main>
@@ -47,6 +57,6 @@ let mapStateToProps = (store: AppStateType) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {SetCharacters, SetUsers}),
+    connect(mapStateToProps, {SetCharacters, SetUsers, SetRoomUsers, ExitRoom, StartGame}),
     withAuthRedirect,
 )(SessionStartMenuContainer) as React.ComponentType

@@ -41,6 +41,20 @@ const roomAPI = {
                 .then(response => response.data)
         )
     },
+
+    startGame() {
+        return (
+            instance.get(`/rooms/start-game`)
+                .then(response => response.data)
+        )
+    },
+
+    remove() {
+        return (
+            instance.post(`rooms/remove`)
+                .then(response => response.data)
+        )
+    }
 }
 
 export default roomAPI

@@ -7,11 +7,12 @@ interface Props {
     setConnected: (status: boolean) => void
     SetCharacters: (payload: Character[]) => void
     SetUsers: (payload: User[]) => void
+    SetRoomUsers: (payload: string[]) => void
 }
 
 let stompClient: any = null
 
-export function connect({setConnected, SetUsers, SetCharacters}: Props) {
+export function connect({setConnected, SetUsers, SetCharacters, SetRoomUsers}: Props) {
     const socket = new SockJS('http://localhost:8080/initialization-websocket')
     stompClient = Stomp.over(socket)
     stompClient.connect({}, () => {
@@ -19,8 +20,11 @@ export function connect({setConnected, SetUsers, SetCharacters}: Props) {
         stompClient.subscribe('/characters/list', (chars: any) => {
             SetCharacters(sortChars(JSON.parse(chars.body)))
         })
-        stompClient.subscribe('/users/list', (chars: any) => {
-            SetUsers(sortUsers(JSON.parse(chars.body)))
+        stompClient.subscribe('/users/list', (users: any) => {
+            SetUsers(sortUsers(JSON.parse(users.body)))
+        })
+        stompClient.subscribe('/usersInTheRoom/list', (users: any) => {
+            SetRoomUsers(JSON.parse(users.body))
         })
     })
 }
@@ -33,6 +37,10 @@ export function disconnect() {
 
 export function getChars(id: number) {
     stompClient.send("/app/edit", {}, JSON.stringify({id}))
+}
+
+export function getUsersInRoom(id: number | null) {
+    stompClient.send("/app/users", {}, JSON.stringify({id}))
 }
 
 export function bindUser(characterId: number, userId: number | null) {

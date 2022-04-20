@@ -3,11 +3,13 @@ import {AppStateType} from "../redux-store";
 import roomAPI, {RoomListType} from "../../api/Rooms/roomAPI";
 
 
-
 const SET_ROOMS = "SET-ROOMS"
 const SET_CHARACTERS = "SET-CHARACTERS"
 const SET_USERS = "SET-USERS"
 const SET_SESSION = "SET-SESSION"
+const SET_ROOM_USERS = "SET-ROOM-USERS"
+const START_GAME = "START-GAME"
+const CLEAR_ROOM = "CLEAR-ROOM"
 
 
 
@@ -37,13 +39,13 @@ export interface RoomInitialState {
     rooms: RoomListType[]
     currentRoom: CurrentRoom
     inSession: boolean
-    readyStatus: boolean
+    gameReadyStatus: boolean
 }
 
 type CurrentRoom = {
     charactersList: Character[]
     usersList: User[]
-    usersInRoom: string[]
+    usersInRoom: PayloadSetRoomUsersType[]
 }
 
 const initialState: RoomInitialState = {
@@ -54,12 +56,19 @@ const initialState: RoomInitialState = {
         usersInRoom: [],
     },
     inSession: false,
-    readyStatus: false
+    gameReadyStatus: false
 }
 
 
 
-type ActionsType = SetRoomDataType | SetSessionType | SetCharactersType | SetUsersType
+type ActionsType =
+    SetRoomDataType |
+    SetSessionType |
+    SetCharactersType |
+    SetUsersType |
+    SetRoomUsersType |
+    StartGameType |
+    ClearRoomType
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
@@ -92,6 +101,30 @@ const roomReducer = (state = initialState, action: ActionsType): RoomInitialStat
                     ...state.currentRoom,
                     usersList: [...action.payload],
                 }
+            }
+        case SET_ROOM_USERS:
+            return {
+                ...state,
+                currentRoom: {
+                    ...state.currentRoom,
+                    usersInRoom: [...action.payload]
+                }
+            }
+        case START_GAME:
+            return {
+                ...state,
+                gameReadyStatus: true
+            }
+        case CLEAR_ROOM:
+            return {
+                ...state,
+                currentRoom: {
+                    charactersList: [],
+                    usersList: [],
+                    usersInRoom: [],
+                },
+                inSession: false,
+                gameReadyStatus: false
             }
         default:
             return state
@@ -184,5 +217,70 @@ export const SetUsers = (payload: User[]): SetUsersType => (
         payload
     }
 )
+
+type PayloadSetRoomUsersType = {
+    username: string
+}
+
+type SetRoomUsersType = {
+    type: typeof SET_ROOM_USERS
+    payload: PayloadSetRoomUsersType[]
+}
+
+export const SetRoomUsers = (payload: PayloadSetRoomUsersType[]): SetRoomUsersType => (
+    {
+        type: SET_ROOM_USERS,
+        payload
+    }
+)
+
+type StartGameType = {
+    type: typeof START_GAME
+}
+
+export const GameIsReady = (): StartGameType => (
+    {
+        type: START_GAME
+    }
+)
+
+export const StartGame = (): ThunkType => {
+
+    return (async (dispatch) => {
+        const response = await roomAPI.startGame()
+        if (response.resultCode === 0) {
+            dispatch(GameIsReady())
+        }
+    })
+}
+
+type ClearRoomType = {
+    type: typeof CLEAR_ROOM
+}
+
+export const ClearRoom = (): ClearRoomType => (
+    {
+        type: CLEAR_ROOM
+    }
+)
+
+interface ExitRoomProps {
+    getChars: (id: number) => void
+    bindUser: (characterId: number, userId: number | null) => void
+    getUsersInRoom: (id: number) => void
+}
+
+export const ExitRoom = ({getChars, bindUser, getUsersInRoom}: ExitRoomProps): ThunkType => {
+
+    return (async (dispatch) => {
+        const response = await roomAPI.remove()
+        if (response.resultCode === 0) {
+            getChars(0)
+            bindUser(0, 0)
+            getUsersInRoom(0)
+            dispatch(ClearRoom())
+        }
+    })
+}
 
 export default roomReducer

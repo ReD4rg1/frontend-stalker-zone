@@ -1,4 +1,4 @@
-import {IInitialPlayerInfo, IPlayer} from "../../../redux/reducers/players-reducer";
+import {IInitialPlayerInfo, Player} from "../../../redux/reducers/players-reducer";
 import {useEffect, useState} from "react";
 import styles from "./PlayerCreateMenu.module.css";
 import backgroundImage from "../../../assets/img/main-menu/main-menu-background.jpg";
@@ -14,7 +14,7 @@ interface IProps {
 }
 
 type PlayersType = {
-    players: Array<IPlayer>
+    players: Array<Player>
     initialPlayersInfo: Array<IInitialPlayerInfo>
 }
 

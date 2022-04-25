@@ -14,7 +14,6 @@ import {
     SetUsers, StartGame,
     User
 } from "../../../redux/reducers/room-reducer";
-import styles from "./index.module.css";
 
 interface Props {
     auth: AuthInitialState

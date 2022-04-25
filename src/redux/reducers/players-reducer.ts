@@ -4,7 +4,7 @@ const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
 
 export interface PlayersInitialState {
-    players: Array<IPlayer>
+    players: Array<Player>
     initialPlayersInfo: Array<IInitialPlayerInfo>
     playersIsReady: boolean
 }
@@ -22,7 +22,7 @@ export interface IInitialPlayerInfo {
         secrecyBoost: number
     }
 }
-export interface IPlayer {
+export interface Player {
     playerId: number
     playerName: string
     playerHP: number

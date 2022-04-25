@@ -1,4 +1,4 @@
-import {IHex} from "../../../redux/reducers/map-reducer";
+import {IHex} from "../../redux/reducers/map-reducer";
 import styles from "./Hex.module.css";
 
 interface IProps {
@@ -10,9 +10,9 @@ const Hex = (props: IProps) => {
     const item = props.data
     let hexStyle = styles.hex
 
-    if (item.isActive && !item.isLocation) hexStyle = styles.activeHex
-    else if (item.isActive && item.isLocation) hexStyle = styles.activeLocationHex
-    else if (!item.isActive && item.isLocation) hexStyle = styles.locationHex
+    if (item.active && !item.containLocation) hexStyle = styles.activeHex
+    else if (item.active && item.containLocation) hexStyle = styles.activeLocationHex
+    else if (!item.active && item.containLocation) hexStyle = styles.locationHex
 
     return (
         <div className={styles.container}>
@@ -20,34 +20,33 @@ const Hex = (props: IProps) => {
                 <div className={hexStyle}>
                     <div className={styles.infoBlock}>
                         <p className={styles.hexId}>{item.locationName}</p>
-                        <p className={styles.hexId}>{'Id: ' + item.HexId}</p>
+                        <p className={styles.hexId}>{'Id: ' + item.id}</p>
+                        <p className={styles.hexId}>{'LocationId: ' + item.locationId}</p>
                         <section className={styles.players}>
-                            {item.players?.map((player) => {
+                            {item.playerList?.map((player) => {
                                 return (
-                                    <div key={player.playerId} className={player.hisTurn ? styles.player : styles.activePlayer} style={{backgroundColor: `#69b${player.playerId}d5`}}>
-                                        <span className={styles.playerDescription}>{player.playerName}</span>
-                                    </div>
+                                    <div key={player} className={styles.player}/>
                                 )
                             })}
                         </section>
                     </div>
                     <section className={styles.topSide}>
-                        <span>{item.Top.difficulty}</span>
+                        <span>{item.top.difficulty}</span>
                     </section>
                     <section className={styles.topLeftSide}>
-                        <span>{item.TopLeft.difficulty}</span>
+                        <span>{item.topLeft.difficulty}</span>
                     </section>
                     <section className={styles.topRightSide}>
-                        <span>{item.TopRight.difficulty}</span>
+                        <span>{item.topRight.difficulty}</span>
                     </section>
                     <section className={styles.bottomSide}>
-                        <span>{item.Bottom.difficulty}</span>
+                        <span>{item.bottom.difficulty}</span>
                     </section>
                     <section className={styles.bottomLeftSide}>
-                        <span>{item.BottomLeft.difficulty}</span>
+                        <span>{item.bottomLeft.difficulty}</span>
                     </section>
                     <section className={styles.bottomRightSide}>
-                        <span>{item.BottomRight.difficulty}</span>
+                        <span>{item.bottomRight.difficulty}</span>
                     </section>
                 </div>
             </div>

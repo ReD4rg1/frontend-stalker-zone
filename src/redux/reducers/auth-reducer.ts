@@ -97,6 +97,7 @@ const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatc
         }
         props.setSubmitting(false)
         props.resetForm()
+        document.location.reload()
     } else {
         props.setSubmitting(false)
         props.setStatus({
@@ -110,7 +111,7 @@ export const registration = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
         let response = await authAPI.signUp(props.values.name, props.values.password)
-        setResponseToken(props, response,dispatch)
+        setResponseToken(props, response, dispatch)
     })
 }
 
@@ -118,7 +119,7 @@ export const login = (props: LoginPropsType): ThunkType => {
 
     return (async (dispatch) => {
         let response = await authAPI.login(props.values.name, props.values.password)
-        setResponseToken(props, response,dispatch)
+        setResponseToken(props, response, dispatch)
     })
 }
 

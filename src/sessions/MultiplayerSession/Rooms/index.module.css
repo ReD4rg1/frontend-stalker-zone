@@ -1,0 +1,43 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rooms {
+    min-width: 500px;
+    min-height: 500px;
+    background-color: #272727;
+    margin: 50px 0;
+    padding: 30px;
+    border-radius: 10px;
+    color: white;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    align-items: center;
+}
+
+.titles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.roomContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #691111;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.roomContainer section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 10px;
+}

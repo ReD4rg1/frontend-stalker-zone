@@ -10,13 +10,6 @@ const instance = axios.create({
 
 const playersAPI = {
 
-    getPlayersInitial() {
-        return (
-            instance.get(`/players/initial`)
-                .then((response) => response.data)
-        )
-    },
-
     getCoords() {
         return (
             instance.get(`/coordinates`)

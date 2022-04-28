@@ -1,8 +1,6 @@
 import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-players";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
-import playersAPI from "../../api/Game/playersAPI";
-import {getPlayers} from "../../api/Game/ws/playersWS";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
@@ -15,9 +13,9 @@ export interface PlayersInitialState {
 }
 
 export interface IInitialPlayerInfo {
-    playerId: number,
-    playerName: string,
-    playerEffects: {
+    id: number,
+    name: string,
+    effects: {
         healBoost: number,
         mapMoveModifier: number,
         damageBoost: number,
@@ -28,33 +26,38 @@ export interface IInitialPlayerInfo {
     }
 }
 export interface Player {
-    playerId: number
-    playerName: string
-    playerHP: number
-    playerReputation: number
-    playerPowerReserve: number
-    playerActiveOrder: OrderType | null
-    playerEffects: PlayerEffectsType
-    playerMoney: number
-    isSkipping: boolean
-    hisTurn: boolean
-    inventory: IInventory
+    id: number
+    name: string
+    hp: number
+    reputation: number
+    numberOfMoves: number
+    order: OrderType | null
+    effects: PlayerEffectsType
+    money: number
+    skipping: boolean
+    move: boolean
+    inventory: Inventory
+    coordinates: CoordinatesType
 }
-interface IInventory {
+
+type CoordinatesType = {
+    locationId: number
+    hexId: number
+}
+
+interface Inventory {
     helmet: ArmorType | null
     bodyArmor: ArmorType | null
     weapon: WeaponType | null
     weaponFirstLevelModifier: WeaponModifierType | null
     weaponSecondLevelModifier: WeaponModifierType | null
     weaponThirdLevelModifier: WeaponModifierType | null
-    grenade: GrenadeType | null
-    healBox: HealBoxType | null
-    stimulator: HealBoxType | null
-    secrecy: OtherItemType | null
-    mapMovesModifier: OtherItemType | null
-    locationMovesModifier: OtherItemType | null
+    grenades: GrenadeType[]
+    healBoxes: HealBoxType[]
+    stimulators: HealBoxType[]
     teleport: TeleportType | null
-    Artifact: ActiveArtifactType | null
+    artifact: ActiveArtifactType | null
+    otherItems: OtherItemType[]
 }
 
 type PlayerEffectsType = {
@@ -65,6 +68,7 @@ type PlayerEffectsType = {
     seedMoney: number
     maxHp: number
     secrecyBoost: number
+    locationMoveModifier: number
 }
 type OrderType = {
     title: string
@@ -145,23 +149,24 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 let initialState: PlayersInitialState = {
     players: [
         {
-            playerId: 1,
-            playerName: "Мажор",
-            playerHP: 30,
-            playerReputation: 0,
-            playerPowerReserve: 0,
-            playerActiveOrder: null,
-            playerMoney: 1500,
-            isSkipping: false,
-            hisTurn: false,
-            playerEffects: {
+            id: 1,
+            name: "Мажор",
+            hp: 30,
+            reputation: 0,
+            numberOfMoves: 0,
+            order: null,
+            money: 1500,
+            skipping: false,
+            move: false,
+            effects: {
                 healBoost: 0,
                 mapMoveModifier: 0,
                 damageBoost: 0,
                 armorBoost: 0,
                 seedMoney: 1500,
                 maxHp: 30,
-                secrecyBoost: 0
+                secrecyBoost: 0,
+                locationMoveModifier: 0,
             },
             inventory: {
                 helmet: null,
@@ -170,22 +175,24 @@ let initialState: PlayersInitialState = {
                 weaponFirstLevelModifier: null,
                 weaponSecondLevelModifier: null,
                 weaponThirdLevelModifier: null,
-                grenade: null,
-                healBox: null,
-                stimulator: null,
-                secrecy: null,
-                mapMovesModifier: null,
-                locationMovesModifier: null,
+                grenades: [],
+                healBoxes: [],
+                stimulators: [],
                 teleport: null,
-                Artifact: null,
-            }
+                artifact: null,
+                otherItems: [],
+            },
+            coordinates: {
+                locationId: 4,
+                hexId: 19,
+            },
         }
     ],
     initialPlayersInfo: [
         {
-            playerId: 1,
-            playerName: "Мажор",
-            playerEffects: {
+            id: 1,
+            name: "Мажор",
+            effects: {
                 healBoost: 0,
                 mapMoveModifier: 0,
                 damageBoost: 0,
@@ -235,15 +242,6 @@ export const createPlayers = (players: Array<number>):GeneratePlayerType => (
         players: players
     }
 )
-
-export const fetchPlayers = ():ThunkType => {
-    return (async (dispatch) => {
-        const response = await playersAPI.getPlayersInitial()
-        if (response.resultCode === 0) {
-            getPlayers()
-        }
-    })
-}
 
 export const showPlayersInfo = ():ShowInitPlayersInfoType => ({type: SHOW_PLAYERS})
 

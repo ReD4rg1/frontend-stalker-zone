@@ -3,27 +3,28 @@ import {Player} from "../reducers/players-reducer";
 
 export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Player> => {
 
-    return  playersNumberArray.map((item) => {
+    return  playersNumberArray.map((item): Player => {
 
         return (
             {
-                playerId: players[item-1].playerId,
-                playerName: players[item-1].playerName,
-                playerHP: players[item-1].playerEffects.maxHp,
-                playerReputation: 0,
-                playerPowerReserve: 0,
-                playerActiveOrder: null,
-                playerMoney: players[item-1].playerEffects.seedMoney,
-                isSkipping: false,
-                hisTurn: false,
-                playerEffects: {
-                    healBoost: players[item-1].playerEffects.healBoost,
-                    mapMoveModifier: players[item-1].playerEffects.mapMoveModifier,
-                    damageBoost: players[item-1].playerEffects.damageBoost,
-                    armorBoost: players[item-1].playerEffects.armorBoost,
-                    seedMoney: players[item-1].playerEffects.seedMoney,
-                    maxHp: players[item-1].playerEffects.maxHp,
-                    secrecyBoost: players[item-1].playerEffects.secrecyBoost,
+                id: players[item-1].id,
+                name: players[item-1].name,
+                hp: players[item-1].effects.maxHp,
+                reputation: 0,
+                numberOfMoves: 0,
+                order: null,
+                money: players[item-1].effects.seedMoney,
+                skipping: false,
+                move: false,
+                effects: {
+                    healBoost: players[item-1].effects.healBoost,
+                    mapMoveModifier: players[item-1].effects.mapMoveModifier,
+                    damageBoost: players[item-1].effects.damageBoost,
+                    armorBoost: players[item-1].effects.armorBoost,
+                    seedMoney: players[item-1].effects.seedMoney,
+                    maxHp: players[item-1].effects.maxHp,
+                    secrecyBoost: players[item-1].effects.secrecyBoost,
+                    locationMoveModifier: 0,
                 },
                 inventory: {
                     helmet: null,
@@ -32,15 +33,17 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Pl
                     weaponFirstLevelModifier: null,
                     weaponSecondLevelModifier: null,
                     weaponThirdLevelModifier: null,
-                    grenade: null,
-                    healBox: null,
-                    stimulator: null,
-                    secrecy: null,
-                    mapMovesModifier: null,
-                    locationMovesModifier: null,
+                    grenades: [],
+                    healBoxes: [],
+                    stimulators: [],
                     teleport: null,
-                    Artifact: null,
-                }
+                    artifact: null,
+                    otherItems: [],
+                },
+                coordinates: {
+                    locationId: 4,
+                    hexId: 19
+                },
             }
         )
     })
@@ -52,16 +55,16 @@ export const showInitPlayersInfo = () => {
 
         return (
             {
-                playerId: item.playerId,
-                playerName: item.playerName,
-                playerEffects: {
-                    healBoost: item.playerEffects.healBoost,
-                    mapMoveModifier: item.playerEffects.mapMoveModifier,
-                    damageBoost: item.playerEffects.damageBoost,
-                    armorBoost: item.playerEffects.armorBoost,
-                    seedMoney: item.playerEffects.seedMoney,
-                    maxHp: item.playerEffects.maxHp,
-                    secrecyBoost: item.playerEffects.secrecyBoost
+                id: item.id,
+                name: item.name,
+                effects: {
+                    healBoost: item.effects.healBoost,
+                    mapMoveModifier: item.effects.mapMoveModifier,
+                    damageBoost: item.effects.damageBoost,
+                    armorBoost: item.effects.armorBoost,
+                    seedMoney: item.effects.seedMoney,
+                    maxHp: item.effects.maxHp,
+                    secrecyBoost: item.effects.secrecyBoost
                 }
             }
         )

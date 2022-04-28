@@ -6,11 +6,9 @@ interface Props {
     user: User
     chars: Character[]
     toggleReadyStatus: (userId: number | null, readyStatus: boolean) => void
-    bindUser: (characterId: number, userId: number | null) => void
-    getChars: (id: number) => void
 }
 
-const UserComponent = ({userId, user, chars, toggleReadyStatus, bindUser, getChars}: Props) => {
+const UserComponent = ({userId, user, chars, toggleReadyStatus}: Props) => {
     return (
         <div className={styles.char}>
             <div>
@@ -31,7 +29,7 @@ const UserComponent = ({userId, user, chars, toggleReadyStatus, bindUser, getCha
                             return (
                                 <div key={char.id}>{char.name}</div>
                             )
-                        }
+                        } else return null
                     })}
                 </div>
             }

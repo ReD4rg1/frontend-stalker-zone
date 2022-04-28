@@ -15,7 +15,6 @@ export function connectWS({setConnected, setPlayers}: Props) {
     stompClient.connect({}, () => {
         setConnected(true)
         stompClient.subscribe('/players', (players: any) => {
-            console.log("players: ", players)
             setPlayers(JSON.parse(players.body))
         })
     })
@@ -28,5 +27,5 @@ export function disconnectWS() {
 }
 
 export function getPlayers() {
-    stompClient.send("/app/players", {})
+    stompClient.send("/app/", {})
 }

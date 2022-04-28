@@ -5,10 +5,10 @@ import {fetchMap, generateMap, MapInitialState} from "../../redux/reducers/map-r
 import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
-import {fetchPlayers, Player, PlayersInitialState, setPlayers} from "../../redux/reducers/players-reducer";
+import {Player, PlayersInitialState, setPlayers} from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
-import {connectWS, disconnectWS} from "../../api/Game/ws/playersWS";
+import {connectWS, disconnectWS, getPlayers} from "../../api/Game/ws/playersWS";
 
 interface GenerateMapProps {
     players: Player[]
@@ -21,7 +21,6 @@ interface MapProps {
     fetchMap: () => void
     generateMap: (players: GenerateMapProps) => void
     setPlayers: (players: Player[]) => void
-    fetchPlayers: () => void
 }
 
 class MapMultiplayerContainer extends React.Component<MapProps, any>{
@@ -44,7 +43,7 @@ class MapMultiplayerContainer extends React.Component<MapProps, any>{
     componentDidUpdate(prevProps: Readonly<MapProps>, prevState: Readonly<any>, snapshot?: any) {
         if (prevState.connect !== this.state.connect) {
             if (this.state.connect) {
-                this.props.fetchPlayers()
+                getPlayers()
             }
         }
     }
@@ -72,6 +71,6 @@ let mapStateToProps = (store: AppStateType) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {generateMap, fetchMap, setPlayers, fetchPlayers}),
+    connect(mapStateToProps, {generateMap, fetchMap, setPlayers}),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

@@ -130,15 +130,15 @@ const PlayerCreateMenu = (props: IProps) => {
                 players: [
                     ...props.players.initialPlayersInfo.map((item) => {
                         return {
-                            id: item.playerId,
-                            name: item.playerName,
+                            id: item.id,
+                            name: item.name,
                         }
                     })
                 ],
                 columns: {
                     'column-1': {
                         ...initialData.columns['column-1'],
-                        playersIds: [...props.players.initialPlayersInfo.map(item => item.playerId)]
+                        playersIds: [...props.players.initialPlayersInfo.map(item => item.id)]
                     },
                     'column-2': {
                         ...initialData.columns['column-2']

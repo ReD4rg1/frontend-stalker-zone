@@ -51,7 +51,7 @@ const MenuContainer = ({auth, rooms, SetCharacters, SetUsers, SetRoomUsers, Exit
 
     useEffect(() => {
         CheckStartGame({users: rooms.currentRoom.usersList, StartGame})
-    }, [rooms.currentRoom.usersList])
+    }, [rooms.currentRoom.usersList, StartGame])
 
     return (
         <div className={styles.mainContainer}>
@@ -78,8 +78,6 @@ const MenuContainer = ({auth, rooms, SetCharacters, SetUsers, SetRoomUsers, Exit
                                 userId={auth.userId}
                                 user={user}
                                 key={user.userId}
-                                bindUser={bindUser}
-                                getChars={getChars}
                                 toggleReadyStatus={toggleReadyStatus}
                             />
                         )}

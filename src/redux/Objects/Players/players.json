@@ -1,8 +1,8 @@
 [
   {
-    "playerId": 1,
-    "playerName": "Мажор",
-    "playerEffects": {
+    "id": 1,
+    "name": "Мажор",
+    "effects": {
       "healBoost": 0,
       "mapMoveModifier": 0,
       "damageBoost": 0,
@@ -13,9 +13,9 @@
     }
   },
   {
-    "playerId": 2,
-    "playerName": "Громобой",
-    "playerEffects": {
+    "id": 2,
+    "name": "Громобой",
+    "effects": {
       "healBoost": 0,
       "mapMoveModifier": 0,
       "damageBoost": 1,
@@ -26,9 +26,9 @@
     }
   },
   {
-    "playerId": 3,
-    "playerName": "Носорог",
-    "playerEffects": {
+    "id": 3,
+    "name": "Носорог",
+    "effects": {
       "healBoost": 0,
       "mapMoveModifier": 0,
       "damageBoost": 0,
@@ -39,9 +39,9 @@
     }
   },
   {
-    "playerId": 4,
-    "playerName": "Верзила",
-    "playerEffects": {
+    "id": 4,
+    "name": "Верзила",
+    "effects": {
       "healBoost": 0,
       "mapMoveModifier": 0,
       "damageBoost": 0,
@@ -52,9 +52,9 @@
     }
   },
   {
-    "playerId": 5,
-    "playerName": "Доктор",
-    "playerEffects": {
+    "id": 5,
+    "name": "Доктор",
+    "effects": {
       "healBoost": 2,
       "mapMoveModifier": 0,
       "damageBoost": 0,
@@ -65,9 +65,9 @@
     }
   },
   {
-    "playerId": 6,
-    "playerName": "Шустрый",
-    "playerEffects": {
+    "id": 6,
+    "name": "Шустрый",
+    "effects": {
       "healBoost": 0,
       "mapMoveModifier": 0,
       "damageBoost": 0,

@@ -9,8 +9,6 @@ type PropsType = {
     players: Player[]
 }
 
-let playersArray: Player[] = []
-
 const locationsQueueArray = getLocationsQueueArray({min: 0, max: 9, length: 10, isLocationArray: true})
 
 interface GenerateLocationItem {
@@ -165,11 +163,7 @@ const getHex = (props: GetHex): IHex => {
 
     return {
         hexId: props.hexId,
-        playerList: props.locationName === 'Посёлок'
-            ? playersArray.map((player) => {
-                return player.playerId
-            })
-            : [],
+        playerList: [],
         active: false,
         containLocation: props.isLocation,
         specialLocation: props.isSpecialLocation,
@@ -447,7 +441,6 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
 
     let newMap: Array<Location> = props.state.locations
     let newLocation: Location
-    playersArray = [...props.players]
 
     for (let i = 0; i < 10; i++) {
 

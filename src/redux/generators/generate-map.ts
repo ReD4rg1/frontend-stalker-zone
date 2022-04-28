@@ -71,7 +71,7 @@ const getRandomHex = (props: GetRandomHex): IHex => {
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
     return {
-        id: props.hexId,
+        hexId: props.hexId,
         locationId: props.locationId,
         playerList: [],
         active: false,
@@ -164,7 +164,7 @@ const getHex = (props: GetHex): IHex => {
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
     return {
-        id: props.hexId,
+        hexId: props.hexId,
         playerList: props.locationName === 'Посёлок'
             ? playersArray.map((player) => {
                 return player.playerId

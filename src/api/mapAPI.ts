@@ -17,6 +17,14 @@ const mapAPI = {
             .then((response): Location[] => response.data)
         )
     },
+
+    deleteMap() {
+        return (
+            instance.get(`/map/delete`)
+                .then((response) => response.data)
+        )
+    },
+
 }
 
 export default mapAPI

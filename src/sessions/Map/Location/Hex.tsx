@@ -1,4 +1,4 @@
-import {IHex} from "../../redux/reducers/map-reducer";
+import {IHex} from "../../../redux/reducers/map-reducer";
 import styles from "./Hex.module.css";
 
 interface IProps {
@@ -20,7 +20,7 @@ const Hex = (props: IProps) => {
                 <div className={hexStyle}>
                     <div className={styles.infoBlock}>
                         <p className={styles.hexId}>{item.locationName}</p>
-                        <p className={styles.hexId}>{'Id: ' + item.id}</p>
+                        <p className={styles.hexId}>{'Id: ' + item.hexId}</p>
                         <p className={styles.hexId}>{'LocationId: ' + item.locationId}</p>
                         <section className={styles.players}>
                             {item.playerList?.map((player) => {

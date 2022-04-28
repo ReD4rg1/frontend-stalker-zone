@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import {AppStateType} from "../../../redux/redux-store";
-import {withAuthRedirect} from "../../../redirect/withAuthRedirect";
 import MenuContainer from "./MenuContainer";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 import {PlayersInitialState} from "../../../redux/reducers/players-reducer";
@@ -14,6 +13,7 @@ import {
     SetUsers, StartGame,
     User
 } from "../../../redux/reducers/room-reducer";
+import {withGameStartRedirect} from "../../../redirect/withGameStartRedirect";
 
 interface Props {
     auth: AuthInitialState
@@ -57,5 +57,5 @@ let mapStateToProps = (store: AppStateType) => {
 
 export default compose(
     connect(mapStateToProps, {SetCharacters, SetUsers, SetRoomUsers, ExitRoom, StartGame}),
-    withAuthRedirect,
+    withGameStartRedirect,
 )(SessionStartMenuContainer) as React.ComponentType

@@ -6,6 +6,7 @@ import MapContainer from "../sessions/Map/MapContainer";
 import SessionStartMenuContainer from "../sessions/MultiplayerSession/StartMenu";
 import React from "react";
 import Rooms from "../sessions/MultiplayerSession/Rooms";
+import MapMultiplayerContainer from "../sessions/Map/MapMultiplayerContainer";
 
 const Navigates = () => {
     return (
@@ -35,8 +36,8 @@ const Navigates = () => {
             <Route path={"/multiplayer/room"} element={
                 <SessionStartMenuContainer />
             } />
-            <Route path={"/map"} element={
-                <MapContainer />
+            <Route path={"/multiplayer/map"} element={
+                <MapMultiplayerContainer />
             } />
         </Routes>
     )

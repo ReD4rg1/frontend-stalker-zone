@@ -18,7 +18,7 @@ export interface Location {
 }
 
 export interface IHex {
-    id: number,
+    hexId: number,
     playerList: number[],
     active: boolean,
     containLocation: boolean,

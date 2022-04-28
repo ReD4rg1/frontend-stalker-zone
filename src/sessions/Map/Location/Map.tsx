@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {MapInitialState} from "../../redux/reducers/map-reducer";
+import {MapInitialState} from "../../../redux/reducers/map-reducer";
 import LocationContainer from "./LocationContainer";
 import styles from "./Map.module.css";
 

@@ -1,16 +1,16 @@
 import Hex from "./Hex";
-import {Location} from "../../redux/reducers/map-reducer";
+import {Location} from "../../../redux/reducers/map-reducer";
 import styles from "./Location.module.css";
-import image0 from "../../assets/img/locations-background/0.png"
-import image1 from "../../assets/img/locations-background/1.png"
-import image2 from "../../assets/img/locations-background/2.png"
-import image3 from "../../assets/img/locations-background/3.png"
-import image4 from "../../assets/img/locations-background/4.png"
-import image5 from "../../assets/img/locations-background/5.png"
-import image6 from "../../assets/img/locations-background/6.png"
-import image7 from "../../assets/img/locations-background/7.png"
-import image8 from "../../assets/img/locations-background/8.png"
-import image9 from "../../assets/img/locations-background/9.png"
+import image0 from "../../../assets/img/locations-background/0.png"
+import image1 from "../../../assets/img/locations-background/1.png"
+import image2 from "../../../assets/img/locations-background/2.png"
+import image3 from "../../../assets/img/locations-background/3.png"
+import image4 from "../../../assets/img/locations-background/4.png"
+import image5 from "../../../assets/img/locations-background/5.png"
+import image6 from "../../../assets/img/locations-background/6.png"
+import image7 from "../../../assets/img/locations-background/7.png"
+import image8 from "../../../assets/img/locations-background/8.png"
+import image9 from "../../../assets/img/locations-background/9.png"
 
 interface Props {
     location: Location

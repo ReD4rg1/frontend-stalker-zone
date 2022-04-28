@@ -8,7 +8,9 @@ import Room from "./Room";
 import HeaderTitle from "../../../components/common/Header/HeaderTitle";
 import styles from "./index.module.css";
 import Button from "../../../components/common/ReloadButton/Button";
-import {withSessionRedirect} from "../../../redirect/withSessionRedirect";
+import { withSessionRedirect } from "../../../redirect/withSessionRedirect";
+import {NavLink} from "react-router-dom";
+import mapAPI from "../../../api/mapAPI";
 
 interface RoomsProps {
     rooms: RoomInitialState
@@ -39,6 +41,16 @@ class Rooms extends React.Component<RoomsProps, any> {
                         {this.props.rooms.rooms.map((room) => (
                             <Room room={room} key={room.id} joinToRoom={this.props.joinToRoom} />
                         ))}
+                    </section>
+                    <section className={styles.backLinkContainer}>
+                        <NavLink to="/main_menu" className={({ isActive }) =>  isActive ? `${styles.active}` : ""}>
+                            <div className={styles.backLink}><span>{'<'}</span></div>
+                        </NavLink>
+                    </section>
+                    <section>
+                        <button onClick={() => mapAPI.deleteMap()}>
+                            TEST: Удалить карту
+                        </button>
                     </section>
                 </div>
             </main>

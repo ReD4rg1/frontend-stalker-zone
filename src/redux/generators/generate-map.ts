@@ -1,82 +1,90 @@
-import {IHex, MapInitialState, ILocation} from "../reducers/map-reducer";
+import {IHex, MapInitialState, Location} from "../reducers/map-reducer";
 import * as hexesDifficultyInfo from '../Objects/Map/kinds-of-hexes.json';
 import * as locationsInfo from '../Objects/Map/filling-location-hexes-info.json';
 import {getLocationsQueueArray, getRandomIntForInterval} from "./random-generators";
-import {IPlayer} from "../reducers/players-reducer";
+import {Player} from "../reducers/players-reducer";
 
 type PropsType = {
     state: MapInitialState
-    players: IPlayer[]
+    players: Player[]
 }
 
-let playersArray: IPlayer[] = []
+let playersArray: Player[] = []
 
 const locationsQueueArray = getLocationsQueueArray({min: 0, max: 9, length: 10, isLocationArray: true})
 
-interface IGenerateLocationItem {
-    first: number | null,
-    second: number | null,
-    third: number | null,
-    fourth: number | null,
-    fifth: number | null,
-    sixth: number | null,
-    locationNumber: number,
+interface GenerateLocationItem {
+    first: number
+    second: number
+    third: number
+    fourth: number
+    fifth: number
+    sixth: number
+    locationNumber: number
 }
 
-interface IGetRandomHex {
-    HexId: number,
+interface GetRandomHex {
+    hexId: number
+    locationId: number
     sides: SidesType
 }
 
-interface IGetHex {
-    HexId: number,
-
+interface GetHex {
+    hexId: number
+    locationId: number
     sides: SidesType
 
-    isLocation: boolean,
-    isSpecialLocation: boolean,
-    locationName: string,
-    locationLevel: number | null,
+    isLocation: boolean
+    isSpecialLocation: boolean
+    locationName: string
+    locationLevel: number
 }
 
 type SidesType = {
-    topId: number | null,
-    topLeftId: number | null,
-    topRightId: number | null,
-    bottomId: number | null,
-    bottomLeftId: number | null,
-    bottomRightId: number | null,
+    topId: number
+    locationTopId: number
+    topLeftId: number
+    locationTopLeftId: number
+    topRightId: number
+    locationTopRightId: number
+    bottomId: number
+    locationBottomId: number
+    bottomLeftId: number
+    locationBottomLeftId: number
+    bottomRightId: number
+    locationBottomRightId: number
 }
 
 type CurrentLocationItemType = {
-    "HexId": number | null,
-    "isLocation": boolean,
-    "isSpecialLocation": boolean,
-    "locationName": string,
-    "locationLevel": number | null
+    "HexId": number
+    "isLocation": boolean
+    "isSpecialLocation": boolean
+    "locationName": string
+    "locationLevel": number
 }
 
 
-const getRandomHex = (props: IGetRandomHex): IHex => {
+const getRandomHex = (props: GetRandomHex): IHex => {
 
     const randomInt: number = getRandomIntForInterval(1, 22)
 
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
     return {
-        HexId: props.HexId,
-        players: [],
-        isActive: false,
-        isLocation: false,
-        isSpecialLocation: false,
-        locationName: null,
-        locationLevel: null,
-        Top: checkEpicenterSide(props.sides.topId, props.HexId, hexDifficultyInfoObject.difficulty.top),
-        TopLeft: checkEpicenterSide(props.sides.topLeftId, props.HexId, hexDifficultyInfoObject.difficulty.topLeft),
-        TopRight: checkEpicenterSide(props.sides.topRightId, props.HexId, hexDifficultyInfoObject.difficulty.topRight),
-        Bottom: checkEpicenterSide(props.sides.bottomId, props.HexId, hexDifficultyInfoObject.difficulty.bottom),
-        BottomLeft: checkEpicenterSide(props.sides.bottomLeftId, props.HexId, hexDifficultyInfoObject.difficulty.bottomLeft),
-        BottomRight: checkEpicenterSide(props.sides.bottomRightId, props.HexId, hexDifficultyInfoObject.difficulty.bottomRight)
+        hexId: props.hexId,
+        locationId: props.locationId,
+        playerList: [],
+        active: false,
+        containLocation: false,
+        specialLocation: false,
+        locationName: "",
+        locationLevel: 0,
+        top: checkEpicenterSide(props.sides.topId, props.hexId, props.sides.locationTopId, hexDifficultyInfoObject.difficulty.top),
+        topLeft: checkEpicenterSide(props.sides.topLeftId, props.hexId, props.sides.locationTopLeftId, hexDifficultyInfoObject.difficulty.topLeft),
+        topRight: checkEpicenterSide(props.sides.topRightId, props.hexId, props.sides.locationTopRightId, hexDifficultyInfoObject.difficulty.topRight),
+        bottom: checkEpicenterSide(props.sides.bottomId, props.hexId, props.sides.locationBottomId, hexDifficultyInfoObject.difficulty.bottom),
+        bottomLeft: checkEpicenterSide(props.sides.bottomLeftId, props.hexId, props.sides.locationBottomLeftId, hexDifficultyInfoObject.difficulty.bottomLeft),
+        bottomRight: checkEpicenterSide(props.sides.bottomRightId, props.hexId, props.sides.locationBottomRightId, hexDifficultyInfoObject.difficulty.bottomRight)
     }
 }
 
@@ -112,28 +120,31 @@ const checkLocationName = (locationName: string) => {
     return locationNumber
 }
 
-const checkEpicenterSide = (sideId: number | null, hexId: number, defaultDiff: number) => {
+const checkEpicenterSide = (sideId: number, hexId: number, locationId: number, defaultDiff: number) => {
 
-    if (hexId !== null && hexId !== ( 15 || 135 || 145 || 155 || 165 || 175 || 185 || 195 )) {
+    if (locationId === 5 && hexId !== ( 1 || 13 || 14 || 15 || 16 || 17 || 18 || 19 )) {
         switch (sideId) {
-            case 135:
-            case 145:
-            case 155:
-            case 165:
-            case 175:
-            case 185:
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+            case 18:
                 return {
                     moveId: sideId,
+                    locationId: locationId,
                     difficulty: 20
                 }
             default:
                 return {
                     moveId: sideId,
+                    locationId: locationId,
                     difficulty: defaultDiff
                 }
         }
-    } else if (hexId === 15 && sideId === 135) return {
+    } else if (locationId === 5 && hexId === 1 && sideId === 13) return {
         moveId: sideId,
+        locationId: locationId,
         difficulty: 6
     }
 
@@ -141,50 +152,58 @@ const checkEpicenterSide = (sideId: number | null, hexId: number, defaultDiff: n
 
     return {
         moveId: sideId,
+        locationId: locationId,
         difficulty: defaultDiff
     }
 }
 
-const getHex = (props: IGetHex): IHex => {
+const getHex = (props: GetHex): IHex => {
 
     const randomInt: number = checkLocationName(props.locationName)
 
     const hexDifficultyInfoObject = JSON.parse(JSON.stringify(hexesDifficultyInfo))[randomInt]
 
     return {
-        HexId: props.HexId,
-        players: props.locationName === 'Посёлок'
+        hexId: props.hexId,
+        playerList: props.locationName === 'Посёлок'
             ? playersArray.map((player) => {
-                return player
+                return player.playerId
             })
             : [],
-        isActive: false,
-        isLocation: props.isLocation,
-        isSpecialLocation: props.isSpecialLocation,
+        active: false,
+        containLocation: props.isLocation,
+        specialLocation: props.isSpecialLocation,
         locationName: props.locationName,
         locationLevel: props.locationLevel,
-        Top: {
+        locationId: props.locationId,
+        top: {
             moveId: props.sides.topId,
+            locationId: props.sides.locationTopId,
             difficulty: hexDifficultyInfoObject.difficulty.top
         },
-        TopLeft: {
+        topLeft: {
             moveId: props.sides.topLeftId,
+            locationId: props.sides.locationTopLeftId,
             difficulty: hexDifficultyInfoObject.difficulty.topLeft
         },
-        TopRight: {
+        topRight: {
             moveId: props.sides.topRightId,
+            locationId: props.sides.locationTopRightId,
             difficulty: hexDifficultyInfoObject.difficulty.topRight
         },
-        Bottom: {
+        bottom: {
             moveId: props.sides.bottomId,
+            locationId: props.sides.locationBottomId,
             difficulty: hexDifficultyInfoObject.difficulty.bottom
         },
-        BottomLeft: {
+        bottomLeft: {
             moveId: props.sides.bottomLeftId,
+            locationId: props.sides.locationBottomLeftId,
             difficulty: hexDifficultyInfoObject.difficulty.bottomLeft
         },
-        BottomRight: {
+        bottomRight: {
             moveId: props.sides.bottomRightId,
+            locationId: props.sides.locationBottomRightId,
             difficulty: hexDifficultyInfoObject.difficulty.bottomRight
         }
     }
@@ -192,7 +211,7 @@ const getHex = (props: IGetHex): IHex => {
 
 
 
-const getHexesArray = (locations: Array<any>, props: IGenerateLocationItem): Array<IHex> => {
+const getHexesArray = (locations: Array<any>, {first, second, third, fourth, fifth, sixth, locationNumber}: GenerateLocationItem): Array<IHex> => {
 
     let hexesArray: Array<IHex> = []
 
@@ -201,11 +220,11 @@ const getHexesArray = (locations: Array<any>, props: IGenerateLocationItem): Arr
         let isNotContain: boolean = true
 
         let currentLocationItem: CurrentLocationItemType = {
-            "HexId": null,
+            "HexId": 0,
             "isLocation": false,
             "isSpecialLocation": false,
             "locationName": '',
-            "locationLevel": null
+            "locationLevel": 0
         }
 
         locations.forEach((item) => {
@@ -215,222 +234,192 @@ const getHexesArray = (locations: Array<any>, props: IGenerateLocationItem): Arr
             }
         })
 
-
+        const getSide = (
+                topId: number,
+                locationTopId: number,
+                topLeftId: number,
+                locationTopLeftId: number,
+                topRightId: number,
+                locationTopRightId: number,
+                bottomId: number,
+                locationBottomId: number,
+                bottomLeftId: number,
+                locationBottomLeftId: number,
+                bottomRightId: number,
+                locationBottomRightId: number,
+            ) => (
+            {
+                topId: topId,
+                locationTopId: locationTopId,
+                topLeftId: topLeftId,
+                locationTopLeftId: locationTopLeftId,
+                topRightId: topRightId,
+                locationTopRightId: locationTopRightId,
+                bottomId: bottomId,
+                locationBottomId: locationBottomId,
+                bottomLeftId: bottomLeftId,
+                locationBottomLeftId: locationBottomLeftId,
+                bottomRightId: bottomRightId,
+                locationBottomRightId: locationBottomRightId,
+            }
+        )
 
         let sides: SidesType
 
         switch (i) {
             case 1:
-                sides = {
-                    topId: props.sixth ? parseInt('9'+ props.sixth) : null,
-                    topLeftId: props.sixth ? parseInt('11'+ props.sixth) : null,
-                    topRightId: props.first ? parseInt('6'+ props.first) : null,
-                    bottomId: parseInt('13'+ props.locationNumber),
-                    bottomLeftId: parseInt('12'+ props.locationNumber),
-                    bottomRightId: parseInt('3'+ props.locationNumber),
-                }
+                sides = getSide(
+                    9, sixth, 11, sixth,
+                    6, first, 13, locationNumber,
+                    12, locationNumber, 3, locationNumber
+                )
                 break
             case 2:
-                sides = {
-                    topId: parseInt('14'+ props.locationNumber),
-                    topLeftId: parseInt('4'+ props.locationNumber),
-                    topRightId: parseInt('11'+ props.locationNumber),
-                    bottomId: props.third ? parseInt('10'+ props.third) : null,
-                    bottomLeftId: props.fourth ? parseInt('5'+ props.fourth) : null,
-                    bottomRightId: props.third ? parseInt('12'+ props.third) : null,
-                }
+                sides = getSide(
+                    14, locationNumber, 4, locationNumber,
+                    11, locationNumber, 10, third,
+                    5, fourth, 12, third
+                )
                 break
             case 3:
-                sides = {
-                    topId: props.first ? parseInt('6'+ props.first) : null,
-                    topLeftId: parseInt('1'+ props.locationNumber),
-                    topRightId: props.first ? parseInt('4'+ props.first) : null,
-                    bottomId: parseInt('15'+ props.locationNumber),
-                    bottomLeftId: parseInt('13'+ props.locationNumber),
-                    bottomRightId: parseInt('5'+ props.locationNumber),
-                }
+                sides = getSide(
+                    6, first, 1, locationNumber,
+                    4, first, 15, locationNumber,
+                    13, locationNumber, 5, locationNumber
+                )
                 break
             case 4:
-                sides = {
-                    topId: parseInt('16'+ props.locationNumber),
-                    topLeftId: parseInt('6'+ props.locationNumber),
-                    topRightId: parseInt('14'+ props.locationNumber),
-                    bottomId: props.fourth ? parseInt('5'+ props.fourth) : null,
-                    bottomLeftId: props.fourth ? parseInt('3'+ props.fourth) : null,
-                    bottomRightId: parseInt('2'+ props.locationNumber),
-                }
+                sides = getSide(
+                    16, locationNumber, 6, locationNumber,
+                    14, locationNumber, 5, fourth,
+                    3, fourth, 2, locationNumber
+                )
                 break
             case 5:
-                sides = {
-                    topId: props.first ? parseInt('4'+ props.first) : null,
-                    topLeftId: parseInt('3'+ props.locationNumber),
-                    topRightId: props.first ? parseInt('2'+ props.first) : null,
-                    bottomId: parseInt('7'+ props.locationNumber),
-                    bottomLeftId: parseInt('15'+ props.locationNumber),
-                    bottomRightId: props.second ? parseInt('10'+ props.second) : null,
-                }
+                sides = getSide(
+                    4, first, 3, locationNumber,
+                    2, first, 7, locationNumber,
+                    15, locationNumber, 10, second
+                )
                 break
             case 6:
-                sides = {
-                    topId: parseInt('8'+ props.locationNumber),
-                    topLeftId: props.fifth ? parseInt('9'+ props.fifth) : null,
-                    topRightId: parseInt('16'+ props.locationNumber),
-                    bottomId: props.fourth ? parseInt('3'+ props.fourth) : null,
-                    bottomLeftId: props.fourth ? parseInt('1'+ props.fourth) : null,
-                    bottomRightId: parseInt('4'+ props.locationNumber),
-                }
+                sides = getSide(
+                    8, locationNumber, 9, fifth,
+                    16, locationNumber, 3, fourth,
+                    1, fourth, 4, locationNumber
+                )
                 break
             case 7:
-                sides = {
-                    topId: parseInt('5'+ props.locationNumber),
-                    topLeftId: parseInt('15'+ props.locationNumber),
-                    topRightId: props.second ? parseInt('10'+ props.second) : null,
-                    bottomId: parseInt('9'+ props.locationNumber),
-                    bottomLeftId: parseInt('17'+ props.locationNumber),
-                    bottomRightId: props.second ? parseInt('8'+ props.second) : null,
-                }
+                sides = getSide(
+                    5, locationNumber, 15, locationNumber,
+                    10, second, 9, locationNumber,
+                    17, locationNumber, 8, second
+                )
                 break
             case 8:
-                sides = {
-                    topId: parseInt('10'+ props.locationNumber),
-                    topLeftId: props.fifth ? parseInt('7'+ props.fifth) : null,
-                    topRightId: parseInt('18'+ props.locationNumber),
-                    bottomId: parseInt('6'+ props.locationNumber),
-                    bottomLeftId: props.fifth ? parseInt('9'+ props.fifth) : null,
-                    bottomRightId: parseInt('16'+ props.locationNumber),
-                }
+                sides = getSide(
+                    10, locationNumber, 7, fifth,
+                    18, locationNumber, 6, locationNumber,
+                    9, fifth, 16, locationNumber
+                )
                 break
             case 9:
-                sides = {
-                    topId: parseInt('7'+ props.locationNumber),
-                    topLeftId: parseInt('17'+ props.locationNumber),
-                    topRightId: props.second ? parseInt('8'+ props.second) : null,
-                    bottomId: props.third ? parseInt('1'+ props.third) : null,
-                    bottomLeftId: parseInt('11'+ props.locationNumber),
-                    bottomRightId: props.second ? parseInt('6'+ props.second) : null,
-                }
+                sides = getSide(
+                    7, locationNumber, 17, locationNumber,
+                    8, second, 1, third,
+                    11, locationNumber, 6, second
+                )
                 break
             case 10:
-                sides = {
-                    topId: props.sixth ? parseInt('2'+ props.sixth) : null,
-                    topLeftId: props.fifth ? parseInt('5'+ props.fifth) : null,
-                    topRightId: parseInt('12'+ props.locationNumber),
-                    bottomId: parseInt('8'+ props.locationNumber),
-                    bottomLeftId: props.fifth ? parseInt('7'+ props.fifth) : null,
-                    bottomRightId: parseInt('18'+ props.locationNumber),
-                }
+                sides = getSide(
+                    2, sixth, 5, fifth,
+                    12, locationNumber, 8, locationNumber,
+                    7, fifth, 18, locationNumber
+                )
                 break
             case 11:
-                sides = {
-                    topId: parseInt('17'+ props.locationNumber),
-                    topLeftId: parseInt('14'+ props.locationNumber),
-                    topRightId: parseInt('9'+ props.locationNumber),
-                    bottomId: props.third ? parseInt('12'+ props.third) : null,
-                    bottomLeftId: parseInt('2'+ props.locationNumber),
-                    bottomRightId: props.third ? parseInt('1'+ props.third) : null,
-                }
+                sides = getSide(
+                    17, locationNumber, 14, locationNumber,
+                    9, locationNumber, 12, third,
+                    2, locationNumber, 1, third
+                )
                 break
             case 12:
-                sides = {
-                    topId: props.sixth ? parseInt('11'+ props.sixth) : null,
-                    topLeftId: props.sixth ? parseInt('2'+ props.sixth) : null,
-                    topRightId: parseInt('1'+ props.locationNumber),
-                    bottomId: parseInt('18'+ props.locationNumber),
-                    bottomLeftId: parseInt('10'+ props.locationNumber),
-                    bottomRightId: parseInt('13'+ props.locationNumber),
-                }
+                sides = getSide(
+                    11, sixth, 2, sixth,
+                    1, locationNumber, 18, locationNumber,
+                    10, locationNumber, 13, locationNumber
+                )
                 break
             case 13:
-                sides = {
-                    topId: parseInt('1'+ props.locationNumber),
-                    topLeftId: parseInt('12'+ props.locationNumber),
-                    topRightId: parseInt('3'+ props.locationNumber),
-                    bottomId: parseInt('19'+ props.locationNumber),
-                    bottomLeftId: parseInt('18'+ props.locationNumber),
-                    bottomRightId: parseInt('15'+ props.locationNumber),
-                }
+                sides = getSide(
+                    1, locationNumber, 12, locationNumber,
+                    3, locationNumber, 19, locationNumber,
+                    18, locationNumber, 15, locationNumber
+                )
                 break
             case 14:
-                sides = {
-                    topId: parseInt('19'+ props.locationNumber),
-                    topLeftId: parseInt('16'+ props.locationNumber),
-                    topRightId: parseInt('17'+ props.locationNumber),
-                    bottomId: parseInt('2'+ props.locationNumber),
-                    bottomLeftId: parseInt('4'+ props.locationNumber),
-                    bottomRightId: parseInt('11'+ props.locationNumber),
-                }
+                sides = getSide(
+                    19, locationNumber, 16, locationNumber,
+                    17, locationNumber, 2, locationNumber,
+                    4, locationNumber, 11, locationNumber
+                )
                 break
             case 15:
-                sides = {
-                    topId: parseInt('3'+ props.locationNumber),
-                    topLeftId: parseInt('13'+ props.locationNumber),
-                    topRightId: parseInt('5'+ props.locationNumber),
-                    bottomId: parseInt('17'+ props.locationNumber),
-                    bottomLeftId: parseInt('19'+ props.locationNumber),
-                    bottomRightId: parseInt('7'+ props.locationNumber),
-                }
+                sides = getSide(
+                    3, locationNumber, 13, locationNumber,
+                    5, locationNumber, 17, locationNumber,
+                    19, locationNumber, 7, locationNumber
+                )
                 break
             case 16:
-                sides = {
-                    topId: parseInt('18'+ props.locationNumber),
-                    topLeftId: parseInt('8'+ props.locationNumber),
-                    topRightId: parseInt('19'+ props.locationNumber),
-                    bottomId: parseInt('4'+ props.locationNumber),
-                    bottomLeftId: parseInt('6'+ props.locationNumber),
-                    bottomRightId: parseInt('14'+ props.locationNumber),
-                }
+                sides = getSide(
+                    18, locationNumber, 8, locationNumber,
+                    19, locationNumber, 4, locationNumber,
+                    6, locationNumber, 14, locationNumber
+                )
                 break
             case 17:
-                sides = {
-                    topId: parseInt('15'+ props.locationNumber),
-                    topLeftId: parseInt('19'+ props.locationNumber),
-                    topRightId: parseInt('7'+ props.locationNumber),
-                    bottomId: parseInt('11'+ props.locationNumber),
-                    bottomLeftId: parseInt('14'+ props.locationNumber),
-                    bottomRightId: parseInt('9'+ props.locationNumber),
-                }
+                sides = getSide(
+                    15, locationNumber, 19, locationNumber,
+                    7, locationNumber, 11, locationNumber,
+                    14, locationNumber, 9, locationNumber
+                )
                 break
             case 18:
-                sides = {
-                    topId: parseInt('12'+ props.locationNumber),
-                    topLeftId: parseInt('10'+ props.locationNumber),
-                    topRightId: parseInt('13'+ props.locationNumber),
-                    bottomId: parseInt('16'+ props.locationNumber),
-                    bottomLeftId: parseInt('8'+ props.locationNumber),
-                    bottomRightId: parseInt('19'+ props.locationNumber),
-                }
+                sides = getSide(
+                    12, locationNumber, 10, locationNumber,
+                    13, locationNumber, 16, locationNumber,
+                    8, locationNumber, 19, locationNumber
+                )
                 break
             case 19:
-                sides = {
-                    topId: parseInt('13'+ props.locationNumber),
-                    topLeftId: parseInt('18'+ props.locationNumber),
-                    topRightId: parseInt('15'+ props.locationNumber),
-                    bottomId: parseInt('14'+ props.locationNumber),
-                    bottomLeftId: parseInt('16'+ props.locationNumber),
-                    bottomRightId: parseInt('17'+ props.locationNumber),
-                }
+                sides = getSide(
+                    13, locationNumber, 18, locationNumber,
+                    15, locationNumber, 14, locationNumber,
+                    16, locationNumber, 17, locationNumber
+                )
                 break
             default:
-                sides = {
-                    topId: null,
-                    topLeftId: null,
-                    topRightId: null,
-                    bottomId: null,
-                    bottomLeftId: null,
-                    bottomRightId: null,
-                }
+                sides = getSide(
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0
+                )
         }
 
 
 
         if (isNotContain) {
             hexesArray.push(getRandomHex({
-                HexId: parseInt(`${i}` + props.locationNumber),
+                hexId: parseInt(`${i}` + locationNumber),
+                locationId: locationNumber,
                 sides: sides
             }))
         } else {
             hexesArray.push(getHex({
-                HexId: parseInt(`${i}` + props.locationNumber),
+                hexId: parseInt(`${i}` + locationNumber),
+                locationId: locationNumber,
                 sides: sides,
                 isLocation: currentLocationItem.isLocation,
                 isSpecialLocation: currentLocationItem.isSpecialLocation,
@@ -444,21 +433,20 @@ const getHexesArray = (locations: Array<any>, props: IGenerateLocationItem): Arr
     return hexesArray
 }
 
-const generateLocationItem = (props: IGenerateLocationItem): ILocation => {
+const generateLocationItem = (props: GenerateLocationItem): Location => {
 
     const currentLocationObject = locationsInfo[props.locationNumber]
 
     return {
-        locationName: null,
-        locationID: currentLocationObject.id,
-        allLocations: getHexesArray(currentLocationObject.locations,props)
+        id: currentLocationObject.id,
+        hexList: getHexesArray(currentLocationObject.locations,props)
     }
 }
 
 const getGeneratedMap = (props: PropsType): MapInitialState => {
 
-    let newMap: Array<ILocation> = props.state.locations
-    let newLocation: ILocation
+    let newMap: Array<Location> = props.state.locations
+    let newLocation: Location
     playersArray = [...props.players]
 
     for (let i = 0; i < 10; i++) {
@@ -466,48 +454,48 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
         switch (i) {
             case 0:
                 newLocation = generateLocationItem({
-                    first: null,
+                    first: 0,
                     second: locationsQueueArray[1],
                     third: locationsQueueArray[4],
-                    fourth: null,
-                    fifth: null,
-                    sixth: null,
+                    fourth: 0,
+                    fifth: 0,
+                    sixth: 0,
                     locationNumber: locationsQueueArray[0],
                 })
                 newMap = [{...newLocation}]
                 break
             case 1:
                 newLocation = generateLocationItem({
-                    first: null,
+                    first: 0,
                     second: locationsQueueArray[2],
                     third: locationsQueueArray[5],
                     fourth: locationsQueueArray[4],
                     fifth: locationsQueueArray[0],
-                    sixth: null,
+                    sixth: 0,
                     locationNumber: locationsQueueArray[1],
                 })
                 newMap = [...newMap, {...newLocation}]
                 break
             case 2:
                 newLocation = generateLocationItem({
-                    first: null,
+                    first: 0,
                     second: locationsQueueArray[3],
                     third: locationsQueueArray[6],
                     fourth: locationsQueueArray[5],
                     fifth: locationsQueueArray[1],
-                    sixth: null,
+                    sixth: 0,
                     locationNumber: locationsQueueArray[2],
                 })
                 newMap = [...newMap, {...newLocation}]
                 break
             case 3:
                 newLocation = generateLocationItem({
-                    first: null,
-                    second: null,
-                    third: null,
+                    first: 0,
+                    second: 0,
+                    third: 0,
                     fourth: locationsQueueArray[6],
                     fifth: locationsQueueArray[2],
-                    sixth: null,
+                    sixth: 0,
                     locationNumber: locationsQueueArray[3],
                 })
                 newMap = [...newMap, {...newLocation}]
@@ -517,8 +505,8 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
                     first: locationsQueueArray[1],
                     second: locationsQueueArray[5],
                     third: locationsQueueArray[7],
-                    fourth: null,
-                    fifth: null,
+                    fourth: 0,
+                    fifth: 0,
                     sixth: locationsQueueArray[0],
                     locationNumber: locationsQueueArray[4],
                 })
@@ -539,8 +527,8 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
             case 6:
                 newLocation = generateLocationItem({
                     first: locationsQueueArray[3],
-                    second: null,
-                    third: null,
+                    second: 0,
+                    third: 0,
                     fourth: locationsQueueArray[8],
                     fifth: locationsQueueArray[5],
                     sixth: locationsQueueArray[2],
@@ -553,8 +541,8 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
                     first: locationsQueueArray[5],
                     second: locationsQueueArray[8],
                     third: locationsQueueArray[9],
-                    fourth: null,
-                    fifth: null,
+                    fourth: 0,
+                    fifth: 0,
                     sixth: locationsQueueArray[4],
                     locationNumber: locationsQueueArray[7],
                 })
@@ -563,8 +551,8 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
             case 8:
                 newLocation = generateLocationItem({
                     first: locationsQueueArray[6],
-                    second: null,
-                    third: null,
+                    second: 0,
+                    third: 0,
                     fourth: locationsQueueArray[9],
                     fifth: locationsQueueArray[7],
                     sixth: locationsQueueArray[5],
@@ -575,10 +563,10 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
             case 9:
                 newLocation = generateLocationItem({
                     first: locationsQueueArray[8],
-                    second: null,
-                    third: null,
-                    fourth: null,
-                    fifth: null,
+                    second: 0,
+                    third: 0,
+                    fourth: 0,
+                    fifth: 0,
                     sixth: locationsQueueArray[7],
                     locationNumber: locationsQueueArray[9],
                 })

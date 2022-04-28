@@ -1,7 +1,12 @@
 import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-players";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../redux-store";
+import playersAPI from "../../api/Game/playersAPI";
+import {getPlayers} from "../../api/Game/ws/playersWS";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
+const SET_PLAYERS = "SET-PLAYERS"
 
 export interface PlayersInitialState {
     players: Array<Player>
@@ -119,7 +124,7 @@ type ArmorType = {
     cost: number
 }
 
-type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType
+type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType | SetPlayersType
 
 type GeneratePlayerType = {
     type: typeof CREATE_PLAYERS
@@ -128,6 +133,14 @@ type GeneratePlayerType = {
 type ShowInitPlayersInfoType = {
     type: typeof SHOW_PLAYERS
 }
+
+type SetPlayersType = {
+    type: typeof SET_PLAYERS
+    players: Player[]
+}
+
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
 let initialState: PlayersInitialState = {
     players: [
@@ -199,10 +212,22 @@ const playersReducer = (state = initialState, action: ActionsType): PlayersIniti
                 ...state,
                 initialPlayersInfo: showInitPlayersInfo()
             }
+        case SET_PLAYERS:
+            return {
+                ...state,
+                players: action.players
+            }
         default:
             return state
     }
 }
+
+export const setPlayers = (players: Player[]):SetPlayersType => (
+    {
+        type: SET_PLAYERS,
+        players
+    }
+)
 
 export const createPlayers = (players: Array<number>):GeneratePlayerType => (
     {
@@ -210,6 +235,15 @@ export const createPlayers = (players: Array<number>):GeneratePlayerType => (
         players: players
     }
 )
+
+export const fetchPlayers = ():ThunkType => {
+    return (async (dispatch) => {
+        const response = await playersAPI.getPlayersInitial()
+        if (response.resultCode === 0) {
+            getPlayers()
+        }
+    })
+}
 
 export const showPlayersInfo = ():ShowInitPlayersInfoType => ({type: SHOW_PLAYERS})
 

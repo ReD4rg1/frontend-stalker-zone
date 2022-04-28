@@ -10,7 +10,7 @@ import styles from "./index.module.css";
 import Button from "../../../components/common/ReloadButton/Button";
 import { withSessionRedirect } from "../../../redirect/withSessionRedirect";
 import {NavLink} from "react-router-dom";
-import mapAPI from "../../../api/mapAPI";
+import mapAPI from "../../../api/Game/mapAPI";
 
 interface RoomsProps {
     rooms: RoomInitialState

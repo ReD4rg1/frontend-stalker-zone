@@ -1,6 +1,5 @@
 import axios from "axios";
-import {getToken} from "./token";
-import {Location} from "../redux/reducers/map-reducer";
+import {getToken} from "../token";
 
 const token = getToken()
 
@@ -9,22 +8,22 @@ const instance = axios.create({
     headers: {'Authorization': `${token}`}
 })
 
-const mapAPI = {
+const playersAPI = {
 
-    getMap() {
+    getPlayersInitial() {
         return (
-        instance.get(`/map`)
-            .then((response): Location[] => response.data)
+            instance.get(`/players/initial`)
+                .then((response) => response.data)
         )
     },
 
-    deleteMap() {
+    getCoords() {
         return (
-            instance.get(`/map/delete`)
+            instance.get(`/coordinates`)
                 .then((response) => response.data)
         )
     },
 
 }
 
-export default mapAPI
+export default playersAPI

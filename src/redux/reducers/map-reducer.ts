@@ -2,7 +2,7 @@ import getGeneratedMap from "../generators/generate-map";
 import {Player} from "./players-reducer";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
-import mapAPI from "../../api/mapAPI";
+import mapAPI from "../../api/Game/mapAPI";
 
 const GENERATE_MAP = "GENERATE-MAP"
 const SET_MAP = "SET-MAP"

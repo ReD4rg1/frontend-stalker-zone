@@ -3,11 +3,11 @@ import {MapInitialState} from "../../../redux/reducers/map-reducer";
 import LocationContainer from "./LocationContainer";
 import styles from "./Map.module.css";
 
-type PropsType = {
-    map: MapInitialState,
+interface Props {
+    map: MapInitialState
 }
 
-const Map: FC<PropsType> = ({map}) => {
+const Map: FC<Props> = ({map}) => {
 
     return (
         <div>
@@ -56,7 +56,9 @@ const Map: FC<PropsType> = ({map}) => {
                     </section>
                     : <div>Нет данных</div>
             }
-
+            <section>
+                PlayersInfo
+            </section>
         </div>
     )
 }

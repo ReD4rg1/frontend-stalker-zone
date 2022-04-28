@@ -6,7 +6,7 @@ import {
     getChars,
     getUsersInRoom,
     toggleReadyStatus
-} from "../../../api/Rooms/WebSocket/WebSocket";
+} from "../../../api/Rooms/ws/roomWS";
 import {Character, RoomInitialState, User} from "../../../redux/reducers/room-reducer";
 import CharacterComponent from "./CharacterComponent";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";

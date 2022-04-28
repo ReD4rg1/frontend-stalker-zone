@@ -4,21 +4,18 @@ import {connect} from "react-redux";
 import {AppStateType} from "../redux/redux-store";
 
 interface Props {
-    isAuth: boolean
-    gameIsReady: boolean
+    playersIsReady: boolean
 }
 
 let mapStateToPropsForRedirect = (state: AppStateType): Props => ({
-    gameIsReady: state.rooms.gameReadyStatus,
-    isAuth: state.auth.isAuth,
+    playersIsReady: state.players.playersIsReady
 })
 
-export const withAuthMapRedirect = (Component: React.ComponentType) => {
+export const withPlayersReadyRedirect = (Component: React.ComponentType) => {
 
     class RedirectComponent extends React.Component<Props> {
         render() {
-            if (!this.props.isAuth) return <Navigate to={'/login'} />
-            if (!this.props.gameIsReady) return <Navigate to={'/multiplayer'} />
+            if (!this.props.playersIsReady) return <Navigate to={'/login'} />
             return <Component {...this.props}/>
         }
     }

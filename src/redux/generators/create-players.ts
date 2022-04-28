@@ -1,7 +1,7 @@
 import players from "../Objects/Players/players.json"
-import {Player} from "../reducers/players-reducer";
+import {IPlayer} from "../reducers/players-reducer";
 
-export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Player> => {
+export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<IPlayer> => {
 
     return  playersNumberArray.map((item) => {
 

@@ -1,60 +1,78 @@
 import React, {FC} from "react";
 import {MapInitialState} from "../../../redux/reducers/map-reducer";
-import LocationContainer from "./LocationContainer";
+import Location from "./Location";
 import styles from "./Map.module.css";
 
 type PropsType = {
     map: MapInitialState,
+    generateMap: () => void,
 }
 
-const Map: FC<PropsType> = ({map}) => {
+const Map: FC<PropsType> = ({map, generateMap}) => {
+
+    let lastLocation = map.locations[map.locations.length - 1]
+
+    const mapItemsArray = map.locations.map((item) => {
+        const hexesArray = item.allLocations.map(item => {
+            return item
+        })
+        return {'hexesArray': hexesArray, 'locationID': item.locationID}
+    })
+
 
     return (
         <div>
+            <section>
+                <p>Generate location</p>
+                <p>{'Last Location: ' + lastLocation.locationID}</p>
+                <button onClick={() => generateMap()}>Generate Map</button>
+            </section>
             {
-                map.locations.length
+                mapItemsArray.length === 10
                     ? <section className={styles.mapContainer}>
 
                         <article className={styles.mapFirstLayer}>
                             <div className={styles.mapFirstItem}>
-                                <LocationContainer location={map.locations[0]}/>
+                                <Location data={mapItemsArray[0]}/>
                             </div>
                             <div className={styles.mapSecondItem}>
-                                <LocationContainer location={map.locations[1]}/>
+                                <Location data={mapItemsArray[1]}/>
                             </div>
                             <div className={styles.mapThirdItem}>
-                                <LocationContainer location={map.locations[2]}/>
+                                <Location data={mapItemsArray[2]}/>
                             </div>
                             <div className={styles.mapFourthItem}>
-                                <LocationContainer location={map.locations[3]}/>
+                                <Location data={mapItemsArray[3]}/>
                             </div>
                         </article>
                         <article className={styles.mapSecondLayer}>
                             <div className={styles.mapFirstItem}>
-                                <LocationContainer location={map.locations[4]}/>
+                                <Location data={mapItemsArray[4]}/>
                             </div>
                             <div className={styles.mapSecondItem}>
-                                <LocationContainer location={map.locations[5]}/>
+                                <Location data={mapItemsArray[5]}/>
                             </div>
                             <div className={styles.mapThirdItem}>
-                                <LocationContainer location={map.locations[6]}/>
+                                <Location data={mapItemsArray[6]}/>
                             </div>
                         </article>
                         <article className={styles.mapThirdLayer}>
                             <div className={styles.mapFirstItem}>
-                                <LocationContainer location={map.locations[7]}/>
+                                <Location data={mapItemsArray[7]}/>
                             </div>
                             <div className={styles.mapSecondItem}>
-                                <LocationContainer location={map.locations[8]}/>
+                                <Location data={mapItemsArray[8]}/>
                             </div>
                         </article>
                         <article className={styles.mapFourthLayer}>
                             <div className={styles.mapFirstItem}>
-                                <LocationContainer location={map.locations[9]}/>
+                                <Location data={mapItemsArray[9]}/>
                             </div>
                         </article>
                     </section>
-                    : <div>Нет данных</div>
+                    : <div className={styles.mapFirstItem}>
+                        <Location data={mapItemsArray[0]}/>
+                    </div>
             }
 
         </div>

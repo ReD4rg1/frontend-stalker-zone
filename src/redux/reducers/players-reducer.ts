@@ -1,14 +1,12 @@
 import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-players";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../redux-store";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
 const SET_PLAYERS = "SET-PLAYERS"
 
 export interface PlayersInitialState {
-    players: Array<Player>
-    initialPlayersInfo: Array<IInitialPlayerInfo>
+    players: Player[]
+    initialPlayersInfo: IInitialPlayerInfo[]
     playersIsReady: boolean
 }
 
@@ -27,6 +25,7 @@ export interface IInitialPlayerInfo {
 }
 export interface Player {
     id: number
+    userId: number
     name: string
     hp: number
     reputation: number
@@ -35,6 +34,7 @@ export interface Player {
     effects: PlayerEffectsType
     money: number
     skipping: boolean
+    inFight: boolean
     move: boolean
     inventory: Inventory
     coordinates: CoordinatesType
@@ -73,7 +73,7 @@ type PlayerEffectsType = {
 type OrderType = {
     title: string
     description: string
-    targetLocations: Array<string>
+    targetLocations: string[]
     receptionPlace: string
     isCompleted: boolean
     reward: number
@@ -113,7 +113,7 @@ type GrenadeType = {
 type WeaponModifierType = {
     title: string
     damageModifier: number
-    compatibility: Array<string>
+    compatibility: string[]
     cost: number
 }
 type WeaponType = {
@@ -132,7 +132,7 @@ type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType | SetPlayersType
 
 type GeneratePlayerType = {
     type: typeof CREATE_PLAYERS
-    players: Array<number>
+    players: number[]
 }
 type ShowInitPlayersInfoType = {
     type: typeof SHOW_PLAYERS
@@ -144,12 +144,12 @@ type SetPlayersType = {
 }
 
 
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
 let initialState: PlayersInitialState = {
     players: [
         {
             id: 1,
+            userId: 1,
             name: "Мажор",
             hp: 30,
             reputation: 0,
@@ -157,6 +157,7 @@ let initialState: PlayersInitialState = {
             order: null,
             money: 1500,
             skipping: false,
+            inFight: false,
             move: false,
             effects: {
                 healBoost: 0,
@@ -236,7 +237,7 @@ export const setPlayers = (players: Player[]):SetPlayersType => (
     }
 )
 
-export const createPlayers = (players: Array<number>):GeneratePlayerType => (
+export const createPlayers = (players: number[]):GeneratePlayerType => (
     {
         type: CREATE_PLAYERS,
         players: players

@@ -571,7 +571,11 @@ const getGeneratedMap = (props: PropsType): MapInitialState => {
     return (
         {
             locations: [...newMap],
-            mapIsGenerated: true
+            mapIsGenerated: true,
+            availableHexes: {
+                playerId: 0,
+                coordinates: []
+            },
         }
     )
 }

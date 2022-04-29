@@ -1,0 +1,15 @@
+.container {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    background-color: white;
+    border-top: black 1px solid;
+    z-index: 10000;
+}
+
+.playerInfo {
+    display: flex;
+    padding: 20px;
+}

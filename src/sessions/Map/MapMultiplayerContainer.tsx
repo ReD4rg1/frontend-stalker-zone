@@ -1,14 +1,21 @@
 import React from 'react';
 import Map from "./Location/Map";
 import {connect} from "react-redux";
-import {fetchMap, generateMap, MapInitialState} from "../../redux/reducers/map-reducer";
+import {
+    AvailableHexes,
+    fetchMap,
+    generateMap,
+    MapInitialState,
+    setAvailableHexes
+} from "../../redux/reducers/map-reducer";
 import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
 import {Player, PlayersInitialState, setPlayers} from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
-import {connectWS, disconnectWS, getPlayers} from "../../api/Game/ws/playersWS";
+import {connectWS, disconnectWS, getCoords, getPlayers} from "../../api/Game/ws/playersWS";
+import InterfaceContainer from "./Interface";
 
 interface GenerateMapProps {
     players: Player[]
@@ -21,6 +28,7 @@ interface MapProps {
     fetchMap: () => void
     generateMap: (players: GenerateMapProps) => void
     setPlayers: (players: Player[]) => void
+    setAvailableHexes: (hexes: AvailableHexes) => void
 }
 
 class MapMultiplayerContainer extends React.Component<MapProps, any>{
@@ -35,7 +43,8 @@ class MapMultiplayerContainer extends React.Component<MapProps, any>{
         connectWS(
             {
                 setConnected: (connect) => this.setState({connect: connect}),
-                setPlayers: this.props.setPlayers
+                setPlayers: this.props.setPlayers,
+                setAvailableHexes: this.props.setAvailableHexes
             }
         )
     }
@@ -44,6 +53,7 @@ class MapMultiplayerContainer extends React.Component<MapProps, any>{
         if (prevState.connect !== this.state.connect) {
             if (this.state.connect) {
                 getPlayers()
+                getCoords()
             }
         }
     }
@@ -56,7 +66,8 @@ class MapMultiplayerContainer extends React.Component<MapProps, any>{
         if (!this.props.map.mapIsGenerated) return <Preloader fetching={!this.props.map.mapIsGenerated} />
         return (
             <div>
-                <Map map={this.props.map} />
+                <Map map={this.props.map} players={this.props.players.players}/>
+                <InterfaceContainer players={this.props.players.players} />
             </div>
         )
     }
@@ -71,6 +82,6 @@ let mapStateToProps = (store: AppStateType) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {generateMap, fetchMap, setPlayers}),
+    connect(mapStateToProps, {generateMap, fetchMap, setPlayers, setAvailableHexes}),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

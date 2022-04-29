@@ -8,6 +8,7 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Pl
         return (
             {
                 id: players[item-1].id,
+                userId: players[item-1].id,
                 name: players[item-1].name,
                 hp: players[item-1].effects.maxHp,
                 reputation: 0,
@@ -15,6 +16,7 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Pl
                 order: null,
                 money: players[item-1].effects.seedMoney,
                 skipping: false,
+                inFight: false,
                 move: false,
                 effects: {
                     healBoost: players[item-1].effects.healBoost,

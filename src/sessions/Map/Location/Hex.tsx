@@ -1,18 +1,34 @@
-import {IHex} from "../../../redux/reducers/map-reducer";
+import {AvailableHexes, IHex} from "../../../redux/reducers/map-reducer";
 import styles from "./Hex.module.css";
+import {Player} from "../../../redux/reducers/players-reducer";
 
 interface IProps {
     data: IHex
+    players: Player[]
+    availableHexes: AvailableHexes
 }
 
 const Hex = (props: IProps) => {
 
     const item = props.data
     let hexStyle = styles.hex
+    let availableMoveStatus: boolean = false
+    props.availableHexes.coordinates.forEach((hex) => {
+        if (hex.moveId === props.data.hexId && hex.locationId === props.data.locationId && hex.move) {
+            availableMoveStatus = true
+        }
+    })
 
-    if (item.active && !item.containLocation) hexStyle = styles.activeHex
-    else if (item.active && item.containLocation) hexStyle = styles.activeLocationHex
-    else if (!item.active && item.containLocation) hexStyle = styles.locationHex
+    if (availableMoveStatus && !item.containLocation) hexStyle = styles.activeHex
+    else if (availableMoveStatus && item.containLocation) hexStyle = styles.activeLocationHex
+    else if (!availableMoveStatus && item.containLocation) hexStyle = styles.locationHex
+
+    const players = props.players.map((player) => {
+        if (player.coordinates.hexId === props.data.hexId
+            && player.coordinates.locationId === props.data.locationId
+        ) return player
+        return null
+    })
 
     return (
         <div className={styles.container}>
@@ -23,10 +39,18 @@ const Hex = (props: IProps) => {
                         <p className={styles.hexId}>{'Id: ' + item.hexId}</p>
                         <p className={styles.hexId}>{'LocationId: ' + item.locationId}</p>
                         <section className={styles.players}>
-                            {item.playerList?.map((player) => {
-                                return (
-                                    <div key={player} className={styles.player}/>
+                            {players?.map((player) => {
+                                if (player) return (
+                                    <div key={player.id} className={player.move
+                                        ? styles.activePlayer
+                                        : styles.player
+                                    }>
+                                        <div className={styles.playerDescription}>
+                                            {player.name}
+                                        </div>
+                                    </div>
                                 )
+                                return null
                             })}
                         </section>
                     </div>

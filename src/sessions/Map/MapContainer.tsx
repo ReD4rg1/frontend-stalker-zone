@@ -25,7 +25,7 @@ class MapContainer extends React.Component<MapProps, any>{
     render() {
         return (
             <div>
-                <Map map={this.props.map} />
+                <Map map={this.props.map} players={this.props.players.players}/>
             </div>
         )
     }

@@ -6,10 +6,23 @@ import mapAPI from "../../api/Game/mapAPI";
 
 const GENERATE_MAP = "GENERATE-MAP"
 const SET_MAP = "SET-MAP"
+const SET_AVAILABLE_HEXES = "SET-AVAILABLE-HEXES"
 
 export interface MapInitialState {
     locations: Location[]
     mapIsGenerated: boolean
+    availableHexes: AvailableHexes
+}
+
+export interface AvailableHexes {
+    playerId: number
+    coordinates: AvailableHex[]
+}
+
+interface AvailableHex {
+    moveId: number
+    locationId: number
+    move: boolean
 }
 
 export interface Location {
@@ -40,11 +53,15 @@ type HexSideType = {
     difficulty: number
 }
 
-type ActionsType = GenerateMapType | SetMapType
+type ActionsType = GenerateMapType | SetMapType | SetAvailableHexesType
 
 let initialState: MapInitialState = {
     locations: [],
-    mapIsGenerated: false
+    mapIsGenerated: false,
+    availableHexes: {
+        playerId: 0,
+        coordinates: []
+    },
 }
 
 const mapReducer = (state = initialState, action: ActionsType): MapInitialState => {
@@ -56,7 +73,14 @@ const mapReducer = (state = initialState, action: ActionsType): MapInitialState 
             return {
                 ...state,
                 mapIsGenerated: true,
-                locations: action.map
+                locations: action.map,
+            }
+        case SET_AVAILABLE_HEXES:
+            return {
+                ...state,
+                availableHexes: {
+                    ...action.hexes,
+                },
             }
         default:
             return state
@@ -88,6 +112,18 @@ const setMap = (map: Location[]): SetMapType => (
     {
         type: SET_MAP,
         map
+    }
+)
+
+type SetAvailableHexesType = {
+    type: typeof SET_AVAILABLE_HEXES
+    hexes: AvailableHexes
+}
+
+export const setAvailableHexes = (hexes: AvailableHexes): SetAvailableHexesType => (
+    {
+        type: SET_AVAILABLE_HEXES,
+        hexes
     }
 )
 

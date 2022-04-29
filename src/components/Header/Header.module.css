@@ -1,8 +1,13 @@
 .headerContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
     display: flex;
     flex-direction: row-reverse;
     background-color: black;
     padding: 20px;
+    z-index: 10000;
 }
 
 .section {

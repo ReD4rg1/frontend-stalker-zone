@@ -1,5 +1,8 @@
 .mainContainer {
-    margin: 100px 100px 500px 100px;
+    height: 2000px;
+    width: 100%;
+    background-color: #232522;
+    padding: 100px;
 }
 
 .mapContainer {

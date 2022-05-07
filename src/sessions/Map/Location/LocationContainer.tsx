@@ -15,11 +15,13 @@ import {Player} from "../../../redux/reducers/players-reducer";
 
 interface Props {
     location: Location
+    myPlayer: Player
     players: Player[]
     availableHexes: AvailableHexes
+    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
 }
 
-const LocationContainer = ({location, players, availableHexes}: Props) => {
+const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}: Props) => {
 
     let imageSrc: string
 
@@ -66,41 +68,189 @@ const LocationContainer = ({location, players, availableHexes}: Props) => {
             </div>
             <section className={styles.hexesContainer}>
                 <section className={styles.rowOne}>
-                    <Hex availableHexes={availableHexes} data={location.hexList[0]} players={players} />
+                    <Hex
+                        myPlayer={myPlayer}
+                        moveTo={moveTo}
+                        availableHexes={availableHexes}
+                        data={location.hexList[0]}
+                        players={players}
+                    />
                 </section>
                 <section className={styles.rowTwo}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[11]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[2]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[11]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[2]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowThree}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[9]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[12]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[4]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[9]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[12]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[4]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowTwo}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[17]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[14]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[17]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[14]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowThree}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[7]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[18]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[6]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[7]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[18]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[6]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowTwo}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[15]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[16]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[15]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[16]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowThree}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[5]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[13]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[8]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[5]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[13]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[8]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowTwo}>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[3]} players={players} /></article>
-                    <article><Hex availableHexes={availableHexes} data={location.hexList[10]} players={players} /></article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[3]}
+                            players={players}
+                        />
+                    </article>
+                    <article>
+                        <Hex
+                            myPlayer={myPlayer}
+                            moveTo={moveTo}
+                            availableHexes={availableHexes}
+                            data={location.hexList[10]}
+                            players={players}
+                        />
+                    </article>
                 </section>
                 <section className={styles.rowOneLast}>
-                    <Hex availableHexes={availableHexes} data={location.hexList[1]} players={players} />
+                    <Hex
+                        myPlayer={myPlayer}
+                        moveTo={moveTo}
+                        availableHexes={availableHexes}
+                        data={location.hexList[1]}
+                        players={players}
+                    />
                 </section>
             </section>
         </section>

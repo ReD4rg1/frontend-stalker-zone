@@ -19,9 +19,10 @@ export interface AvailableHexes {
     coordinates: AvailableHex[]
 }
 
-interface AvailableHex {
+export interface AvailableHex {
     moveId: number
     locationId: number
+    difficulty: number
     move: boolean
 }
 

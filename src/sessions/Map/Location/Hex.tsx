@@ -4,8 +4,10 @@ import {Player} from "../../../redux/reducers/players-reducer";
 
 interface IProps {
     data: IHex
+    myPlayer: Player
     players: Player[]
     availableHexes: AvailableHexes
+    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
 }
 
 const Hex = (props: IProps) => {
@@ -13,9 +15,11 @@ const Hex = (props: IProps) => {
     const item = props.data
     let hexStyle = styles.hex
     let availableMoveStatus: boolean = false
+    let difficulty: number = 0
     props.availableHexes.coordinates.forEach((hex) => {
         if (hex.moveId === props.data.hexId && hex.locationId === props.data.locationId && hex.move) {
             availableMoveStatus = true
+            difficulty = hex.difficulty
         }
     })
 
@@ -30,10 +34,21 @@ const Hex = (props: IProps) => {
         return null
     })
 
+    const moveTo = () => {
+        if (props.myPlayer.move) {
+            props.moveTo(
+                props.data.locationId,
+                props.data.hexId,
+                difficulty,
+                props.myPlayer.id,
+            )
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.subHex}>
-                <div className={hexStyle}>
+                <div className={hexStyle} onClick={() => moveTo()}>
                     <div className={styles.infoBlock}>
                         <p className={styles.hexId}>{item.locationName}</p>
                         <p className={styles.hexId}>{'Id: ' + item.hexId}</p>

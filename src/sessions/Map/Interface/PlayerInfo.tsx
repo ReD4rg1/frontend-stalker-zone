@@ -2,10 +2,12 @@ import {Player} from "../../../redux/reducers/players-reducer";
 import React from "react";
 
 interface Props {
-    player: Player
+    player: Player | null
 }
 
 const PlayerInfo = ({player}: Props) => {
+
+    if (!player) return null
 
     const armor = player.effects.armorBoost
         + (player.inventory.bodyArmor ? player.inventory.bodyArmor?.def : 0)
@@ -34,6 +36,10 @@ const PlayerInfo = ({player}: Props) => {
             <div>
                 <span>{"Деньги: "}</span>
                 <span>{player.money}</span>
+            </div>
+            <div>
+                <span>{"Доступные ходы: "}</span>
+                <span>{player.numberOfMoves}</span>
             </div>
         </div>
     )

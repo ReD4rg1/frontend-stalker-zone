@@ -18,6 +18,7 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Pl
                 skipping: false,
                 inFight: false,
                 move: false,
+                rollCube: false,
                 effects: {
                     healBoost: players[item-1].effects.healBoost,
                     mapMoveModifier: players[item-1].effects.mapMoveModifier,

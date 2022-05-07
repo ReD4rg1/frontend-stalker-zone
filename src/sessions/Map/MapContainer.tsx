@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 import {generateMap, MapInitialState} from "../../redux/reducers/map-reducer";
 import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
-import {Player, PlayersInitialState} from "../../redux/reducers/players-reducer";
+import {moveTo, Player, PlayersInitialState} from "../../redux/reducers/players-reducer";
+import {AuthInitialState} from "../../redux/reducers/auth-reducer";
 
 interface GenerateMapProps {
     players: Player[]
@@ -12,8 +13,10 @@ interface GenerateMapProps {
 
 interface MapProps {
     map: MapInitialState
+    auth: AuthInitialState
     players: PlayersInitialState
     generateMap: (players: GenerateMapProps) => void
+    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
 }
 
 class MapContainer extends React.Component<MapProps, any>{
@@ -25,7 +28,7 @@ class MapContainer extends React.Component<MapProps, any>{
     render() {
         return (
             <div>
-                <Map map={this.props.map} players={this.props.players.players}/>
+                <Map map={this.props.map} players={this.props.players.players} moveTo={this.props.moveTo} auth={this.props.auth}/>
             </div>
         )
     }
@@ -34,10 +37,11 @@ class MapContainer extends React.Component<MapProps, any>{
 let mapStateToProps = (store: AppStateType) => {
     return {
         map: store.map,
-        players: store.players
+        players: store.players,
+        auth: store.auth
     }
 }
 
 export default compose(
-    connect(mapStateToProps, {generateMap}),
+    connect(mapStateToProps, {generateMap, moveTo}),
 )(MapContainer) as React.ComponentType

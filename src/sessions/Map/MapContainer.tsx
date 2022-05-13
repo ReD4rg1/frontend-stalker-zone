@@ -28,7 +28,13 @@ class MapContainer extends React.Component<MapProps, any>{
     render() {
         return (
             <div>
-                <Map map={this.props.map} players={this.props.players.players} moveTo={this.props.moveTo} auth={this.props.auth}/>
+                <Map
+                    map={this.props.map}
+                    players={this.props.players.players}
+                    moveTo={this.props.moveTo}
+                    auth={this.props.auth}
+                    showCoords={true}
+                />
             </div>
         )
     }

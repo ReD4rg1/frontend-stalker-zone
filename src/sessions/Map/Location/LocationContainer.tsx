@@ -19,9 +19,18 @@ interface Props {
     players: Player[]
     availableHexes: AvailableHexes
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
+    showCoords: boolean
 }
 
-const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}: Props) => {
+const LocationContainer = (
+    {
+        location,
+        players,
+        availableHexes,
+        moveTo,
+        myPlayer,
+        showCoords,
+    }: Props) => {
 
     let imageSrc: string
 
@@ -69,6 +78,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
             <section className={styles.hexesContainer}>
                 <section className={styles.rowOne}>
                     <Hex
+                        showCoords={showCoords}
                         myPlayer={myPlayer}
                         moveTo={moveTo}
                         availableHexes={availableHexes}
@@ -79,6 +89,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowTwo}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -88,6 +99,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -99,6 +111,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowThree}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -108,6 +121,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -117,6 +131,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -128,6 +143,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowTwo}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -137,6 +153,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -148,6 +165,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowThree}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -157,6 +175,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -166,6 +185,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -177,6 +197,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowTwo}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -186,6 +207,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -197,6 +219,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowThree}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -206,6 +229,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -215,6 +239,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -226,6 +251,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 <section className={styles.rowTwo}>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -235,6 +261,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                     </article>
                     <article>
                         <Hex
+                            showCoords={showCoords}
                             myPlayer={myPlayer}
                             moveTo={moveTo}
                             availableHexes={availableHexes}
@@ -245,6 +272,7 @@ const LocationContainer = ({location, players, availableHexes, moveTo, myPlayer}
                 </section>
                 <section className={styles.rowOneLast}>
                     <Hex
+                        showCoords={showCoords}
                         myPlayer={myPlayer}
                         moveTo={moveTo}
                         availableHexes={availableHexes}

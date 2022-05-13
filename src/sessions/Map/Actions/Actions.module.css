@@ -49,3 +49,34 @@
     background-color: #464646;
     color: #535353;
 }
+
+.subContainer {
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+}
+
+.testContainer {
+    display: flex;
+    margin-left: 100px;
+}
+
+.testContainer button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #99ff00;
+    font-weight: 700;
+    transition: background-color 0.15s ease 0s;
+}
+
+.testContainer button:hover {
+    background-color: #535353;
+}

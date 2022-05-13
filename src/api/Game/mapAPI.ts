@@ -20,7 +20,7 @@ const mapAPI = {
 
     deleteMap() {
         return (
-            instance.get(`/map/delete`)
+            instance.get(`/delete`)
                 .then((response) => response.data)
         )
     },

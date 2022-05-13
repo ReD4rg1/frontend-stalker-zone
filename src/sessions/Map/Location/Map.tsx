@@ -10,9 +10,17 @@ interface Props {
     auth: AuthInitialState
     players: Player[]
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
+    showCoords: boolean
 }
 
-const Map: FC<Props> = ({map, players, moveTo, auth}) => {
+const Map: FC<Props> = (
+    {
+        map,
+        players,
+        moveTo,
+        auth,
+        showCoords
+    }) => {
 
     let myPlayer: Player = players[0]
     players.forEach((player) => {
@@ -27,6 +35,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                     <article className={styles.mapFirstLayer}>
                         <div className={styles.mapFirstItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -36,6 +45,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                         </div>
                         <div className={styles.mapSecondItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -45,6 +55,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                         </div>
                         <div className={styles.mapThirdItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -54,6 +65,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                         </div>
                         <div className={styles.mapFourthItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -65,6 +77,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                     <article className={styles.mapSecondLayer}>
                         <div className={styles.mapFirstItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -74,6 +87,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                         </div>
                         <div className={styles.mapSecondItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -83,6 +97,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                         </div>
                         <div className={styles.mapThirdItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -94,6 +109,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                     <article className={styles.mapThirdLayer}>
                         <div className={styles.mapFirstItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -103,6 +119,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                         </div>
                         <div className={styles.mapSecondItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}
@@ -114,6 +131,7 @@ const Map: FC<Props> = ({map, players, moveTo, auth}) => {
                     <article className={styles.mapFourthLayer}>
                         <div className={styles.mapFirstItem}>
                             <LocationContainer
+                                showCoords={showCoords}
                                 myPlayer={myPlayer}
                                 moveTo={moveTo}
                                 availableHexes={map.availableHexes}

@@ -70,11 +70,11 @@
 
 .imageContainer {
     position: absolute;
-    top: -5px;
-    left: -5px;
+    top: 0;
+    left: 0;
 }
 
 .imageContainer img {
-    width: 520px;
-    height: 590px;
+    width: 505px;
+    height: 585px;
 }

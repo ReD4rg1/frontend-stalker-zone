@@ -114,22 +114,22 @@
 
 .topSide {
     position: absolute;
-    top: 0;
+    top: 5px;
     left: 55px;
     z-index: 10;
 }
 
 .topLeftSide {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 25px;
+    left: 25px;
     z-index: 10;
 }
 
 .topRightSide {
     position: absolute;
-    top: 20px;
-    left: 90px;
+    top: 25px;
+    left: 85px;
     z-index: 10;
 }
 
@@ -142,15 +142,15 @@
 
 .bottomLeftSide {
     position: absolute;
-    top: 65px;
-    left: 20px;
+    top: 63px;
+    left: 23px;
     z-index: 10;
 }
 
 .bottomRightSide {
     position: absolute;
-    top: 65px;
-    left: 90px;
+    top: 63px;
+    left: 87px;
     z-index: 10;
 }
 
@@ -177,6 +177,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    box-shadow: -6px 3px 3px #00000099;
 }
 
 .player:hover {
@@ -210,6 +211,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    box-shadow: -6px 3px 3px #00000099;
 }
 
 .activePlayer:hover {
@@ -220,3 +222,7 @@
     opacity: 100;
 }
 
+.location {
+    color: red;
+    font-weight: 700;
+}

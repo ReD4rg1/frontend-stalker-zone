@@ -1,6 +1,7 @@
 import {AvailableHexes, IHex} from "../../../redux/reducers/map-reducer";
 import styles from "./Hex.module.css";
 import {Player} from "../../../redux/reducers/players-reducer";
+import HexSideDiff from "./HexSideDiff/HexSideDiff";
 
 interface IProps {
     data: IHex
@@ -8,6 +9,7 @@ interface IProps {
     players: Player[]
     availableHexes: AvailableHexes
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
+    showCoords: boolean
 }
 
 const Hex = (props: IProps) => {
@@ -35,7 +37,7 @@ const Hex = (props: IProps) => {
     })
 
     const moveTo = () => {
-        if (props.myPlayer.move) {
+        if (props.myPlayer.states.move) {
             props.moveTo(
                 props.data.locationId,
                 props.data.hexId,
@@ -50,13 +52,19 @@ const Hex = (props: IProps) => {
             <div className={styles.subHex}>
                 <div className={hexStyle} onClick={() => moveTo()}>
                     <div className={styles.infoBlock}>
-                        <p className={styles.hexId}>{item.locationName}</p>
-                        <p className={styles.hexId}>{'Id: ' + item.hexId}</p>
-                        <p className={styles.hexId}>{'LocationId: ' + item.locationId}</p>
+                        {props.showCoords
+                            ? <div>
+                                <p className={styles.location}>{item.locationName}</p>
+                                <p className={styles.hexId}>{'Id: ' + item.hexId}</p>
+                                <p className={styles.hexId}>{'LocId: ' + item.locationId}</p>
+                            </div>
+                            : <div />
+                        }
+
                         <section className={styles.players}>
                             {players?.map((player) => {
                                 if (player) return (
-                                    <div key={player.id} className={player.move
+                                    <div key={player.id} className={player.states.move
                                         ? styles.activePlayer
                                         : styles.player
                                     }>
@@ -70,22 +78,22 @@ const Hex = (props: IProps) => {
                         </section>
                     </div>
                     <section className={styles.topSide}>
-                        <span>{item.top.difficulty}</span>
+                        <HexSideDiff difficulty={item.top.difficulty} type={"t"} />
                     </section>
                     <section className={styles.topLeftSide}>
-                        <span>{item.topLeft.difficulty}</span>
+                        <HexSideDiff difficulty={item.topLeft.difficulty} type={"tL"} />
                     </section>
                     <section className={styles.topRightSide}>
-                        <span>{item.topRight.difficulty}</span>
+                        <HexSideDiff difficulty={item.topRight.difficulty} type={"tR"} />
                     </section>
                     <section className={styles.bottomSide}>
-                        <span>{item.bottom.difficulty}</span>
+                        <HexSideDiff difficulty={item.bottom.difficulty} type={"b"} />
                     </section>
                     <section className={styles.bottomLeftSide}>
-                        <span>{item.bottomLeft.difficulty}</span>
+                        <HexSideDiff difficulty={item.bottomLeft.difficulty} type={"bL"} />
                     </section>
                     <section className={styles.bottomRightSide}>
-                        <span>{item.bottomRight.difficulty}</span>
+                        <HexSideDiff difficulty={item.bottomRight.difficulty} type={"bR"} />
                     </section>
                 </div>
             </div>

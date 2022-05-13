@@ -12,19 +12,22 @@ import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
 import {
+    applyEvent,
+    EventsType,
     makeRoll,
     moveTo,
     passMove,
     Player,
-    PlayersInitialState,
-    setPlayers
+    PlayersInitialState, setEvents,
+    setPlayers, showEvent
 } from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
-import {connectWS, disconnectWS, getCoords, getPlayers} from "../../api/Game/ws/playersWS";
+import {connectWS, disconnectWS, updateWS,} from "../../api/Game/ws/playersWS";
 import InterfaceContainer from "./Interface";
 import {AuthInitialState} from "../../redux/reducers/auth-reducer";
-import Actions from "./actions/Actions";
+import Actions from "./Actions/Actions";
+import Events from "./Events";
 
 interface GenerateMapProps {
     players: Player[]
@@ -39,14 +42,18 @@ interface MapProps {
     generateMap: (players: GenerateMapProps) => void
     setPlayers: (players: Player[]) => void
     setAvailableHexes: (hexes: AvailableHexes) => void
+    setEvents: (events: any) => void
     makeRoll: (playerId: number) => void
-    passMove: () => void
+    passMove: (eventType: EventsType) => void
+    showEvent: (playerId: number) => void
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
+    applyEvent: (playerId: number, eventId: number, type: EventsType) => void
 }
 
 interface State {
     connect: boolean
     showInfo: boolean
+    showCoords: boolean
 }
 
 class MapMultiplayerContainer extends React.Component<MapProps, State>{
@@ -56,8 +63,10 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
         this.state = {
             connect: false,
             showInfo: true,
+            showCoords: false,
         }
         this.toggleShowInfo = this.toggleShowInfo.bind(this)
+        this.toggleShowCoords = this.toggleShowCoords.bind(this)
     }
 
     toggleShowInfo() {
@@ -70,16 +79,20 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
             {
                 setConnected: (connect) => this.setState({...this.state, connect: connect}),
                 setPlayers: this.props.setPlayers,
-                setAvailableHexes: this.props.setAvailableHexes
+                setAvailableHexes: this.props.setAvailableHexes,
+                setEvents: this.props.setEvents,
             }
         )
+    }
+
+    toggleShowCoords() {
+        this.setState({...this.state, showCoords: !this.state.showCoords})
     }
 
     componentDidUpdate(prevProps: Readonly<MapProps>, prevState: Readonly<any>, snapshot?: any) {
         if (prevProps.map.mapIsGenerated !== this.props.map.mapIsGenerated) {
             if (this.state.connect && this.props.map.mapIsGenerated) {
-                getPlayers()
-                getCoords()
+                updateWS()
             }
         }
     }
@@ -97,6 +110,7 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     auth={this.props.auth}
                     players={this.props.players.players}
                     moveTo={this.props.moveTo}
+                    showCoords={this.state.showCoords}
                 />
                  <InterfaceContainer
                      players={this.props.players.players}
@@ -108,6 +122,16 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     players={this.props.players.players}
                     auth={this.props.auth}
                     makeRoll={this.props.makeRoll}
+                    passMove={this.props.passMove}
+                    showCoords={this.state.showCoords}
+                    toggleShowCoords={this.toggleShowCoords}
+                    event={this.props.players.currentEvent}
+                    showEvent={this.props.showEvent}
+                />
+                <Events
+                    players={this.props.players}
+                    auth={this.props.auth}
+                    applyEvent={this.props.applyEvent}
                     passMove={this.props.passMove}
                 />
             </div>
@@ -130,9 +154,12 @@ export default compose(
         fetchMap,
         setPlayers,
         setAvailableHexes,
+        setEvents,
         makeRoll,
         passMove,
         moveTo,
+        showEvent,
+        applyEvent,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

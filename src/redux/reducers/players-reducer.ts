@@ -2,17 +2,29 @@ import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-pla
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
 import playersAPI from "../../api/Game/playersAPI";
-import {getCoords, getPlayers } from "../../api/Game/ws/playersWS";
+import {updateWS} from "../../api/Game/ws/playersWS";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
 const SET_PLAYERS = "SET-PLAYERS"
+const SET_EVENTS = "SET-EVENTS"
 
 export interface PlayersInitialState {
     players: Player[]
     initialPlayersInfo: IInitialPlayerInfo[]
     playersIsReady: boolean
+    currentEvent: CurrentEvent
 }
+
+export interface CurrentEvent {
+    id: number
+    title: string
+    text: string
+    description: string
+    type: EventsType
+}
+
+export type EventsType = "simpleCard"
 
 export interface IInitialPlayerInfo {
     id: number,
@@ -27,6 +39,7 @@ export interface IInitialPlayerInfo {
         secrecyBoost: number
     }
 }
+
 export interface Player {
     id: number
     userId: number
@@ -37,12 +50,19 @@ export interface Player {
     order: OrderType | null
     effects: PlayerEffectsType
     money: number
+    states: States
+    inventory: Inventory
+    coordinates: CoordinatesType
+}
+
+interface States {
     skipping: boolean
     inFight: boolean
     move: boolean
     rollCube: boolean
-    inventory: Inventory
-    coordinates: CoordinatesType
+    alreadyMove: boolean
+    inEvent: boolean
+    anotherMove: boolean
 }
 
 type CoordinatesType = {
@@ -133,7 +153,7 @@ type ArmorType = {
     cost: number
 }
 
-type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType | SetPlayersType
+type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType | SetPlayersType | SetEventsType
 
 type GeneratePlayerType = {
     type: typeof CREATE_PLAYERS
@@ -146,6 +166,11 @@ type ShowInitPlayersInfoType = {
 type SetPlayersType = {
     type: typeof SET_PLAYERS
     players: Player[]
+}
+
+type SetEventsType = {
+    type: typeof SET_EVENTS
+    event: any
 }
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
@@ -161,10 +186,15 @@ let initialState: PlayersInitialState = {
             numberOfMoves: 0,
             order: null,
             money: 1500,
-            skipping: false,
-            inFight: false,
-            move: false,
-            rollCube: false,
+            states: {
+                skipping: false,
+                inFight: false,
+                move: false,
+                rollCube: false,
+                alreadyMove: false,
+                inEvent: false,
+                anotherMove: false,
+            },
             effects: {
                 healBoost: 0,
                 mapMoveModifier: 0,
@@ -210,7 +240,14 @@ let initialState: PlayersInitialState = {
             }
         }
     ],
-    playersIsReady: false
+    playersIsReady: false,
+    currentEvent: {
+        id: 0,
+        title: "",
+        text: "",
+        description: "",
+        type: "simpleCard",
+    },
 }
 
 const playersReducer = (state = initialState, action: ActionsType): PlayersInitialState => {
@@ -231,19 +268,24 @@ const playersReducer = (state = initialState, action: ActionsType): PlayersIniti
                 ...state,
                 players: action.players
             }
+        case SET_EVENTS:
+            return {
+                ...state,
+                currentEvent: action.event
+            }
         default:
             return state
     }
 }
 
-export const setPlayers = (players: Player[]):SetPlayersType => (
+export const setPlayers = (players: Player[]): SetPlayersType => (
     {
         type: SET_PLAYERS,
         players
     }
 )
 
-export const createPlayers = (players: number[]):GeneratePlayerType => (
+export const createPlayers = (players: number[]): GeneratePlayerType => (
     {
         type: CREATE_PLAYERS,
         players: players
@@ -255,19 +297,18 @@ export const makeRoll = (playerId: number): ThunkType => {
     return (async () => {
         const response = await playersAPI.makeRoll(playerId)
         if (response.resultCode === 0) {
-            getPlayers()
-            getCoords()
+            updateWS()
         }
     })
 }
 
-export const passMove = (): ThunkType => {
+export const passMove = (eventType: EventsType): ThunkType => {
 
     return (async () => {
         const response = await playersAPI.passMove()
         if (response.resultCode === 0) {
-            getPlayers()
-            getCoords()
+            updateWS()
+            await playersAPI.nextEvent(eventType)
         }
     })
 }
@@ -277,12 +318,39 @@ export const moveTo = (locationId: number, hexId: number, difficulty: number, pl
     return (async () => {
         const response = await playersAPI.setCoordinates(locationId, hexId, difficulty, playerId)
         if (response.resultCode === 0) {
-            getPlayers()
-            getCoords()
+            updateWS()
         }
     })
 }
 
-export const showPlayersInfo = ():ShowInitPlayersInfoType => ({type: SHOW_PLAYERS})
+
+export const setEvents = (event: any): SetEventsType => (
+    {
+        type: SET_EVENTS,
+        event
+    }
+)
+
+export const showPlayersInfo = (): ShowInitPlayersInfoType => ({type: SHOW_PLAYERS})
+
+export const showEvent = (playerId: number): ThunkType => {
+
+    return (async () => {
+        const response = await playersAPI.showEvent(playerId)
+        if (response.resultCode === 0) {
+            updateWS()
+        }
+    })
+}
+
+export const applyEvent = (playerId: number, eventId: number, type: EventsType): ThunkType => {
+
+    return (async () => {
+        const response = await playersAPI.applyEvent(playerId, eventId, type)
+        if (response.resultCode === 0) {
+            updateWS()
+        }
+    })
+}
 
 export default playersReducer

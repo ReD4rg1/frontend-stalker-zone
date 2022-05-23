@@ -2,7 +2,8 @@ import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-pla
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
 import playersAPI from "../../api/Game/playersAPI";
-import {updateWS} from "../../api/Game/ws/playersWS";
+import {updateWS} from "../../api/Game/ws/gameWS";
+import eventsAPI from "../../api/Game/eventsAPI";
 
 const CREATE_PLAYERS = "CREATE-PLAYERS"
 const SHOW_PLAYERS = "SHOW-PLAYERS"
@@ -22,9 +23,13 @@ export interface CurrentEvent {
     text: string
     description: string
     type: EventsType
+    possibilitySkip: boolean
+    locationId: number
+    hexId: number
+    rollCube: number
 }
 
-export type EventsType = "simpleCard"
+export type EventsType = "simpleCard" | "throwCard" | "moveCard"
 
 export interface IInitialPlayerInfo {
     id: number,
@@ -63,6 +68,8 @@ interface States {
     alreadyMove: boolean
     inEvent: boolean
     anotherMove: boolean
+    alreadyThrowCube: boolean
+    eventComplete: boolean
 }
 
 type CoordinatesType = {
@@ -194,6 +201,8 @@ let initialState: PlayersInitialState = {
                 alreadyMove: false,
                 inEvent: false,
                 anotherMove: false,
+                alreadyThrowCube: false,
+                eventComplete: false,
             },
             effects: {
                 healBoost: 0,
@@ -247,6 +256,10 @@ let initialState: PlayersInitialState = {
         text: "",
         description: "",
         type: "simpleCard",
+        possibilitySkip: false,
+        locationId: 0,
+        hexId: 0,
+        rollCube: 2,
     },
 }
 
@@ -296,9 +309,7 @@ export const makeRoll = (playerId: number): ThunkType => {
 
     return (async () => {
         const response = await playersAPI.makeRoll(playerId)
-        if (response.resultCode === 0) {
-            updateWS()
-        }
+        if (response.resultCode === 0) updateWS()
     })
 }
 
@@ -308,7 +319,7 @@ export const passMove = (eventType: EventsType): ThunkType => {
         const response = await playersAPI.passMove()
         if (response.resultCode === 0) {
             updateWS()
-            await playersAPI.nextEvent(eventType)
+            await eventsAPI.nextEvent(eventType)
         }
     })
 }
@@ -317,9 +328,7 @@ export const moveTo = (locationId: number, hexId: number, difficulty: number, pl
 
     return (async () => {
         const response = await playersAPI.setCoordinates(locationId, hexId, difficulty, playerId)
-        if (response.resultCode === 0) {
-            updateWS()
-        }
+        if (response.resultCode === 0) updateWS()
     })
 }
 
@@ -336,20 +345,23 @@ export const showPlayersInfo = (): ShowInitPlayersInfoType => ({type: SHOW_PLAYE
 export const showEvent = (playerId: number): ThunkType => {
 
     return (async () => {
-        const response = await playersAPI.showEvent(playerId)
-        if (response.resultCode === 0) {
-            updateWS()
-        }
+        const response = await eventsAPI.showEvent(playerId)
+        if (response.resultCode === 0) updateWS()
     })
 }
 
 export const applyEvent = (playerId: number, eventId: number, type: EventsType): ThunkType => {
 
     return (async () => {
-        const response = await playersAPI.applyEvent(playerId, eventId, type)
-        if (response.resultCode === 0) {
-            updateWS()
-        }
+        const response = await eventsAPI.applyEvent(playerId, eventId, type)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
+export const eventRoll = (playerId: number) => {
+    return(async () => {
+        const response = await eventsAPI.eventRoll(playerId)
+        if (response.resultCode === 0) updateWS()
     })
 }
 

@@ -12,7 +12,7 @@ import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
 import {
-    applyEvent,
+    applyEvent, eventRoll,
     EventsType,
     makeRoll,
     moveTo,
@@ -23,7 +23,7 @@ import {
 } from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
-import {connectWS, disconnectWS, updateWS,} from "../../api/Game/ws/playersWS";
+import {connectWS, disconnectWS, updateWS,} from "../../api/Game/ws/gameWS";
 import InterfaceContainer from "./Interface";
 import {AuthInitialState} from "../../redux/reducers/auth-reducer";
 import Actions from "./Actions/Actions";
@@ -44,6 +44,7 @@ interface MapProps {
     setAvailableHexes: (hexes: AvailableHexes) => void
     setEvents: (events: any) => void
     makeRoll: (playerId: number) => void
+    eventRoll: (playerId: number) => void
     passMove: (eventType: EventsType) => void
     showEvent: (playerId: number) => void
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
@@ -133,6 +134,7 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     auth={this.props.auth}
                     applyEvent={this.props.applyEvent}
                     passMove={this.props.passMove}
+                    eventRoll={this.props.eventRoll}
                 />
             </div>
         )
@@ -160,6 +162,7 @@ export default compose(
         moveTo,
         showEvent,
         applyEvent,
+        eventRoll,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

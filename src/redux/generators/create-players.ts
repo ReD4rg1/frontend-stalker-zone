@@ -23,6 +23,8 @@ export const createAndAddPlayers = (playersNumberArray: Array<number>): Array<Pl
                     alreadyMove: false,
                     inEvent: false,
                     anotherMove: false,
+                    alreadyThrowCube: false,
+                    eventComplete: false,
                 },
                 effects: {
                     healBoost: players[item-1].effects.healBoost,

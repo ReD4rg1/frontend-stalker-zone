@@ -1,15 +1,17 @@
 import styles from "./Event.module.css";
 import {EventsType, Player, PlayersInitialState} from "../../../redux/reducers/players-reducer";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
+import EventButtons from "./EventButtons";
 
 interface Props {
     players: PlayersInitialState
     auth: AuthInitialState
     applyEvent: (playerId: number, eventId: number, type: EventsType) => void
     passMove: (eventType: EventsType) => void
+    eventRoll: (playerId: number) => void
 }
 
-const Event = ({players, auth, applyEvent, passMove}:Props) => {
+const Event = ({players, auth, applyEvent, passMove, eventRoll}:Props) => {
 
     const inEvent = (player: Player) => {
         return player.states.inEvent
@@ -31,22 +33,15 @@ const Event = ({players, auth, applyEvent, passMove}:Props) => {
             <section className={styles.description}>
                 {players.currentEvent.description}
             </section>
-
-            {myPlayer.states.inEvent
-                ? <section>
-                    <button onClick={() => applyEvent(
-                        myPlayer.id,
-                        players.currentEvent.id,
-                        players.currentEvent.type
-                    )}>
-                        {"Проиграть событие"}
-                    </button>
-                    <button onClick={() => passMove(players.currentEvent.type)}>
-                        {"Завершить событие"}
-                    </button>
-                </section>
-                : <div/>
-            }
+            <section>
+                <EventButtons
+                    myPlayer={myPlayer}
+                    applyEvent={applyEvent}
+                    passMove={passMove}
+                    eventRoll={eventRoll}
+                    event={players.currentEvent}
+                />
+            </section>
         </div>
     )
 

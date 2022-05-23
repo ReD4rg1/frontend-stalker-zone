@@ -3,6 +3,7 @@ import styles from "./Actions.module.css";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 import HeaderTitle from "../../../components/common/Header/HeaderTitle";
 import React from "react";
+import TestButtons from "./TestButtons";
 
 interface Props {
     players: Player[]
@@ -53,11 +54,12 @@ const Actions = (
                 <div>
                     <HeaderTitle text={`Сейчас очередь ходить: ${moveOrder}`}/>
                 </div>
-                <div className={styles.testContainer}>
-                    <button onClick={toggleShowCoords}>
-                        {showCoords ? "Скрыть координаты" : "Показать координаты"}
-                    </button>
-                </div>
+                <TestButtons
+                    event={event}
+                    toggleShowCoords={toggleShowCoords}
+                    showCoords={showCoords}
+                    passMove={passMove}
+                />
             </section>
 
         </div>

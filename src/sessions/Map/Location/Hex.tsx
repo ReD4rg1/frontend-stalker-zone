@@ -37,7 +37,7 @@ const Hex = (props: IProps) => {
     })
 
     const moveTo = () => {
-        if (props.myPlayer.states.move) {
+        if (props.myPlayer.states.move && props.myPlayer.numberOfMoves > 0 && availableMoveStatus) {
             props.moveTo(
                 props.data.locationId,
                 props.data.hexId,

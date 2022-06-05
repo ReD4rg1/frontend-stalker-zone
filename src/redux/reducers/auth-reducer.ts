@@ -8,13 +8,13 @@ const SET_USERS_DATA = 'SET-USERS-DATA'
 
 export interface AuthInitialState {
     username: string | null
-    userId: number | null
+    userId: number
     isAuth: boolean
 }
 
 const initialState: AuthInitialState = {
     username: null,
-    userId: null,
+    userId: 0,
     isAuth: false,
 }
 
@@ -36,7 +36,7 @@ const authReducer = (state = initialState, action: ActionsType): AuthInitialStat
 
 type SetUsersDataTypePayloadType = {
     username: string | null,
-    userId: number | null,
+    userId: number,
     isAuth: boolean,
 }
 type SetUsersDataType = {
@@ -62,7 +62,7 @@ export const getAuth = (): ThunkType => {
             dispatch(setUsersData({username, userId, isAuth: true}))
         }
         if (response.resultCode === 1) {
-            dispatch(setUsersData({username: null, userId: null, isAuth: false}))
+            dispatch(setUsersData({username: null, userId: 0, isAuth: false}))
         }
     })
 }
@@ -129,7 +129,7 @@ export const logout = (): ThunkType => {
         let response = await authAPI.logout()
         if (response.resultCode === 0) {
             setToken('')
-            dispatch(setUsersData({username: null, userId: null, isAuth: false}))
+            dispatch(setUsersData({username: null, userId: 0, isAuth: false}))
         }
     })
 }

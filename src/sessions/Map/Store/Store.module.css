@@ -1,0 +1,29 @@
+.container {
+    position: fixed;
+    top: 200px;
+    left: 400px;
+    display: flex;
+    width: 500px;
+    height: 500px;
+    background-color: #ffffff90;
+    overflow: scroll;
+    z-index: 20000;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    width: 100%;
+    color: #000;
+}
+
+.gridContainer div {
+    min-width: 110px;
+    border: 1px #000000 solid;
+    overflow: hidden;
+}
+
+.hiddenBlock {
+    display: none;
+}

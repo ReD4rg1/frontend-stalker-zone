@@ -1,0 +1,134 @@
+.buttonContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    bottom: 300px;
+    right: 0;
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.buttonContainer img {
+    cursor: pointer;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.rollCube {
+    transform: rotate(90deg);
+    transition: all 0.2s ease 0s;
+
+    animation-name: rollCube;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.rollCube:hover {
+    transform: rotate(0deg);
+    animation-name: rollCubeHover;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.rollCube:active {
+    transform: rotate(0deg);
+    width: 50%;
+    animation-play-state: paused;
+}
+
+.passMove {
+    transform: rotate(0deg);
+    transition: all 0.2s ease 0s;
+}
+
+.passMove:hover {
+    opacity: 50%;
+}
+
+.passMove img {
+    border-radius: 50%;
+}
+
+@keyframes rollCube {
+    0% {
+        transform: rotate(-3deg);
+    }
+    1% {
+        transform: rotate(0);
+    }
+    2% {
+        transform: rotate(3deg);
+    }
+    5% {
+        transform: rotate(-2deg);
+    }
+    95% {
+        transform: rotate(2deg);
+    }
+    98% {
+        transform: rotate(-3deg);
+    }
+    99% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes rollCubeHover {
+    0% {
+        width: 100%;
+        opacity: 100%;
+    }
+    100% {
+        width: 99%;
+        opacity: 80%;
+    }
+}
+
+/*-----------------------------------------------------------*/
+
+.testContainer {
+    justify-content: flex-end;
+    display: flex;
+    position: fixed;
+    bottom: 196px;
+    right: 0;
+    background-color: #1c1c1c;
+    color: white;
+    border-radius: 15px 0 0 0;
+    z-index: 20000;
+}
+
+.testContainer button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #ffb45e;
+    font-weight: 700;
+    transition: background-color 0.15s ease 0s;
+}
+
+.testContainer button:hover {
+    background-color: #535353;
+}
+
+.infoContainer {
+    display: flex;
+    justify-content: center;
+}

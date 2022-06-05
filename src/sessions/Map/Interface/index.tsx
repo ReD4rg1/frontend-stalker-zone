@@ -1,48 +1,52 @@
-import React from "react";
-import {Player} from "../../../redux/reducers/players-reducer";
 import styles from "./index.module.css";
-import HeaderTitle from "../../../components/common/Header/HeaderTitle";
-import PlayerInfo from "./PlayerInfo";
-import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
+import mainPanelL from "../../../assets/img/interface/mainPanelL.png";
+import mainPanelR from "../../../assets/img/interface/mainPanelR.png";
+import '../../../fonts/Boycott.otf';
+import {CurrentEvent, EventsType, PlayersInitialState} from "../../../redux/reducers/players-reducer";
+import React, { useState } from "react";
+import MainPlate from "./MainPlate/MainPlate";
+import RightPanel from "./RightPanel/RightPanel";
+import Scanner from "./Scanner/Scanner";
 
 interface Props {
-    players: Player[]
-    auth: AuthInitialState
-    showInfo: boolean
-    toggleShowInfo: () => void
+    players: PlayersInitialState
+    makeRoll: (playerId: number) => void
+    passMove: (eventType: EventsType) => void
+    showEvent: (playerId: number) => void
+    event: CurrentEvent
 }
 
-const InterfaceContainer = ({players, auth, toggleShowInfo, showInfo}: Props) => {
+const Interface = ({players, passMove, makeRoll, event, showEvent}: Props) => {
 
-    let myPlayer: Player = players[0]
-    players.forEach((player) => {
-        if (player.userId === auth.userId) myPlayer = player
-    })
-
-    if (!showInfo) return (
-        <div className={styles.container}>
-            <button onClick={() => toggleShowInfo()}>
-                {">"}
-            </button>
-        </div>
-    )
+    const [isWeapon, setIsWeapon] = useState(false)
 
     return (
         <div className={styles.container}>
-            <section className={styles.playerInfo}>
-                <div>
-                    <HeaderTitle text={`Ваш персонаж: ${myPlayer.name}`}/>
-                    <PlayerInfo player={myPlayer}/>
+            <div className={styles.background}>
+                <div className={styles.backgroundL}>
+                    <img src={mainPanelL} alt={""}/>
                 </div>
-
-            </section>
-            <section className={styles.buttonSection}>
-                <button onClick={() => toggleShowInfo()}>
-                    {"<"}
-                </button>
-            </section>
+                <div className={styles.backgroundR}>
+                    <img src={mainPanelR} alt={""}/>
+                </div>
+            </div>
+            <MainPlate
+                myPlayer={players.myPlayer}
+                makeRoll={makeRoll}
+                passMove={passMove}
+                event={event}
+                showEvent={showEvent}
+                isWeapon={isWeapon}
+                toggleWeapon={() => setIsWeapon(!isWeapon)}
+            />
+            <RightPanel
+                myPlayer={players.myPlayer}
+            />
+            <Scanner
+                myPlayer={players.myPlayer}
+            />
         </div>
     )
 }
 
-export default InterfaceContainer
+export default Interface

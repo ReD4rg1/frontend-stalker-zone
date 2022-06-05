@@ -32,3 +32,47 @@
 .section button:hover {
     background-color: #949494;
 }
+
+/*------------------------------------------------*/
+
+.container {
+    position: fixed;
+    top: -2px;
+    right: 50px;
+    display: flex;
+    flex-direction: row-reverse;
+    z-index: 10000;
+}
+
+.background {
+    position: fixed;
+    display: flex;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.background img {
+    width: 430px;
+}
+
+.infoSection {
+    z-index: 11000;
+    display: flex;
+    width: 180px;
+    justify-content: space-between;
+    color: #000000;
+    align-items: center;
+}
+
+.exit {
+    cursor: pointer;
+}
+
+.exit:hover {
+    opacity: 50%;
+}
+
+.exit img {
+    width: 50px;
+}

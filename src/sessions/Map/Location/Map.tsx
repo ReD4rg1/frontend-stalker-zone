@@ -9,7 +9,7 @@ interface Props {
     map: MapInitialState
     auth: AuthInitialState
     players: Player[]
-    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
+    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string) => void
     showCoords: boolean
 }
 

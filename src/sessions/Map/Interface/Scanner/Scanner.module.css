@@ -1,0 +1,71 @@
+.scanContainer {
+    position: fixed;
+    bottom: 157px;
+    left: 152px;
+    width: 308px;
+    height: 308px;
+    z-index: 22000;
+
+    animation-name: scanContainer;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+}
+
+@keyframes scanContainer {
+    0% {
+        bottom: 16px;
+        left: 15px;
+    }
+    10% {
+        bottom: 16px;
+        left: 15px;
+    }
+    95% {
+        bottom: -120px;
+        left: 152px;
+    }
+    100% {
+        bottom: -120px;
+        left: 152px;
+    }
+}
+
+.scan {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid white;
+    animation-name: scan;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+}
+
+@keyframes scan {
+    0% {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    10% {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    80% {
+        opacity: 50%;
+    }
+    95% {
+        width: 10%;
+        height: 10%;
+        opacity: 20%;
+    }
+    100% {
+        width: 10%;
+        height: 10%;
+        opacity: 0;
+    }
+}

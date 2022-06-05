@@ -8,7 +8,7 @@ interface IProps {
     myPlayer: Player
     players: Player[]
     availableHexes: AvailableHexes
-    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
+    moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string) => void
     showCoords: boolean
 }
 
@@ -43,24 +43,40 @@ const Hex = (props: IProps) => {
                 props.data.hexId,
                 difficulty,
                 props.myPlayer.id,
+                props.data.locationName,
             )
         }
     }
 
+    const color = {
+        0: "deepskyblue",
+        1: "lime",
+        2: "yellow",
+        3: "red",
+    }
+
     return (
-        <div className={styles.container}>
+        <div className={styles.container} id={`${props.data.hexId + '/' + props.data.locationId}`}>
             <div className={styles.subHex}>
                 <div className={hexStyle} onClick={() => moveTo()}>
                     <div className={styles.infoBlock}>
-                        {props.showCoords
-                            ? <div>
-                                <p className={styles.location}>{item.locationName}</p>
-                                <p className={styles.hexId}>{'Id: ' + item.hexId}</p>
-                                <p className={styles.hexId}>{'LocId: ' + item.locationId}</p>
-                            </div>
-                            : <div />
-                        }
-
+                        <section>
+                            {item.locationName
+                                ? <div className={styles.location}>
+                                    <div style={{color: color[item.locationLevel]}}>
+                                        {item.locationName}
+                                    </div>
+                                </div>
+                                : <div />
+                            }
+                            {props.showCoords
+                                ? <div className={styles.coords}>
+                                    <p className={styles.hexId}>{'Id: ' + item.hexId}</p>
+                                    <p className={styles.hexId}>{'LocId: ' + item.locationId}</p>
+                                </div>
+                                : <div />
+                            }
+                        </section>
                         <section className={styles.players}>
                             {players?.map((player) => {
                                 if (player) return (

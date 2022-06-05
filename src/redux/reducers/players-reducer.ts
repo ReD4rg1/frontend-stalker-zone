@@ -1,20 +1,23 @@
-import {createAndAddPlayers, showInitPlayersInfo} from "../generators/create-players";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
 import playersAPI from "../../api/Game/playersAPI";
 import {updateWS} from "../../api/Game/ws/gameWS";
 import eventsAPI from "../../api/Game/eventsAPI";
+import inventoryAPI, {ItemTypes, Shop} from "../../api/Game/inventoryAPI";
+import {findMyPlayer} from "../utils";
 
-const CREATE_PLAYERS = "CREATE-PLAYERS"
-const SHOW_PLAYERS = "SHOW-PLAYERS"
 const SET_PLAYERS = "SET-PLAYERS"
 const SET_EVENTS = "SET-EVENTS"
+const SET_SHOP = "SET-SHOP"
 
 export interface PlayersInitialState {
     players: Player[]
+    myPlayer: Player
     initialPlayersInfo: IInitialPlayerInfo[]
     playersIsReady: boolean
     currentEvent: CurrentEvent
+    shop: Shop
+    shopLoaded: boolean
 }
 
 export interface CurrentEvent {
@@ -50,6 +53,7 @@ export interface Player {
     userId: number
     name: string
     hp: number
+    armor: number
     reputation: number
     numberOfMoves: number
     order: OrderType | null
@@ -57,6 +61,7 @@ export interface Player {
     money: number
     states: States
     inventory: Inventory
+    backpack: Backpack
     coordinates: CoordinatesType
 }
 
@@ -75,6 +80,7 @@ interface States {
 type CoordinatesType = {
     locationId: number
     hexId: number
+    locationName: string
 }
 
 interface Inventory {
@@ -85,11 +91,31 @@ interface Inventory {
     weaponSecondLevelModifier: WeaponModifierType | null
     weaponThirdLevelModifier: WeaponModifierType | null
     grenades: GrenadeType[]
-    healBoxes: HealBoxType[]
-    stimulators: HealBoxType[]
+    medkits: HealBoxType[]
+    stimulants: HealBoxType[]
     teleport: TeleportType | null
     artifact: ActiveArtifactType | null
-    otherItems: OtherItemType[]
+    mapModifier: OtherItemType | null
+    locationModifier: OtherItemType | null
+    trapModifier: OtherItemType | null
+    stealthModifier: OtherItemType | null
+}
+
+interface Backpack {
+    helmet: ArmorType[]
+    bodyArmor: ArmorType[]
+    weapon: WeaponType[]
+    weaponFirstLevelModifier: WeaponModifierType[]
+    weaponSecondLevelModifier: WeaponModifierType[]
+    weaponThirdLevelModifier: WeaponModifierType[]
+    grenades: GrenadeType[]
+    stimulants: HealBoxType[]
+    teleport: TeleportType[]
+    artifact: ActiveArtifactType[]
+    mapModifier: OtherItemType[]
+    locationModifier: OtherItemType[]
+    trapModifier: OtherItemType[]
+    stealthModifier: OtherItemType[]
 }
 
 type PlayerEffectsType = {
@@ -103,7 +129,8 @@ type PlayerEffectsType = {
     locationMoveModifier: number
 }
 type OrderType = {
-    title: string
+    id: number
+    name: string
     description: string
     targetLocations: string[]
     receptionPlace: string
@@ -112,67 +139,64 @@ type OrderType = {
     orderEffect: PlayerEffectsType
 }
 type ActiveArtifactType = {
-    title: string
-    mapMoveEffect: number
-    healEffect: number
-    count: number
-    cost: number
+    id: number
+    name: string
+    effect: string
+    price: number
 }
 type TeleportType = {
-    title: string
-    coordinates: number
-    cost: number
+    id: number
+    name: string
+    location: string
+    price: number
 }
 type OtherItemType = {
-    title: string
-    effect: number
-    cost: number
+    id: number
+    name: string
+    effect: string
+    price: number
 }
 type HealBoxType = {
-    title: string
-    healEffect: number
-    count: number
-    cost: number
+    id: number
+    name: string
+    effect: string
+    price: number
 }
 type GrenadeType = {
-    title: string
+    id: number
+    name: string
     damage: number
     damageBoost: number
     damageModifier: number
-    count: number
-    cost: number
+    price: number
 }
 type WeaponModifierType = {
-    title: string
+    id: number
+    name: string
     damageModifier: number
-    compatibility: string[]
-    cost: number
+    weaponName: string
+    price: number
 }
 type WeaponType = {
-    title: string
+    id: number
+    name: string
     damage: number
     damageBoost: number
-    cost: number
+    price: number
 }
 type ArmorType = {
-    title: string
-    def: number
-    cost: number
+    id: number
+    name: string
+    defence: number
+    price: number
 }
 
-type ActionsType = GeneratePlayerType | ShowInitPlayersInfoType | SetPlayersType | SetEventsType
-
-type GeneratePlayerType = {
-    type: typeof CREATE_PLAYERS
-    players: number[]
-}
-type ShowInitPlayersInfoType = {
-    type: typeof SHOW_PLAYERS
-}
+type ActionsType = SetPlayersType | SetEventsType | SetShopType
 
 type SetPlayersType = {
     type: typeof SET_PLAYERS
     players: Player[]
+    userId: number
 }
 
 type SetEventsType = {
@@ -180,60 +204,87 @@ type SetEventsType = {
     event: any
 }
 
+type SetShopType = {
+    type: typeof SET_SHOP
+    shop: Shop
+}
+
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
+let initialPlayer: Player = {
+    id: 1,
+    userId: 1,
+    name: "Мажор",
+    hp: 30,
+    armor: 0,
+    reputation: 0,
+    numberOfMoves: 0,
+    order: null,
+    money: 1500,
+    states: {
+        skipping: false,
+        inFight: false,
+        move: false,
+        rollCube: false,
+        alreadyMove: false,
+        inEvent: false,
+        anotherMove: false,
+        alreadyThrowCube: false,
+        eventComplete: false,
+    },
+    effects: {
+        healBoost: 0,
+        mapMoveModifier: 0,
+        damageBoost: 0,
+        armorBoost: 0,
+        seedMoney: 1500,
+        maxHp: 30,
+        secrecyBoost: 0,
+        locationMoveModifier: 0,
+    },
+    inventory: {
+        helmet: null,
+        bodyArmor: null,
+        weapon: null,
+        weaponFirstLevelModifier: null,
+        weaponSecondLevelModifier: null,
+        weaponThirdLevelModifier: null,
+        grenades: [],
+        medkits: [],
+        stimulants: [],
+        teleport: null,
+        artifact: null,
+        mapModifier: null,
+        locationModifier: null,
+        trapModifier: null,
+        stealthModifier: null,
+    },
+    backpack: {
+        helmet: [],
+        bodyArmor: [],
+        weapon: [],
+        weaponFirstLevelModifier: [],
+        weaponSecondLevelModifier: [],
+        weaponThirdLevelModifier: [],
+        grenades: [],
+        stimulants: [],
+        teleport: [],
+        artifact: [],
+        mapModifier: [],
+        locationModifier: [],
+        trapModifier: [],
+        stealthModifier: [],
+    },
+    coordinates: {
+        locationId: 4,
+        hexId: 19,
+        locationName: '',
+    },
+}
+
 let initialState: PlayersInitialState = {
-    players: [
-        {
-            id: 1,
-            userId: 1,
-            name: "Мажор",
-            hp: 30,
-            reputation: 0,
-            numberOfMoves: 0,
-            order: null,
-            money: 1500,
-            states: {
-                skipping: false,
-                inFight: false,
-                move: false,
-                rollCube: false,
-                alreadyMove: false,
-                inEvent: false,
-                anotherMove: false,
-                alreadyThrowCube: false,
-                eventComplete: false,
-            },
-            effects: {
-                healBoost: 0,
-                mapMoveModifier: 0,
-                damageBoost: 0,
-                armorBoost: 0,
-                seedMoney: 1500,
-                maxHp: 30,
-                secrecyBoost: 0,
-                locationMoveModifier: 0,
-            },
-            inventory: {
-                helmet: null,
-                bodyArmor: null,
-                weapon: null,
-                weaponFirstLevelModifier: null,
-                weaponSecondLevelModifier: null,
-                weaponThirdLevelModifier: null,
-                grenades: [],
-                healBoxes: [],
-                stimulators: [],
-                teleport: null,
-                artifact: null,
-                otherItems: [],
-            },
-            coordinates: {
-                locationId: 4,
-                hexId: 19,
-            },
-        }
-    ],
+    players: [initialPlayer],
+    myPlayer: initialPlayer,
     initialPlayersInfo: [
         {
             id: 1,
@@ -261,47 +312,50 @@ let initialState: PlayersInitialState = {
         hexId: 0,
         rollCube: 2,
     },
+    shop: {
+        armors: [],
+        weapon: [],
+        weaponModifiers: [],
+        equipments: [],
+        grenade: [],
+    },
+    shopLoaded: false,
 }
 
 const playersReducer = (state = initialState, action: ActionsType): PlayersInitialState => {
     switch (action.type) {
-        case CREATE_PLAYERS:
-            return {
-                ...state,
-                players: createAndAddPlayers(action.players),
-                playersIsReady: true
-            }
-        case SHOW_PLAYERS:
-            return {
-                ...state,
-                initialPlayersInfo: showInitPlayersInfo()
-            }
         case SET_PLAYERS:
             return {
                 ...state,
-                players: action.players
+                players: action.players,
+                myPlayer: findMyPlayer(action.players, action.userId)
             }
         case SET_EVENTS:
             return {
                 ...state,
                 currentEvent: action.event
             }
+        case SET_SHOP:
+            return {
+                ...state,
+                shop: {
+                    armors: [...action.shop.armors],
+                    weapon: [...action.shop.weapon],
+                    weaponModifiers: [...action.shop.weaponModifiers],
+                    equipments: [...action.shop.equipments],
+                    grenade: [...action.shop.grenade],
+                }
+            }
         default:
             return state
     }
 }
 
-export const setPlayers = (players: Player[]): SetPlayersType => (
+export const setPlayers = (players: Player[], userId: number): SetPlayersType => (
     {
         type: SET_PLAYERS,
-        players
-    }
-)
-
-export const createPlayers = (players: number[]): GeneratePlayerType => (
-    {
-        type: CREATE_PLAYERS,
-        players: players
+        players,
+        userId,
     }
 )
 
@@ -324,23 +378,21 @@ export const passMove = (eventType: EventsType): ThunkType => {
     })
 }
 
-export const moveTo = (locationId: number, hexId: number, difficulty: number, playerId: number): ThunkType => {
+export const moveTo = (locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string): ThunkType => {
 
     return (async () => {
-        const response = await playersAPI.setCoordinates(locationId, hexId, difficulty, playerId)
+        const response = await playersAPI.setCoordinates(locationId, hexId, difficulty, playerId, locationName)
         if (response.resultCode === 0) updateWS()
     })
 }
 
 
-export const setEvents = (event: any): SetEventsType => (
+export const setEvents = (event: CurrentEvent): SetEventsType => (
     {
         type: SET_EVENTS,
         event
     }
 )
-
-export const showPlayersInfo = (): ShowInitPlayersInfoType => ({type: SHOW_PLAYERS})
 
 export const showEvent = (playerId: number): ThunkType => {
 
@@ -358,9 +410,45 @@ export const applyEvent = (playerId: number, eventId: number, type: EventsType):
     })
 }
 
-export const eventRoll = (playerId: number) => {
-    return(async () => {
+export const eventRoll = (playerId: number): ThunkType => {
+    return (async () => {
         const response = await eventsAPI.eventRoll(playerId)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
+export const setShop = (shop: Shop): SetShopType => (
+    {
+        type: SET_SHOP,
+        shop
+    }
+)
+
+export const getShop = (): ThunkType => {
+    return (async (dispatch) => {
+        const shop = await inventoryAPI.getShop()
+        dispatch(setShop(shop))
+    })
+}
+
+export const setItem = (playerId: number, itemId: number, price: number, type: ItemTypes): ThunkType => {
+    return (async () => {
+        console.log('itemId: ',itemId,' type: ', type)
+        const response = await inventoryAPI.setItem(playerId, itemId, price, type)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
+export const removeItem = (playerId: number, itemId: number, type: ItemTypes): ThunkType => {
+    return (async () => {
+        const response = await inventoryAPI.removeItem(playerId, itemId, type)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
+export const sellItem = (playerId: number, itemId: number, price: number, type: ItemTypes): ThunkType => {
+    return (async () => {
+        const response = await inventoryAPI.sellItem(playerId, itemId, price, type)
         if (response.resultCode === 0) updateWS()
     })
 }

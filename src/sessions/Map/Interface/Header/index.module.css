@@ -1,0 +1,82 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 50px;
+    display: flex;
+    background-color: #FFFFFF05;
+    border-radius: 0 0 5px 5px;
+    backdrop-filter: blur(1.5px);
+    z-index: 10000;
+}
+
+.rollCount {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    display: flex;
+    background-color: #FFFFFF05;
+    border-radius: 0 0 5px 5px;
+    backdrop-filter: blur(1.5px);
+    z-index: 10000;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.rollCount img {
+    width: 50px;
+}
+
+.playersInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    padding: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    color: white;
+}
+
+.playerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.move {
+    position: absolute;
+    top: 10px;
+    left: -13px;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    background-color: #99ff00;
+    animation-name: move;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes move {
+    0% {
+        background-color: #99ff00ff;
+        height: 10px;
+        width: 10px;
+        top: 10px;
+        left: -13px;
+    }
+
+    100% {
+        background-color: #99ff0070;
+        height: 5px;
+        width: 5px;
+        top: 13px;
+        left: -10px;
+    }
+}

@@ -1,5 +1,5 @@
 .container {
-    display: flex; /* we will talk about this later ... */
+    display: flex;
     --s: 120px;  /* size  */
     --m: 5px;   /* margin */
     font-size: 0;
@@ -14,7 +14,7 @@
     width: calc(var(--s) + 10px);
     height: calc(var(--s) * 0.9 + 10px);
     display: inline-block;
-    font-size: initial; /* we reset the font-size if we want to add some content */
+    font-size: initial;
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
     background-color: #00000000;
 }
@@ -26,7 +26,7 @@
     margin-top: var(--m);
     height: calc(var(--s) * 0.9);
     display: inline-block;
-    font-size: initial; /* we reset the font-size if we want to add some content */
+    font-size: initial;
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
     background-color: #2d2d2d00;
     position: relative;
@@ -35,7 +35,7 @@
 }
 
 .hex:hover {
-    background-color: #2c2c6c;
+    background-color: #2c2c6c99;
 }
 
 .locationHex {
@@ -43,7 +43,7 @@
     margin-top: var(--m);
     height: calc(var(--s) * 0.9);
     display: inline-block;
-    font-size: initial; /* we reset the font-size if we want to add some content */
+    font-size: initial;
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
     background-color: #0e5d0e90;
     position: relative;
@@ -52,7 +52,7 @@
 }
 
 .locationHex:hover {
-    background-color: #249424;
+    background-color: #24942499;
 }
 
 /*-------------------------ACTIVE HEXES---------------------------*/
@@ -62,16 +62,31 @@
     margin-top: var(--m);
     height: calc(var(--s) * 0.9);
     display: inline-block;
-    font-size: initial; /* we reset the font-size if we want to add some content */
+    font-size: initial;
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
     background-color: #ffe26990;
     position: relative;
     transition: all 0.15s ease 0s;
     cursor: pointer;
+    animation-name: activeHex;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes activeHex {
+    0% {
+        background-color: #ffe26990;
+    }
+    100% {
+        background-color: #ffe26930;
+    }
 }
 
 .activeHex:hover {
-    background-color: #ff6c6c;
+    background-color: #6cffd399;
+    animation-name: none;
 }
 
 .activeLocationHex {
@@ -79,16 +94,31 @@
     margin-top: var(--m);
     height: calc(var(--s) * 0.9);
     display: inline-block;
-    font-size: initial; /* we reset the font-size if we want to add some content */
+    font-size: initial;
     clip-path: polygon(25% 0%, 0% 50%, 25% 100%, 75% 100%, 100% 50%, 75% 0%);
-    background-color: #00dc0090;
+    background-color: #3DFF3D93;
     position: relative;
     transition: all 0.15s ease 0s;
     cursor: pointer;
+    animation-name: activeLocationHex;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes activeLocationHex {
+    0% {
+        background-color: #3DFF3D99;
+    }
+    100% {
+        background-color: #3DFF3D30;
+    }
 }
 
 .activeLocationHex:hover {
-    background-color: #99ff00;
+    background-color: #ccff8c;
+    animation-name: none;
 }
 
 /*-------------------------INFO---------------------------*/
@@ -212,6 +242,34 @@
     align-items: center;
     cursor: pointer;
     box-shadow: -6px 3px 3px #00000099;
+    animation-name: activePlayer;
+    animation-duration: 1.5s, 2s, 3.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes activePlayer {
+    0% {
+        background-color: #99ff00ff;
+        border-radius: 50%;
+    }
+    2% {
+        background-color: #99ff0099;
+    }
+    4% {
+        background-color: #99ff00ff;
+    }
+    15% {
+        background-color: #99ff0099;
+    }
+    17% {
+        background-color: #99ff00ff;
+    }
+    100% {
+        background-color: #99ff0099;
+        border-radius: 20%;
+    }
 }
 
 .activePlayer:hover {
@@ -223,6 +281,29 @@
 }
 
 .location {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 90px;
+}
+
+.location div {
+    display: flex;
+    color: #ffffff;
+    background-color: #00000070;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+}
+
+.coords {
+    display: flex;
+    flex-direction: column;
+    min-width: 60px;
+    position: absolute;
+    top: 40px;
+    left: 15px;
     color: red;
-    font-weight: 700;
+    background-color: #00000090;
 }

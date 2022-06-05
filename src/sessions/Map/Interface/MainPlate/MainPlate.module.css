@@ -1,0 +1,167 @@
+@font-face {
+    font-family: "Boycott";
+    src: local("Boycott"),
+    url("../../../../fonts/Boycott.otf") format('opentype');
+}
+
+@font-face {
+    font-family: "perfoc_bold";
+    src: local("perfoc_bold"),
+    url("../../../../fonts/perfoc_bold.otf") format('opentype');
+}
+
+.actions {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 20000;
+}
+
+
+
+.rollCube {
+    position: fixed;
+    bottom: 226px;
+    right: 813px;
+}
+
+.rollCube button {
+    font-family: "Boycott", sans-serif;
+    font-size: 28px;
+    border-radius: 50%;
+    border: none;
+    background-color: #00000009;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    transition: all 0.15s ease 0s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rollCube button:hover {
+    background-color: #00000030;
+}
+
+.rollCubeActiveBt {
+    animation-name: rollCubeActiveBt;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes rollCubeActiveBt {
+    0% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 50%;
+    }
+}
+
+
+
+.passMove {
+    position: fixed;
+    bottom: 214px;
+    right: 1009px;
+}
+
+.passMove button {
+    font-family: "Boycott", sans-serif;
+    font-size: 28px;
+    border-radius: 50%;
+    border: none;
+    background-color: #fff0b409;
+    width: 49px;
+    height: 49px;
+    cursor: pointer;
+    transition: all 0.15s ease 0s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.passMove button:hover {
+    background-color: #fff0b430;
+}
+
+.passMoveActiveBt {
+    animation-name: passMoveActiveBt;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.passMoveActiveBt:hover {
+    animation-name: none;
+}
+
+@keyframes passMoveActiveBt {
+    0% {
+        background-color: #fff0b410;
+    }
+    100% {
+        background-color: #fff0b430;
+    }
+}
+
+/*------------------------------------------*/
+
+.stats {
+    font-family: "Boycott", sans-serif;
+    position: fixed;
+    bottom: 25px;
+    right: 655px;
+    display: grid;
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+    grid-template-columns: 1fr 1fr;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.monitor {
+    font-family: "perfoc_bold", sans-serif;
+    position: fixed;
+    bottom: 32px;
+    right: 878px;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 102px;
+    height: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 24px;
+    color: #99ff00ff;
+    animation-name: monitor;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+}
+
+@keyframes monitor {
+    0% {
+        color: #99ff0040;
+    }
+    1% {
+        color: #99ff0000;
+    }
+    2% {
+        color: #99ff00ff;
+    }
+    3% {
+        color: #99ff0000;
+    }
+    4% {
+        color: #99ff00ff;
+    }
+    100% {
+        color: #99ff0040;
+    }
+}

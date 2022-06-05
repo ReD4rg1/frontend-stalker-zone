@@ -1,34 +1,22 @@
 .container {
+    /*font-family: "Boycott", sans-serif;*/
+}
+
+.background {
+
+}
+
+.backgroundL {
     position: fixed;
-    height: 100%;
-    top: 72px;
-    left: 0;
-    display: flex;
-    background-color: #ffffff99;
-    backdrop-filter: blur(1.5px);
+    bottom: -20px;
+    left: -20px;
+    z-index: 11000;
+}
+
+.backgroundR {
+    position: fixed;
+    bottom: -20px;
+    right: -30px;
     z-index: 10000;
 }
 
-.playerInfo {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.buttonSection {
-    margin-left: 20px;
-}
-
-.container button {
-    border: none;
-    color: white;
-    background-color: #1c1c1c;
-    width: 40px;
-    height: 100%;
-    cursor: pointer;
-    transition: all 0.15s ease 0s;
-}
-
-.container button:hover {
-    width: 80px;
-}

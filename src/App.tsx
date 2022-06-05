@@ -6,6 +6,7 @@ import {initialize} from './redux/reducers/app-reducer';
 import HeaderContainer from "./components/Header";
 import Navigates from "./navigate/routes";
 
+
 class App extends Component<any, any> {
 
     componentDidMount() {
@@ -19,7 +20,7 @@ class App extends Component<any, any> {
             <BrowserRouter>
                 <div className="App">
                     <header>
-                        <HeaderContainer/>
+                        <HeaderContainer />
                     </header>
                     <Navigates/>
                 </div>

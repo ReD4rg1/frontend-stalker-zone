@@ -1,26 +1,20 @@
 import styles from "./Event.module.css";
 import {EventsType, Player, PlayersInitialState} from "../../../redux/reducers/players-reducer";
-import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 import EventButtons from "./EventButtons";
+import angleEvent from "../../../redux/logic/angleEvent";
 
 interface Props {
     players: PlayersInitialState
-    auth: AuthInitialState
     applyEvent: (playerId: number, eventId: number, type: EventsType) => void
     passMove: (eventType: EventsType) => void
     eventRoll: (playerId: number) => void
 }
 
-const Event = ({players, auth, applyEvent, passMove, eventRoll}:Props) => {
+const Event = ({players, applyEvent, passMove, eventRoll}:Props) => {
 
     const inEvent = (player: Player) => {
         return player.states.inEvent
     }
-
-    let myPlayer: Player = players.players[0]
-    players.players.forEach((player) => {
-        if (auth.userId === player.userId) myPlayer = player
-    })
 
     if (players.players.some(inEvent)) return (
         <div className={styles.container}>
@@ -34,8 +28,11 @@ const Event = ({players, auth, applyEvent, passMove, eventRoll}:Props) => {
                 {players.currentEvent.description}
             </section>
             <section>
+                {"Угол между локациями: " + angleEvent({playerCoords: players.myPlayer.coordinates, finishCoords: {hexId: players.currentEvent.hexId, locationId: players.currentEvent.locationId}})}
+            </section>
+            <section>
                 <EventButtons
-                    myPlayer={myPlayer}
+                    myPlayer={players.myPlayer}
                     applyEvent={applyEvent}
                     passMove={passMove}
                     eventRoll={eventRoll}

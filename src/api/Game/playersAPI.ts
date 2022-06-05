@@ -24,9 +24,9 @@ const playersAPI = {
         )
     },
 
-    setCoordinates(locationId: number, hexId: number, difficulty: number, playerId: number) {
+    setCoordinates(locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string) {
         return (
-            instance.post(`/coordinates/set-coordinates`, {locationId, hexId, difficulty, playerId})
+            instance.post(`/coordinates/set-coordinates`, {locationId, hexId, difficulty, playerId, locationName})
                 .then((response) => response.data)
         )
     },

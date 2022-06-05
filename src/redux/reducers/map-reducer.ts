@@ -1,10 +1,7 @@
-import getGeneratedMap from "../generators/generate-map";
-import {Player} from "./players-reducer";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
 import mapAPI from "../../api/Game/mapAPI";
 
-const GENERATE_MAP = "GENERATE-MAP"
 const SET_MAP = "SET-MAP"
 const SET_AVAILABLE_HEXES = "SET-AVAILABLE-HEXES"
 
@@ -38,7 +35,7 @@ export interface IHex {
     containLocation: boolean,
     specialLocation: boolean,
     locationName: string,
-    locationLevel: number,
+    locationLevel: 0 | 1 | 2 | 3,
     locationId: number,
     top: HexSideType,
     topLeft: HexSideType,
@@ -54,7 +51,7 @@ type HexSideType = {
     difficulty: number
 }
 
-type ActionsType = GenerateMapType | SetMapType | SetAvailableHexesType
+type ActionsType = SetMapType | SetAvailableHexesType
 
 let initialState: MapInitialState = {
     locations: [],
@@ -67,9 +64,6 @@ let initialState: MapInitialState = {
 
 const mapReducer = (state = initialState, action: ActionsType): MapInitialState => {
     switch (action.type) {
-        case GENERATE_MAP:
-            return getGeneratedMap({state, players: action.players})
-
         case SET_MAP:
             return {
                 ...state,
@@ -87,22 +81,6 @@ const mapReducer = (state = initialState, action: ActionsType): MapInitialState 
             return state
     }
 }
-
-type GenerateMapType = {
-    type: typeof GENERATE_MAP
-    players: Player[]
-}
-
-interface GenerateMapProps {
-    players: Player[]
-}
-
-export const generateMap = ({players}: GenerateMapProps): GenerateMapType => (
-    {
-        type: GENERATE_MAP,
-        players: players,
-    }
-)
 
 type SetMapType = {
     type: typeof SET_MAP

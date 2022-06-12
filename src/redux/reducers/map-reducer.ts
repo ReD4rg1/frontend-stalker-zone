@@ -21,6 +21,7 @@ export interface AvailableHex {
     locationId: number
     difficulty: number
     move: boolean
+    side: "top" | "topLeft" | "topRight"  | "bottom" | "bottomLeft" | "bottomRight"
 }
 
 export interface Location {

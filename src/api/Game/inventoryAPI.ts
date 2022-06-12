@@ -85,6 +85,13 @@ const inventoryAPI = {
         )
     },
 
+    setFromBackpackItem(playerId: number, itemId: number, type: ItemTypes) {
+        return (
+            instance.post(`/backpack/set?playerId=${playerId}&itemId=${itemId}&type=${type}`, {})
+                .then((response) => response.data)
+        )
+    },
+
     removeItem(playerId: number, itemId: number, type: ItemTypes) {
         return (
             instance.post(`/inventory/remove?playerId=${playerId}&itemId=${itemId}&type=${type}`, {})
@@ -95,6 +102,27 @@ const inventoryAPI = {
     sellItem(playerId: number, itemId: number, price: number, type: ItemTypes) {
         return (
             instance.post(`/inventory/sell?playerId=${playerId}&itemId=${itemId}&price=${price}&type=${type}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    useMedkit(playerId: number, medKitId: number) {
+        return (
+            instance.post(`/items/use-medkit?playerId=${playerId}&medKitId=${medKitId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    useStimulator(playerId: number, stimulatorId: number) {
+        return (
+            instance.post(`/items/use-stimulator?playerId=${playerId}&stimulatorId=${stimulatorId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    useGrenade(playerId: number, grenadeId: number) {
+        return (
+            instance.post(`/items/use-grenade?playerId=${playerId}&grenadeId=${grenadeId}`, {})
                 .then((response) => response.data)
         )
     },

@@ -31,6 +31,20 @@ const playersAPI = {
         )
     },
 
+    setOrder(playerId: number) {
+        return (
+            instance.post(`/order/set?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    passOrder(playerId: number, place: "base" | "village" | "laboratory") {
+        return (
+            instance.post(`/order/end?playerId=${playerId}&place=${place}`, {})
+                .then((response) => response.data)
+        )
+    },
+
 }
 
 export default playersAPI

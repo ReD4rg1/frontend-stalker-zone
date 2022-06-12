@@ -58,6 +58,14 @@ export function getMonster() {
     stompClient.send("/app/get-monster", {})
 }
 
+export function getFightQueue() {
+    stompClient.send("/app/get-fight-queue", {})
+}
+
+export function getFightEffect() {
+    stompClient.send("/app/get-fight-effect", {})
+}
+
 export function updateWS() {
     getPlayers()
     getCoords()

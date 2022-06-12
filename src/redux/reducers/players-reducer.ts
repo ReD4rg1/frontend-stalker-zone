@@ -32,7 +32,7 @@ export interface CurrentEvent {
     rollCube: number
 }
 
-export type EventsType = "simpleCard" | "throwCard" | "moveCard"
+export type EventsType = "simpleCard" | "throwCard" | "moveCard" | "monsterCard"
 
 export interface IInitialPlayerInfo {
     id: number,
@@ -75,12 +75,14 @@ interface States {
     anotherMove: boolean
     alreadyThrowCube: boolean
     eventComplete: boolean
+    paralyze: boolean
 }
 
 type CoordinatesType = {
     locationId: number
     hexId: number
     locationName: string
+    locationLevel: number
 }
 
 interface Inventory {
@@ -116,6 +118,7 @@ interface Backpack {
     locationModifier: OtherItemType[]
     trapModifier: OtherItemType[]
     stealthModifier: OtherItemType[]
+    trophies: TrophiesType[]
 }
 
 type PlayerEffectsType = {
@@ -154,6 +157,11 @@ type OtherItemType = {
     id: number
     name: string
     effect: string
+    price: number
+}
+type TrophiesType = {
+    id: number
+    name: string
     price: number
 }
 type HealBoxType = {
@@ -231,6 +239,7 @@ let initialPlayer: Player = {
         anotherMove: false,
         alreadyThrowCube: false,
         eventComplete: false,
+        paralyze: false,
     },
     effects: {
         healBoost: 0,
@@ -274,11 +283,13 @@ let initialPlayer: Player = {
         locationModifier: [],
         trapModifier: [],
         stealthModifier: [],
+        trophies: [],
     },
     coordinates: {
         locationId: 4,
         hexId: 19,
         locationName: '',
+        locationLevel: 0,
     },
 }
 

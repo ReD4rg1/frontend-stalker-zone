@@ -43,4 +43,18 @@ const getCoords = (coords: CoordsType): GetCoordsType => {
     }
 }
 
-export default angleEvent
+type sidesType = "top" | "topLeft" | "topRight"  | "bottom" | "bottomLeft" | "bottomRight"
+
+const getSideByCoords = ({playerCoords, finishCoords}: Props):sidesType | null => {
+    const angle = angleEvent({playerCoords, finishCoords})
+    if (angle > 330 || angle < 30) return "top"
+    if (angle > 300) return "topLeft"
+    if (angle > 0 && angle < 90) return "topRight"
+    if (angle > 240 && angle < 300) return "bottom"
+    if (angle > 210 && angle < 270) return "bottomLeft"
+    if (angle > 180) return "bottomRight"
+
+    return null
+}
+
+export default getSideByCoords

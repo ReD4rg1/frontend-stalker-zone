@@ -22,13 +22,15 @@ interface ItemProps {
 
 const Item = (props: ItemProps) => {
 
+    let disabled = props.myPlayer.money < props.price
+
     return (
         <div className={styles.gridContainer}>
             <div>{props.name}</div>
             <div>{props.defense || props.damage || props.effectValue || props.damageModifier}</div>
             <div className={styles.hiddenBlock}>{props.description || props.effect || props.weaponName}</div>
             <div>{props.price}</div>
-            <button disabled={props.myPlayer.money < props.price} onClick={() => props.setItem(props.myPlayer.id, props.id, props.price, props.type)}>{"купить"}</button>
+            <button disabled={disabled} onClick={() => props.setItem(props.myPlayer.id, props.id, props.price, props.type)}>{"КУПИТЬ"}</button>
         </div>
     )
 }

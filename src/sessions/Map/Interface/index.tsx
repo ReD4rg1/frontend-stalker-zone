@@ -14,9 +14,10 @@ interface Props {
     passMove: (eventType: EventsType) => void
     showEvent: (playerId: number) => void
     event: CurrentEvent
+    openStore: () => void
 }
 
-const Interface = ({players, passMove, makeRoll, event, showEvent}: Props) => {
+const Interface = ({players, passMove, makeRoll, event, showEvent, openStore}: Props) => {
 
     const [isWeapon, setIsWeapon] = useState(false)
 
@@ -31,13 +32,14 @@ const Interface = ({players, passMove, makeRoll, event, showEvent}: Props) => {
                 </div>
             </div>
             <MainPlate
-                myPlayer={players.myPlayer}
+                players={players}
                 makeRoll={makeRoll}
                 passMove={passMove}
                 event={event}
                 showEvent={showEvent}
                 isWeapon={isWeapon}
                 toggleWeapon={() => setIsWeapon(!isWeapon)}
+                openStore={openStore}
             />
             <RightPanel
                 myPlayer={players.myPlayer}

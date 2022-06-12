@@ -8,8 +8,7 @@ const MainMenu = () => {
     return (
         <div className={styles.container}>z
             <section className={styles.imageContainer}>
-                {/*<img src={backgroundImage} alt={'#'}/>*/}
-                <div style={{backgroundImage: `${backgroundImage}`, width: '100%', height: '100%'}}/>
+                <img src={backgroundImage} alt={'#'}/>
             </section>
             <section className={styles.sectionContainer}>
                 <div className={styles.titleContainer}>
@@ -20,15 +19,7 @@ const MainMenu = () => {
                         Настольная игра
                     </h2>
                 </div>
-                <div>
-                    <h2 className={styles.subTitle}>
-                        Главное меню
-                    </h2>
-                </div>
                 <div className={styles.linkItemsContainer}>
-                    <NavLink to="/players_create_menu" className={({ isActive }) =>  isActive ? `${styles.active}` : ""}>
-                        <div className={styles.linkItem}><span>Играть на одном устройстве</span></div>
-                    </NavLink>
                     <NavLink to="/login" className={({ isActive }) =>  isActive ? `${styles.active}` : ""}>
                         <div className={styles.linkItem}><span>Подключиться к сессии</span></div>
                     </NavLink>

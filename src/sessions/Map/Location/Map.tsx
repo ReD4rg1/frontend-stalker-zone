@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {MapInitialState} from "../../../redux/reducers/map-reducer";
 import LocationContainer from "./LocationContainer";
 import styles from "./Map.module.css";
-import {Player} from "../../../redux/reducers/players-reducer";
+import {CurrentEvent, Player} from "../../../redux/reducers/players-reducer";
 import {AuthInitialState} from "../../../redux/reducers/auth-reducer";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
     players: Player[]
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string) => void
     showCoords: boolean
+    currentEvent: CurrentEvent
 }
 
 const Map: FC<Props> = (
@@ -19,7 +20,8 @@ const Map: FC<Props> = (
         players,
         moveTo,
         auth,
-        showCoords
+        showCoords,
+        currentEvent,
     }) => {
 
     let myPlayer: Player = players[0]
@@ -41,6 +43,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[0]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                         <div className={styles.mapSecondItem}>
@@ -51,6 +54,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[1]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                         <div className={styles.mapThirdItem}>
@@ -61,6 +65,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[2]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                         <div className={styles.mapFourthItem}>
@@ -71,6 +76,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[3]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                     </article>
@@ -83,6 +89,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[4]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                         <div className={styles.mapSecondItem}>
@@ -93,6 +100,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[5]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                         <div className={styles.mapThirdItem}>
@@ -103,6 +111,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[6]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                     </article>
@@ -115,6 +124,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[7]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                         <div className={styles.mapSecondItem}>
@@ -125,6 +135,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[8]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                     </article>
@@ -137,6 +148,7 @@ const Map: FC<Props> = (
                                 availableHexes={map.availableHexes}
                                 location={map.locations[9]}
                                 players={players}
+                                currentEvent={currentEvent}
                             />
                         </div>
                     </article>

@@ -2,28 +2,46 @@ import styles from "./MainPlate.module.css";
 import React from "react";
 import '../../../../fonts/Boycott.otf';
 import '../../../../fonts/perfoc_bold.otf';
-import {CurrentEvent, EventsType, Player} from "../../../../redux/reducers/players-reducer";
+import {CurrentEvent, EventsType, Player, PlayersInitialState} from "../../../../redux/reducers/players-reducer";
 import MovesCount from "./MovesCount";
 
 interface Props {
-    myPlayer: Player
+    players: PlayersInitialState
     makeRoll: (playerId: number) => void
     passMove: (eventType: EventsType) => void
     showEvent: (playerId: number) => void
     event: CurrentEvent
     toggleWeapon: () => void
     isWeapon: boolean
+    openStore: () => void
 }
 
 const MainPlate = ({
-    myPlayer,
+    players,
     makeRoll,
     passMove,
     showEvent,
     event,
     toggleWeapon,
-    isWeapon
+    isWeapon,
+    openStore,
 }: Props) => {
+
+    let currentMove = "Ваша очередь ходить"
+    let myPlayer = players.myPlayer
+
+    players.players.forEach((player) => {
+        if (player.states.move && player.name !== myPlayer.name) currentMove = `Очередь ходить: ${player.name}`
+    })
+
+    let buttonIsAvailable = (myPlayer: Player): boolean => {
+
+        if (myPlayer.coordinates.locationName === "Посёлок") return true
+        else if (myPlayer.coordinates.locationName === "Военная база" && myPlayer.reputation > 2) return true
+        else if (myPlayer.coordinates.locationName === "Лаборатория" && myPlayer.reputation > 5) return true
+
+        return false
+    }
 
     return (
         <section className={styles.actions}>
@@ -81,9 +99,12 @@ const MainPlate = ({
             </section>
             <section className={styles.monitor}>
                 <div>
-                    {`Очередь ходить: `}
+                    {currentMove}
                 </div>
             </section>
+            <button style={{display: `${buttonIsAvailable(myPlayer) ? "block" : "none"}`}} className={styles.store} onClick={() => openStore()}>
+                {"МАГАЗИН"}
+            </button>
         </section>
     )
 }

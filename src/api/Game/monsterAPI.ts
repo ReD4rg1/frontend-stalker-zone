@@ -12,7 +12,49 @@ const monsterAPI = {
 
     setMonster(level: number) {
         return (
-            instance.post(`/monster/set`, {level})
+            instance.post(`/monster/set?level=${level}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    startFight(playerId: number) {
+        return (
+            instance.post(`/fight/start?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    playerAttack(playerId: number) {
+        return (
+            instance.post(`/fight/player-attack?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    monsterAttack(playerId: number) {
+        return (
+            instance.post(`/fight/monster-attack?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    nextMember(playerId: number) {
+        return (
+            instance.post(`/fight/next-member?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    endFight(playerId: number) {
+        return (
+            instance.post(`/fight/end?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    playerDied(playerId: number) {
+        return (
+            instance.post(`/fight/player-died?playerId=${playerId}`, {})
                 .then((response) => response.data)
         )
     },

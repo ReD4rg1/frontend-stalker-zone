@@ -12,24 +12,24 @@ import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
 import {
     applyEvent, CurrentEvent, eventRoll,
-    EventsType,
+    EventsType, getShop,
     makeRoll,
     moveTo,
     passMove,
     Player,
-    PlayersInitialState, setEvents,
+    PlayersInitialState, setEvents, setItem,
     setPlayers, showEvent
 } from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
 import {connectWS, disconnectWS, updateWS,} from "../../api/Game/ws/gameWS";
-import TopPanel from "./Interface/Header/TopPanel";
 import {AuthInitialState} from "../../redux/reducers/auth-reducer";
 import Events from "./Events";
 import Interface from "./Interface";
 import TestButtons from "./TestButtons/TestButtons";
-import Index from "./Store";
-import {setMonster} from "../../redux/reducers/monster-reducer";
+import {requestMonster, setMonster} from "../../redux/reducers/monster-reducer";
+import {ItemTypes} from "../../api/Game/inventoryAPI";
+import Store from "./Store/Store";
 
 interface GenerateMapProps {
     players: Player[]
@@ -52,12 +52,17 @@ interface MapProps {
     showEvent: (playerId: number) => void
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number) => void
     applyEvent: (playerId: number, eventId: number, type: EventsType) => void
+    requestMonster: (level: number) => void
+    getShop: () => void
+    setItem: (playerId: number, itemId: number, price: number, type: ItemTypes) => void
 }
 
 interface State {
     connect: boolean
     showInfo: boolean
     showCoords: boolean
+    showShop: boolean
+    showEvent: boolean
 }
 
 class MapMultiplayerContainer extends React.Component<MapProps, State>{
@@ -68,9 +73,13 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
             connect: false,
             showInfo: true,
             showCoords: false,
+            showShop: false,
+            showEvent: false,
         }
         this.toggleShowInfo = this.toggleShowInfo.bind(this)
         this.toggleShowCoords = this.toggleShowCoords.bind(this)
+        this.toggleShowShop = this.toggleShowShop.bind(this)
+        this.toggleShowEvent = this.toggleShowEvent.bind(this)
     }
 
     toggleShowInfo() {
@@ -89,10 +98,18 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                 auth: this.props.auth,
             }
         )
+        if (!this.props.players.shopLoaded) this.props.getShop()
     }
 
     toggleShowCoords() {
         this.setState({...this.state, showCoords: !this.state.showCoords})
+    }
+    toggleShowShop() {
+        this.setState({...this.state, showShop: !this.state.showShop})
+    }
+
+    toggleShowEvent() {
+        this.setState({...this.state, showEvent: !this.state.showEvent})
     }
 
     componentDidUpdate(prevProps: Readonly<MapProps>, prevState: Readonly<any>, snapshot?: any) {
@@ -117,22 +134,22 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     players={this.props.players.players}
                     moveTo={this.props.moveTo}
                     showCoords={this.state.showCoords}
+                    currentEvent={this.props.players.currentEvent}
                 />
-                 <TopPanel
-                     players={this.props.players.players}
-                     auth={this.props.auth}
-                 />
                 <TestButtons
                     event={this.props.players.currentEvent}
                     toggleShowCoords={this.toggleShowCoords}
                     showCoords={this.state.showCoords}
                     passMove={this.props.passMove}
+                    requestMonster={this.props.requestMonster}
                 />
                 <Events
                     players={this.props.players}
                     applyEvent={this.props.applyEvent}
                     passMove={this.props.passMove}
                     eventRoll={this.props.eventRoll}
+                    showEvent={this.state.showEvent}
+                    toggleShowEvent={this.toggleShowEvent}
                 />
                 <Interface
                     players={this.props.players}
@@ -140,8 +157,14 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     passMove={this.props.passMove}
                     event={this.props.players.currentEvent}
                     showEvent={this.props.showEvent}
+                    openStore={this.toggleShowShop}
                 />
-                <Index/>
+                <Store
+                    players={this.props.players}
+                    setItem={this.props.setItem}
+                    closeStore={this.toggleShowShop}
+                    showStore={this.state.showShop}
+                />
             </div>
         )
     }
@@ -170,6 +193,9 @@ export default compose(
         applyEvent,
         eventRoll,
         setMonster,
+        requestMonster,
+        getShop,
+        setItem,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

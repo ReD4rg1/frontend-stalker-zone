@@ -1,7 +1,8 @@
 import {AvailableHexes, IHex} from "../../../redux/reducers/map-reducer";
 import styles from "./Hex.module.css";
-import {Player} from "../../../redux/reducers/players-reducer";
+import {CurrentEvent, Player} from "../../../redux/reducers/players-reducer";
 import HexSideDiff from "./HexSideDiff/HexSideDiff";
+import getSideByCoords from "../../../redux/logic/angleEvent";
 
 interface IProps {
     data: IHex
@@ -10,6 +11,7 @@ interface IProps {
     availableHexes: AvailableHexes
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string) => void
     showCoords: boolean
+    currentEvent: CurrentEvent
 }
 
 const Hex = (props: IProps) => {
@@ -19,9 +21,13 @@ const Hex = (props: IProps) => {
     let availableMoveStatus: boolean = false
     let difficulty: number = 0
     props.availableHexes.coordinates.forEach((hex) => {
-        if (hex.moveId === props.data.hexId && hex.locationId === props.data.locationId && hex.move) {
+        if (!props.myPlayer.states.eventComplete && hex.moveId === item.hexId && hex.locationId === item.locationId && hex.move) {
             availableMoveStatus = true
             difficulty = hex.difficulty
+        }
+        if (props.myPlayer.states.eventComplete && (props.myPlayer.states.inEvent && props.currentEvent.type === "moveCard") && (hex.moveId === item.hexId && hex.locationId === item.locationId) && hex.side === getSideByCoords({playerCoords: {hexId: props.myPlayer.coordinates.hexId, locationId: props.myPlayer.coordinates.locationId}, finishCoords: {hexId: props.currentEvent.hexId, locationId: props.currentEvent.locationId}})) {
+            availableMoveStatus = true
+            difficulty = 0
         }
     })
 

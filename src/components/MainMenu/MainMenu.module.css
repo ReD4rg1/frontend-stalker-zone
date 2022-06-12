@@ -11,17 +11,19 @@
     position: absolute;
     top: 0;
     left: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
 }
 
 .imageContainer img {
     width: 100vw;
-    height: calc(100vh - 4px);
+    height: 100vh;
 }
 
 .sectionContainer {
     position: absolute;
     top: 50px;
-    left: 50px;
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -58,7 +60,7 @@
 }
 
 .linkItem {
-    background-color: #691111;
+    background-color: #116954;
     font-size: 26px;
     color: #ffffff;
     padding: 5px;
@@ -68,6 +70,6 @@
 }
 
 .linkItem:hover {
-    background-color: #ff3737;
+    background-color: #37ffa5;
     color: #000000;
 }

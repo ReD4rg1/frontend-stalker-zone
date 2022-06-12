@@ -11,7 +11,7 @@ import image6 from "../../../assets/img/locations-background/6.png"
 import image7 from "../../../assets/img/locations-background/7.png"
 import image8 from "../../../assets/img/locations-background/8.png"
 import image9 from "../../../assets/img/locations-background/9.png"
-import {Player} from "../../../redux/reducers/players-reducer";
+import {CurrentEvent, Player} from "../../../redux/reducers/players-reducer";
 
 interface Props {
     location: Location
@@ -20,6 +20,7 @@ interface Props {
     availableHexes: AvailableHexes
     moveTo: (locationId: number, hexId: number, difficulty: number, playerId: number, locationName: string) => void
     showCoords: boolean
+    currentEvent: CurrentEvent
 }
 
 const LocationContainer = (
@@ -30,6 +31,7 @@ const LocationContainer = (
         moveTo,
         myPlayer,
         showCoords,
+        currentEvent,
     }: Props) => {
 
     let imageSrc: string
@@ -84,6 +86,7 @@ const LocationContainer = (
                         availableHexes={availableHexes}
                         data={location.hexList[0]}
                         players={players}
+                        currentEvent={currentEvent}
                     />
                 </section>
                 <section className={styles.rowTwo}>
@@ -95,6 +98,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[11]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -105,6 +109,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[2]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -117,6 +122,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[9]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -127,6 +133,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[12]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -137,6 +144,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[4]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -149,6 +157,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[17]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -159,6 +168,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[14]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -171,6 +181,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[7]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -181,6 +192,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[18]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -191,6 +203,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[6]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -203,6 +216,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[15]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -213,6 +227,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[16]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -225,6 +240,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[5]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -235,6 +251,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[13]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -245,6 +262,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[8]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -257,6 +275,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[3]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                     <article>
@@ -267,6 +286,7 @@ const LocationContainer = (
                             availableHexes={availableHexes}
                             data={location.hexList[10]}
                             players={players}
+                            currentEvent={currentEvent}
                         />
                     </article>
                 </section>
@@ -278,6 +298,7 @@ const LocationContainer = (
                         availableHexes={availableHexes}
                         data={location.hexList[1]}
                         players={players}
+                        currentEvent={currentEvent}
                     />
                 </section>
             </section>

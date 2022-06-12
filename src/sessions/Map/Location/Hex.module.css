@@ -251,23 +251,23 @@
 
 @keyframes activePlayer {
     0% {
-        background-color: #99ff00ff;
+        background-color: #ff0000;
         border-radius: 50%;
     }
-    2% {
-        background-color: #99ff0099;
+    20% {
+        background-color: #000000;
     }
-    4% {
-        background-color: #99ff00ff;
+    40% {
+        background-color: #ff0000;
     }
-    15% {
-        background-color: #99ff0099;
+    60% {
+        background-color: #ffffff;
     }
-    17% {
-        background-color: #99ff00ff;
+    80% {
+        background-color: #ff0000;
     }
     100% {
-        background-color: #99ff0099;
+        background-color: #00ff00;
         border-radius: 20%;
     }
 }

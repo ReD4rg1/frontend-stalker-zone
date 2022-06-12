@@ -1,4 +1,5 @@
 import {CurrentEvent, EventsType, Player} from "../../../redux/reducers/players-reducer";
+import makeRoll from "../../../assets/img/buttonIcons/diceRoll.png"
 
 interface Props {
     myPlayer: Player
@@ -13,7 +14,7 @@ const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event}: Props)
     if (!myPlayer.states.inEvent) return null
 
     if (event.type === "simpleCard") return (
-        <section>
+        <div>
             {myPlayer.states.eventComplete
                 ? (
                     <button onClick={() => passMove(event.type)}>
@@ -30,11 +31,11 @@ const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event}: Props)
                     </button>
                 )
             }
-        </section>
+        </div>
     )
 
     if (event.type === "throwCard") return (
-        <section>
+        <div>
             {myPlayer.states.eventComplete
                 ? (
                     <button onClick={() => passMove(event.type)}>
@@ -57,19 +58,61 @@ const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event}: Props)
                         </div>
                     )
                     : (
-                        <button onClick={() => eventRoll(
-                            myPlayer.id
-                        )}>
-                            {"Бросить кубик"}
-                        </button>
+                        <img
+                            onClick={() => eventRoll(
+                                myPlayer.id
+                            )}
+                            src={makeRoll}
+                            alt={"Сделать бросок"}
+                        />
                     )
             }
-        </section>
+        </div>
     )
 
     if (event.type === "moveCard") return (
-        <section>
-            {!myPlayer.states.eventComplete
+        <div>
+            {myPlayer.states.eventComplete && (myPlayer.numberOfMoves === 0 || ((event.locationId === myPlayer.coordinates.locationId) && (event.hexId === myPlayer.coordinates.hexId)))
+                ? (
+                    <button onClick={() => passMove(event.type)}>
+                        {"Завершить событие"}
+                    </button>
+                )
+                : event.possibilitySkip
+                    ? myPlayer.states.eventComplete
+                        ? (<div>{"Завершите ходы"}</div>)
+                        : (<div>
+                                <button onClick={() => applyEvent(
+                                    myPlayer.id,
+                                    event.id,
+                                    event.type
+                                )}>
+                                    {"Принять"}
+                                </button>
+                                <button onClick={() => passMove(event.type)}>
+                                    {"Завершить событие"}
+                                </button>
+                            </div>
+
+
+                        )
+                    : myPlayer.states.eventComplete
+                        ? (<div>{"Завершите ходы"}</div>)
+                        : (
+                            <button onClick={() => applyEvent(
+                                myPlayer.id,
+                                event.id,
+                                event.type
+                            )}>
+                                {"Принять"}
+                            </button>
+                        )
+            }
+        </div>
+    )
+    if (event.type === "monsterCard") return (
+        <div>
+            {myPlayer.states.eventComplete && !myPlayer.states.inFight
                 ? (
                     <button onClick={() => passMove(event.type)}>
                         {"Завершить событие"}
@@ -81,14 +124,14 @@ const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event}: Props)
                         event.id,
                         event.type
                     )}>
-                        {"Принять"}
+                        {"Принять бой"}
                     </button>
                 )
             }
-        </section>
+        </div>
     )
 
-    return <div />
+    return <div/>
 }
 
 export default EventButtons

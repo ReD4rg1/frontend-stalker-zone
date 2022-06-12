@@ -11,6 +11,7 @@ import Button from "../../../components/common/ReloadButton/Button";
 import { withSessionRedirect } from "../../../redirect/withSessionRedirect";
 import {NavLink} from "react-router-dom";
 import mapAPI from "../../../api/Game/mapAPI";
+import backgroundImage from "../../../assets/img/main-menu/main-menu-background.gif";
 
 interface RoomsProps {
     rooms: RoomInitialState
@@ -28,6 +29,9 @@ class Rooms extends React.Component<RoomsProps, any> {
     render() {
         return (
             <main className={styles.mainContainer}>
+                <section className={styles.imageContainer}>
+                    <img src={backgroundImage} alt={'#'}/>
+                </section>
                 <div className={styles.rooms}>
                     <section className={styles.header}>
                         <HeaderTitle text="Список комнат"/>
@@ -49,7 +53,7 @@ class Rooms extends React.Component<RoomsProps, any> {
                     </section>
                     <section>
                         <button onClick={() => mapAPI.deleteMap()}>
-                            TEST: Удалить карту
+                            {"Удалить карту"}
                         </button>
                     </section>
                 </div>

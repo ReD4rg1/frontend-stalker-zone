@@ -17,8 +17,8 @@ import {
     moveTo,
     passMove,
     Player,
-    PlayersInitialState, setEvents, setItem,
-    setPlayers, showEvent, useMedkit, useStimulator
+    PlayersInitialState, removeItem, sellItem, setEvents, setItem, setItemFromBackpack,
+    setPlayers, showEvent, useGrenade, useMedkit, useStimulator
 } from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
@@ -31,6 +31,7 @@ import {requestMonster, setMonster} from "../../redux/reducers/monster-reducer";
 import {ItemTypes} from "../../api/Game/inventoryAPI";
 import Store from "./Store/Store";
 import Fight from "./Fight/Fight";
+import Inventory from "./Inventory/Inventory";
 
 interface GenerateMapProps {
     players: Player[]
@@ -58,6 +59,10 @@ interface MapProps {
     setItem: (playerId: number, itemId: number, price: number, type: ItemTypes) => void
     useMedkit: (playerId: number, medkitId: number) => void
     useStimulator: (playerId: number, stimulatorId: number) => void
+    useGrenade: (playerId: number, grenadeId: number) => void
+    removeItem: (playerId: number, itemId: number, price: number,type: ItemTypes) => void
+    sellItem: (playerId: number, itemId: number, price: number, type: ItemTypes) => void
+    setItemFromBackpack: (playerId: number, itemId: number, type: ItemTypes) => void
 }
 
 interface State {
@@ -66,8 +71,13 @@ interface State {
     showCoords: boolean
     showShop: boolean
     showEvent: boolean
+    showInventory: boolean
+    showFight: boolean
+    showLocation: boolean
+    showOrder: boolean
     medkitsPosition: number
     stimsPosition: number
+    grenadesPosition: number
 }
 
 class MapMultiplayerContainer extends React.Component<MapProps, State>{
@@ -80,23 +90,43 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
             showCoords: false,
             showShop: false,
             showEvent: false,
+            showFight: false,
+            showLocation: false,
+            showOrder: false,
             medkitsPosition: 0,
             stimsPosition: 0,
+            grenadesPosition: 0,
+            showInventory: false,
         }
         this.toggleShowInfo = this.toggleShowInfo.bind(this)
         this.toggleShowCoords = this.toggleShowCoords.bind(this)
         this.toggleShowShop = this.toggleShowShop.bind(this)
         this.toggleShowEvent = this.toggleShowEvent.bind(this)
+        this.toggleShowInventory = this.toggleShowInventory.bind(this)
+        this.toggleShowFight = this.toggleShowFight.bind(this)
+        this.toggleShowLocation = this.toggleShowLocation.bind(this)
+        this.toggleShowOrder = this.toggleShowOrder.bind(this)
         this.setMedkitsPosition = this.setMedkitsPosition.bind(this)
         this.setStimsPosition = this.setStimsPosition.bind(this)
+        this.setGrenadesPosition = this.setGrenadesPosition.bind(this)
     }
 
     setMedkitsPosition(position: number) {
-        this.setState({...this.state, medkitsPosition: position})
+        if ((this.state.medkitsPosition + position) < 0) this.setState({...this.state, medkitsPosition: this.props.players.myPlayer.inventory.medkits.length-1})
+        else if ((this.state.medkitsPosition + position) >= this.props.players.myPlayer.inventory.medkits.length) this.setState({...this.state, medkitsPosition: 0})
+        else this.setState({...this.state, medkitsPosition: this.state.medkitsPosition + position})
     }
 
     setStimsPosition(position: number) {
-        this.setState({...this.state, stimsPosition: position})
+        if ((this.state.stimsPosition + position) < 0) this.setState({...this.state, stimsPosition: this.props.players.myPlayer.inventory.stimulants.length-1})
+        else if ((this.state.stimsPosition + position) >= this.props.players.myPlayer.inventory.stimulants.length) this.setState({...this.state, stimsPosition: 0})
+        else this.setState({...this.state, stimsPosition: this.state.stimsPosition + position})
+    }
+
+    setGrenadesPosition(position: number) {
+        if ((this.state.grenadesPosition + position) < 0) this.setState({...this.state, grenadesPosition: this.props.players.myPlayer.inventory.grenades.length-1})
+        else if ((this.state.grenadesPosition + position) >= this.props.players.myPlayer.inventory.grenades.length) this.setState({...this.state, grenadesPosition: 0})
+        else this.setState({...this.state, grenadesPosition: this.state.grenadesPosition + position})
     }
 
     toggleShowInfo() {
@@ -127,6 +157,22 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
 
     toggleShowEvent() {
         this.setState({...this.state, showEvent: !this.state.showEvent})
+    }
+
+    toggleShowInventory() {
+        this.setState({...this.state, showInventory: !this.state.showInventory})
+    }
+
+    toggleShowFight() {
+        this.setState({...this.state, showFight: !this.state.showFight})
+    }
+
+    toggleShowLocation() {
+        this.setState({...this.state, showLocation: !this.state.showLocation})
+    }
+
+    toggleShowOrder() {
+        this.setState({...this.state, showOrder: !this.state.showOrder})
     }
 
     componentDidUpdate(prevProps: Readonly<MapProps>, prevState: Readonly<any>, snapshot?: any) {
@@ -175,10 +221,13 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     event={this.props.players.currentEvent}
                     showEvent={this.props.showEvent}
                     openStore={this.toggleShowShop}
+                    toggleShowInventory={this.toggleShowInventory}
                     medkitsPosition={this.state.medkitsPosition}
                     stimsPosition={this.state.stimsPosition}
+                    grenadesPosition={this.state.grenadesPosition}
                     setMedkitsPosition={this.setMedkitsPosition}
                     setStimsPosition={this.setStimsPosition}
+                    setGrenadesPosition={this.setGrenadesPosition}
                     useMedkit={this.props.useMedkit}
                     useStimulator={this.props.useStimulator}
                 />
@@ -189,7 +238,20 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     showStore={this.state.showShop}
                 />
                 <Fight
-
+                    showFight={this.state.showFight}
+                    toggleShowFight={this.toggleShowFight}
+                    useGrenade={this.props.useGrenade}
+                />
+                <Inventory
+                    showInventory={this.state.showInventory}
+                    toggleShowInventory={this.toggleShowInventory}
+                    myPlayer={this.props.players.myPlayer}
+                    removeItem={this.props.removeItem}
+                    sellItem={this.props.sellItem}
+                    setItemFromBackpack={this.props.setItemFromBackpack}
+                    medkitsPosition={this.state.medkitsPosition}
+                    stimsPosition={this.state.stimsPosition}
+                    grenadesPosition={this.state.grenadesPosition}
                 />
             </div>
         )
@@ -224,6 +286,10 @@ export default compose(
         setItem,
         useMedkit,
         useStimulator,
+        removeItem,
+        sellItem,
+        setItemFromBackpack,
+        useGrenade,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

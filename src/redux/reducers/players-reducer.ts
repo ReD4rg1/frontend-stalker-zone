@@ -5,6 +5,7 @@ import {updateWS} from "../../api/Game/ws/gameWS";
 import eventsAPI from "../../api/Game/eventsAPI";
 import inventoryAPI, {ItemTypes, Shop} from "../../api/Game/inventoryAPI";
 import {findMyPlayer} from "../utils";
+import {grenadesNames, medkitsNames, stimsNames, weaponsNames} from "../../consts/multiplayerSession";
 
 const SET_PLAYERS = "SET-PLAYERS"
 const SET_EVENTS = "SET-EVENTS"
@@ -104,20 +105,20 @@ interface Inventory {
 }
 
 interface Backpack {
-    helmet: ArmorType[]
-    bodyArmor: ArmorType[]
-    weapon: WeaponType[]
-    weaponFirstLevelModifier: WeaponModifierType[]
-    weaponSecondLevelModifier: WeaponModifierType[]
-    weaponThirdLevelModifier: WeaponModifierType[]
+    helmets: ArmorType[]
+    bodyArmors: ArmorType[]
+    weapons: WeaponType[]
+    weaponFirstLevelModifiers: WeaponModifierType[]
+    weaponSecondLevelModifiers: WeaponModifierType[]
+    weaponThirdLevelModifiers: WeaponModifierType[]
     grenades: GrenadeType[]
     stimulants: StimsType[]
-    teleport: TeleportType[]
-    artifact: ActiveArtifactType[]
-    mapModifier: OtherItemType[]
-    locationModifier: OtherItemType[]
-    trapModifier: OtherItemType[]
-    stealthModifier: OtherItemType[]
+    teleports: TeleportType[]
+    artifacts: ActiveArtifactType[]
+    mapModifiers: OtherItemType[]
+    locationModifiers: OtherItemType[]
+    trapModifiers: OtherItemType[]
+    stealthModifiers: OtherItemType[]
     trophies: TrophiesType[]
 }
 
@@ -166,19 +167,19 @@ type TrophiesType = {
 }
 type MedkitsType = {
     id: number
-    name: "Лист подорожника" | "Бинты" | "Нанопластырь"
+    name: medkitsNames
     effect: string
     price: number
 }
 type StimsType = {
     id: number
-    name: "Самогон" | "Стероиды" | "Дзета-элексир"
+    name: stimsNames
     effect: string
     price: number
 }
 type GrenadeType = {
     id: number
-    name: string
+    name: grenadesNames
     damage: number
     damageBoost: number
     damageModifier: number
@@ -193,7 +194,7 @@ type WeaponModifierType = {
 }
 type WeaponType = {
     id: number
-    name: string
+    name: weaponsNames
     damage: number
     damageBoost: number
     price: number
@@ -275,20 +276,20 @@ let initialPlayer: Player = {
         stealthModifier: null,
     },
     backpack: {
-        helmet: [],
-        bodyArmor: [],
-        weapon: [],
-        weaponFirstLevelModifier: [],
-        weaponSecondLevelModifier: [],
-        weaponThirdLevelModifier: [],
+        helmets: [],
+        bodyArmors: [],
+        weapons: [],
+        weaponFirstLevelModifiers: [],
+        weaponSecondLevelModifiers: [],
+        weaponThirdLevelModifiers: [],
         grenades: [],
         stimulants: [],
-        teleport: [],
-        artifact: [],
-        mapModifier: [],
-        locationModifier: [],
-        trapModifier: [],
-        stealthModifier: [],
+        teleports: [],
+        artifacts: [],
+        mapModifiers: [],
+        locationModifiers: [],
+        trapModifiers: [],
+        stealthModifiers: [],
         trophies: [],
     },
     coordinates: {
@@ -456,9 +457,9 @@ export const setItem = (playerId: number, itemId: number, price: number, type: I
     })
 }
 
-export const removeItem = (playerId: number, itemId: number, type: ItemTypes): ThunkType => {
+export const removeItem = (playerId: number, itemId: number, price: number,type: ItemTypes): ThunkType => {
     return (async () => {
-        const response = await inventoryAPI.removeItem(playerId, itemId, type)
+        const response = await inventoryAPI.removeItem(playerId, itemId, price, type)
         if (response.resultCode === 0) updateWS()
     })
 }
@@ -470,17 +471,40 @@ export const sellItem = (playerId: number, itemId: number, price: number, type: 
     })
 }
 
+export const setItemFromBackpack = (playerId: number, itemId: number, type: ItemTypes): ThunkType => {
+    return (async () => {
+        const response = await inventoryAPI.setFromBackpackItem(playerId, itemId, type)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
 export const useMedkit = (playerId: number, medkitId: number): ThunkType => {
     return (async () => {
         const response = await inventoryAPI.useMedkit(playerId, medkitId)
-        if (response.resultCode === 0) updateWS()
+        if (response.resultCode === 0) {
+            updateWS()
+            alert("Вы использовали аптечку")
+        }
     })
 }
 
 export const useStimulator = (playerId: number, stimulatorId: number): ThunkType => {
     return (async () => {
         const response = await inventoryAPI.useStimulator(playerId, stimulatorId)
-        if (response.resultCode === 0) updateWS()
+        if (response.resultCode === 0) {
+            updateWS()
+            alert("Вы использовали стимулятор")
+        }
+    })
+}
+
+export const useGrenade = (playerId: number, grenadeId: number): ThunkType => {
+    return (async () => {
+        const response = await inventoryAPI.useGrenade(playerId, grenadeId)
+        if (response.resultCode === 0) {
+            updateWS()
+            alert("Вы использовали гранату")
+        }
     })
 }
 

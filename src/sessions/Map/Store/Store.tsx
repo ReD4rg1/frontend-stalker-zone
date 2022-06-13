@@ -118,6 +118,7 @@ const Store = ({players, setItem, closeStore, showStore}: Props) => {
                                     myPlayer={players.myPlayer}
                                     name={item.name}
                                     damageModifier={item.damageModifier}
+                                    weaponName={item.weaponName}
                                     type={item.type}
                                     place={item.place}
                                     price={item.price}

@@ -15,7 +15,7 @@ const RightPanel = ({myPlayer}: Props) => {
                     borderRadius: `10px`,
                     backgroundColor: `#ff000070`,
                     height: `100%`,
-                    width: `${myPlayer.hp / myPlayer.effects.maxHp * 100}%`,
+                    width: `${myPlayer.hp > 0 ? (myPlayer.hp / myPlayer.effects.maxHp * 100) : 0}%`,
                 }}/>
                 <div className={styles.HP}>{`${myPlayer.hp}/${myPlayer.effects.maxHp}`}</div>
             </section>

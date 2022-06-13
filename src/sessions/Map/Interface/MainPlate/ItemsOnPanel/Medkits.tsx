@@ -41,18 +41,6 @@ const Medkits = ({
     let imgMed = medkitImages[myPlayer.inventory.medkits[medkitsPosition] ? myPlayer.inventory.medkits[medkitsPosition].name : "Лист подорожника"]
     let imgStim = stimImages[myPlayer.inventory.stimulants[stimsPosition] ? myPlayer.inventory.stimulants[stimsPosition].name : "Самогон"]
 
-    const changeMedkitPosition = (position: number) => {
-        if ((medkitsPosition + position) < 0) setMedkitsPosition(myPlayer.inventory.medkits.length-1)
-        else if ((medkitsPosition + position) >= myPlayer.inventory.medkits.length) setMedkitsPosition(0)
-        else setMedkitsPosition(medkitsPosition + position)
-    }
-
-    const changeStimPosition = (position: number) => {
-        if ((stimsPosition + position) < 0) setStimsPosition(myPlayer.inventory.stimulants.length-1)
-        else if ((stimsPosition + position) >= myPlayer.inventory.stimulants.length) setStimsPosition(0)
-        else setStimsPosition(stimsPosition + position)
-    }
-
     return (
         <div>
             {myPlayer.inventory.medkits[medkitsPosition]
@@ -63,8 +51,8 @@ const Medkits = ({
                     <div className={styles.medkitsInfoBlock}>
                         {myPlayer.inventory.medkits[medkitsPosition].name}
                     </div>
-                    <button onClick={() => changeMedkitPosition(1)} className={styles.rightButton}>{">"}</button>
-                    <button onClick={() => changeMedkitPosition(-1)} className={styles.leftButton}>{"<"}</button>
+                    <button onClick={() => setMedkitsPosition(1)} className={styles.rightButton}>{">"}</button>
+                    <button onClick={() => setMedkitsPosition(-1)} className={styles.leftButton}>{"<"}</button>
                 </div>
                 : <div/>
             }
@@ -76,8 +64,8 @@ const Medkits = ({
                     <div className={styles.stimsInfoBlock}>
                         {myPlayer.inventory.stimulants[stimsPosition].name}
                     </div>
-                    <button onClick={() => changeStimPosition(1)} className={styles.rightButton}>{">"}</button>
-                    <button onClick={() => changeStimPosition(-1)} className={styles.leftButton}>{"<"}</button>
+                    <button onClick={() => setStimsPosition(1)} className={styles.rightButton}>{">"}</button>
+                    <button onClick={() => setStimsPosition(-1)} className={styles.leftButton}>{"<"}</button>
                 </div>
                 : <div/>
             }

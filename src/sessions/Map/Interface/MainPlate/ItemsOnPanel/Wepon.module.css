@@ -6,7 +6,6 @@
     right: 1007px;
     height: 150px;
     width: 200px;
-    border: white 1px solid;
 }
 
 .imageContainer {
@@ -58,4 +57,36 @@
     100% {
         background-color: #00000030;
     }
+}
+
+.rightButton {
+    position: fixed;
+    bottom: 80px;
+    right: 1006px;
+    background-color: #00000090;
+    color: #fff;
+    font-size: 34px;
+    border: none;
+    cursor: pointer;
+}
+
+.rightButton:hover {
+    background-color: #ffffff30;
+    color: #000;
+}
+
+.leftButton {
+    position: fixed;
+    bottom: 80px;
+    right: 1178px;
+    background-color: #00000090;
+    color: #fff;
+    font-size: 34px;
+    border: none;
+    cursor: pointer;
+}
+
+.leftButton:hover {
+    background-color: #ffffff30;
+    color: #000;
 }

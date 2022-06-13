@@ -22,7 +22,7 @@ const Content = ({auth, logout, gameIsReady}: Props) => {
                 <Avatar size={50} id={auth.userId}/>
                 <HeaderTitle text={auth.username} maxWidth={100}/>
                 <div className={styles.exit} onClick={() => logout()}>
-                    <img src={exit} alt={"exit"}/>
+                    <img src={exit} alt={"выход"}/>
                 </div>
             </section>
         </div>
@@ -34,9 +34,7 @@ const Content = ({auth, logout, gameIsReady}: Props) => {
                 ? <section className={styles.section}>
                     <Avatar size={25} id={auth.userId}/>
                     <HeaderTitle text={auth.username}/>
-                    <button onClick={() => logout()}>
-                        Logout
-                    </button>
+                    <button onClick={() => logout()}>{"Выйти"}</button>
                 </section>
                 : <div/>
             }

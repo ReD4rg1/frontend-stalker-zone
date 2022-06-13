@@ -16,12 +16,15 @@ interface Props {
     toggleWeapon: () => void
     isWeapon: boolean
     openStore: () => void
+    toggleShowInventory: () => void
     setMedkitsPosition: (position: number) => void
     setStimsPosition: (position: number) => void
     medkitsPosition: number
     stimsPosition: number
     useMedkit: (playerId: number, medkitId: number) => void
     useStimulator: (playerId: number, stimulatorId: number) => void
+    grenadesPosition: number
+    setGrenadesPosition: (position: number) => void
 }
 
 const MainPlate = ({
@@ -39,6 +42,9 @@ const MainPlate = ({
     setStimsPosition,
     useMedkit,
     useStimulator,
+    grenadesPosition,
+    setGrenadesPosition,
+    toggleShowInventory,
 }: Props) => {
 
     let currentMove = "Ваша очередь ходить"
@@ -92,8 +98,8 @@ const MainPlate = ({
                                         ))
                                 : ("1" + (myPlayer.effects.damageBoost - 2))
                             )
-                            : myPlayer.inventory.grenades[0] ? (myPlayer.inventory.grenades[0].damage * myPlayer.inventory.grenades[0].damageBoost
-                                + '+' + (myPlayer.effects.damageBoost + myPlayer.inventory.grenades[0].damageModifier)
+                            : myPlayer.inventory.grenades[grenadesPosition] ? (myPlayer.inventory.grenades[grenadesPosition].damage * myPlayer.inventory.grenades[grenadesPosition].damageBoost
+                                + 'x' + (myPlayer.effects.damageBoost + "+" + myPlayer.inventory.grenades[grenadesPosition].damageModifier)
                             ) : ("1" + (myPlayer.effects.damageBoost - 2))
                     )
                     }
@@ -123,6 +129,8 @@ const MainPlate = ({
                 isWeapon={isWeapon}
                 toggleWeapon={toggleWeapon}
                 myPlayer={myPlayer}
+                grenadesPosition={grenadesPosition}
+                setGrenadesPosition={setGrenadesPosition}
             />
             <Medkits
                 medkitsPosition={medkitsPosition}
@@ -136,6 +144,7 @@ const MainPlate = ({
             <button style={{display: `${buttonIsAvailable(myPlayer) ? "block" : "none"}`}} className={styles.store} onClick={() => openStore()}>
                 {"МАГАЗИН"}
             </button>
+            <button className={styles.inventory} onClick={() => toggleShowInventory()}>{""}</button>
         </section>
     )
 }

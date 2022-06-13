@@ -1,5 +1,6 @@
 import axios from "axios";
 import {getToken} from "../token";
+import {weaponsNames} from "../../consts/multiplayerSession";
 
 export interface Shop {
     armors: ArmorType[]
@@ -30,7 +31,7 @@ interface ArmorType {
 
 interface WeaponType {
     id: number
-    name: string
+    name: weaponsNames
     damage: number
     damageBoost: number
     description: string
@@ -41,7 +42,7 @@ interface WeaponType {
 interface WeaponModifierType {
     id: number
     name: string
-    weaponName: string
+    weaponName: weaponsNames
     damageModifier: number
     type: ItemTypes
     place: string
@@ -60,7 +61,7 @@ interface EquipmentsType {
 
 export type ItemTypes = 'Голова' | 'Корпус' | 'weapon' | 'firstModifier'
     | 'secondModifier' | 'thirdModifier' | 'artifact' | 'trapModifier' | 'stealthModifier'
-    | 'mapModifier' | 'teleport' | 'grenade' | 'medkit' | 'stimulator'
+    | 'mapModifier' | 'locationModifier' | 'teleport' | 'grenade' | 'medkit' | 'stimulator' | 'trophy'
 
 const token = getToken()
 
@@ -92,9 +93,9 @@ const inventoryAPI = {
         )
     },
 
-    removeItem(playerId: number, itemId: number, type: ItemTypes) {
+    removeItem(playerId: number, itemId: number, price: number,type: ItemTypes) {
         return (
-            instance.post(`/inventory/remove?playerId=${playerId}&itemId=${itemId}&type=${type}`, {})
+            instance.post(`/inventory/remove?playerId=${playerId}&itemId=${itemId}&price=${price}&type=${type}`, {})
                 .then((response) => response.data)
         )
     },

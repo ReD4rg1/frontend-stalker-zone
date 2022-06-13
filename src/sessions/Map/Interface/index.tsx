@@ -15,9 +15,28 @@ interface Props {
     showEvent: (playerId: number) => void
     event: CurrentEvent
     openStore: () => void
+    setMedkitsPosition: (position: number) => void
+    setStimsPosition: (position: number) => void
+    medkitsPosition: number
+    stimsPosition: number
+    useMedkit: (playerId: number, medkitId: number) => void
+    useStimulator: (playerId: number, stimulatorId: number) => void
 }
 
-const Interface = ({players, passMove, makeRoll, event, showEvent, openStore}: Props) => {
+const Interface = ({
+    players,
+    passMove,
+    makeRoll,
+    event,
+    showEvent,
+    openStore,
+    medkitsPosition,
+    stimsPosition,
+    setMedkitsPosition,
+    setStimsPosition,
+    useMedkit,
+    useStimulator,
+}: Props) => {
 
     const [isWeapon, setIsWeapon] = useState(false)
 
@@ -40,6 +59,12 @@ const Interface = ({players, passMove, makeRoll, event, showEvent, openStore}: P
                 isWeapon={isWeapon}
                 toggleWeapon={() => setIsWeapon(!isWeapon)}
                 openStore={openStore}
+                medkitsPosition={medkitsPosition}
+                stimsPosition={stimsPosition}
+                setStimsPosition={setStimsPosition}
+                setMedkitsPosition={setMedkitsPosition}
+                useStimulator={useStimulator}
+                useMedkit={useMedkit}
             />
             <RightPanel
                 myPlayer={players.myPlayer}

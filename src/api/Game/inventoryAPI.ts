@@ -106,9 +106,9 @@ const inventoryAPI = {
         )
     },
 
-    useMedkit(playerId: number, medKitId: number) {
+    useMedkit(playerId: number, medkitId: number) {
         return (
-            instance.post(`/items/use-medkit?playerId=${playerId}&medKitId=${medKitId}`, {})
+            instance.post(`/items/use-medkit?playerId=${playerId}&medkitId=${medkitId}`, {})
                 .then((response) => response.data)
         )
     },

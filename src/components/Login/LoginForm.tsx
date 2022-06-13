@@ -50,9 +50,6 @@ const LoginForm = (props: IProps) => {
                         {errors.password && touched.password ? <div className={styles.error}>{errors.password}</div> : null}
                         {status && status.messagePassword ? <div className={styles.error}>{status.messagePassword}</div> : null}
                     </div>
-                    <div className={styles.formCheckbox}>
-                        <Field name={'rememberMe'} type={"checkbox"}/> Запомнить меня
-                    </div>
                     <div className={styles.formButton}>
                         <button type="submit">{props.haveAccount ? 'Войти' : 'Создать аккаунт'}</button>
                     </div>

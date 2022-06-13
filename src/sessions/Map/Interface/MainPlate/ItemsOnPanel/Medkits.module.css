@@ -1,0 +1,89 @@
+.medkitsContainer {
+    position: fixed;
+    bottom: 28px;
+    right: 1255px;
+    width: 110px;
+    height: 130px;
+}
+
+.medkitsImgContainer {
+    position: fixed;
+    right: 1260px;
+    cursor: pointer;
+}
+
+.medkitsImgContainer img {
+    width: 100px;
+    height: 100px;
+}
+
+.medkitsInfoBlock {
+    position: fixed;
+    bottom: 30px;
+    right: 1260px;
+    background-color: #ffffff90;
+    width: 100px;
+}
+
+/*----------------------------------------------*/
+
+.stimsContainer {
+    position: fixed;
+    bottom: 28px;
+    right: 1385px;
+    width: 110px;
+    height: 130px;
+}
+
+.stimsImgContainer {
+    position: fixed;
+    right: 1390px;
+    cursor: pointer;
+}
+
+.stimsImgContainer img {
+    width: 100px;
+    height: 100px;
+}
+
+.stimsInfoBlock {
+    position: fixed;
+    bottom: 30px;
+    right: 1390px;
+    background-color: #ffffff90;
+    width: 100px;
+}
+
+/*----------------------------------------------*/
+
+.rightButton {
+    position: relative;
+    bottom: -50px;
+    right: -60px;
+    background-color: #00000090;
+    color: #fff;
+    font-size: 34px;
+    border: none;
+    cursor: pointer;
+}
+
+.rightButton:hover {
+    background-color: #ffffff30;
+    color: #000;
+}
+
+.leftButton {
+    position: relative;
+    bottom: -50px;
+    right: 60px;
+    background-color: #00000090;
+    color: #fff;
+    font-size: 34px;
+    border: none;
+    cursor: pointer;
+}
+
+.leftButton:hover {
+    background-color: #ffffff30;
+    color: #000;
+}

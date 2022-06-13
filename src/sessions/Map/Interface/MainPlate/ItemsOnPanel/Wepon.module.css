@@ -1,0 +1,61 @@
+.weaponContainer {
+    position: fixed;
+    display: flex;
+    align-items: flex-end;
+    bottom: 27px;
+    right: 1007px;
+    height: 150px;
+    width: 200px;
+    border: white 1px solid;
+}
+
+.imageContainer {
+    position: fixed;
+    right: 1033px;
+}
+
+.imageContainer img {
+    width: 150px;
+}
+
+.infoBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff90;
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    z-index: 100;
+}
+
+.toggleWeaponButton {
+    position: fixed;
+    bottom: 211px;
+    right: 1131px;
+    width: 46px;
+    height: 46px;
+    border: none;
+    background-color: #00000070;
+    border-radius: 50%;
+    cursor: pointer;
+    animation-name: toggleWeapon;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.toggleWeaponButton:hover {
+    animation-name: none;
+    background-color: #ffffff10;
+}
+
+@keyframes toggleWeapon {
+    0% {
+        background-color: #ffffff10;
+    }
+    100% {
+        background-color: #00000030;
+    }
+}

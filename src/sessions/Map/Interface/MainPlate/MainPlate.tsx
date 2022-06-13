@@ -4,6 +4,8 @@ import '../../../../fonts/Boycott.otf';
 import '../../../../fonts/perfoc_bold.otf';
 import {CurrentEvent, EventsType, Player, PlayersInitialState} from "../../../../redux/reducers/players-reducer";
 import MovesCount from "./MovesCount";
+import Weapon from "./ItemsOnPanel/Weapon";
+import Medkits from "./ItemsOnPanel/Medkits";
 
 interface Props {
     players: PlayersInitialState
@@ -14,6 +16,12 @@ interface Props {
     toggleWeapon: () => void
     isWeapon: boolean
     openStore: () => void
+    setMedkitsPosition: (position: number) => void
+    setStimsPosition: (position: number) => void
+    medkitsPosition: number
+    stimsPosition: number
+    useMedkit: (playerId: number, medkitId: number) => void
+    useStimulator: (playerId: number, stimulatorId: number) => void
 }
 
 const MainPlate = ({
@@ -25,6 +33,12 @@ const MainPlate = ({
     toggleWeapon,
     isWeapon,
     openStore,
+    medkitsPosition,
+    stimsPosition,
+    setMedkitsPosition,
+    setStimsPosition,
+    useMedkit,
+    useStimulator,
 }: Props) => {
 
     let currentMove = "Ваша очередь ходить"
@@ -56,7 +70,7 @@ const MainPlate = ({
             <section className={styles.passMove}>
                 {(myPlayer.states.move && !myPlayer.states.inEvent)
                     ? <button onClick={
-                        () => myPlayer.states.alreadyMove
+                        () => myPlayer.states.alreadyMove && !buttonIsAvailable(myPlayer)
                             ? showEvent(myPlayer.id)
                             : passMove(event.type)
                     }
@@ -69,15 +83,18 @@ const MainPlate = ({
             <section className={styles.stats}>
                 <div>
                     {"АТК: " + (isWeapon
-                            ? (myPlayer.inventory.weapon?.damage + '+'
-                                + (myPlayer.effects.damageBoost
-                                    + (myPlayer.inventory.weaponFirstLevelModifier?.damageModifier ?? 0)
-                                    + (myPlayer.inventory.weaponSecondLevelModifier?.damageModifier ?? 0)
-                                    + (myPlayer.inventory.weaponThirdLevelModifier?.damageModifier ?? 0)
-                            ))
+                            ? (myPlayer.inventory.weapon
+                                ? (myPlayer.inventory.weapon?.damage + '+'
+                                        + (myPlayer.effects.damageBoost
+                                            + (myPlayer.inventory.weaponFirstLevelModifier?.damageModifier ?? 0)
+                                            + (myPlayer.inventory.weaponSecondLevelModifier?.damageModifier ?? 0)
+                                            + (myPlayer.inventory.weaponThirdLevelModifier?.damageModifier ?? 0)
+                                        ))
+                                : ("1" + (myPlayer.effects.damageBoost - 2))
+                            )
                             : myPlayer.inventory.grenades[0] ? (myPlayer.inventory.grenades[0].damage * myPlayer.inventory.grenades[0].damageBoost
                                 + '+' + (myPlayer.effects.damageBoost + myPlayer.inventory.grenades[0].damageModifier)
-                            ) : 0
+                            ) : ("1" + (myPlayer.effects.damageBoost - 2))
                     )
                     }
                 </div>
@@ -102,6 +119,20 @@ const MainPlate = ({
                     {currentMove}
                 </div>
             </section>
+            <Weapon
+                isWeapon={isWeapon}
+                toggleWeapon={toggleWeapon}
+                myPlayer={myPlayer}
+            />
+            <Medkits
+                medkitsPosition={medkitsPosition}
+                stimsPosition={stimsPosition}
+                myPlayer={myPlayer}
+                setMedkitsPosition={setMedkitsPosition}
+                setStimsPosition={setStimsPosition}
+                stimulatorUse={useStimulator}
+                medkitUse={useMedkit}
+            />
             <button style={{display: `${buttonIsAvailable(myPlayer) ? "block" : "none"}`}} className={styles.store} onClick={() => openStore()}>
                 {"МАГАЗИН"}
             </button>

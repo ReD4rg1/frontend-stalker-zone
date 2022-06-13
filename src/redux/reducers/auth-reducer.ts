@@ -101,8 +101,8 @@ const setResponseToken = (props: LoginPropsType, response: ResponseType, dispatc
     } else {
         props.setSubmitting(false)
         props.setStatus({
-            messageEmail: response.errorMessage ?? '',
-            messagePassword: response.errorMessage ?? '',
+            messageEmail: response.errorMessage ?? 'Неверная комбинация логин/пароль',
+            messagePassword: response.errorMessage ?? 'Неверная комбинация логин/пароль',
         })
     }
 }

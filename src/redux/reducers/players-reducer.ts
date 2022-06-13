@@ -93,8 +93,8 @@ interface Inventory {
     weaponSecondLevelModifier: WeaponModifierType | null
     weaponThirdLevelModifier: WeaponModifierType | null
     grenades: GrenadeType[]
-    medkits: HealBoxType[]
-    stimulants: HealBoxType[]
+    medkits: MedkitsType[]
+    stimulants: StimsType[]
     teleport: TeleportType | null
     artifact: ActiveArtifactType | null
     mapModifier: OtherItemType | null
@@ -111,7 +111,7 @@ interface Backpack {
     weaponSecondLevelModifier: WeaponModifierType[]
     weaponThirdLevelModifier: WeaponModifierType[]
     grenades: GrenadeType[]
-    stimulants: HealBoxType[]
+    stimulants: StimsType[]
     teleport: TeleportType[]
     artifact: ActiveArtifactType[]
     mapModifier: OtherItemType[]
@@ -164,9 +164,15 @@ type TrophiesType = {
     name: string
     price: number
 }
-type HealBoxType = {
+type MedkitsType = {
     id: number
-    name: string
+    name: "Лист подорожника" | "Бинты" | "Нанопластырь"
+    effect: string
+    price: number
+}
+type StimsType = {
+    id: number
+    name: "Самогон" | "Стероиды" | "Дзета-элексир"
     effect: string
     price: number
 }
@@ -460,6 +466,20 @@ export const removeItem = (playerId: number, itemId: number, type: ItemTypes): T
 export const sellItem = (playerId: number, itemId: number, price: number, type: ItemTypes): ThunkType => {
     return (async () => {
         const response = await inventoryAPI.sellItem(playerId, itemId, price, type)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
+export const useMedkit = (playerId: number, medkitId: number): ThunkType => {
+    return (async () => {
+        const response = await inventoryAPI.useMedkit(playerId, medkitId)
+        if (response.resultCode === 0) updateWS()
+    })
+}
+
+export const useStimulator = (playerId: number, stimulatorId: number): ThunkType => {
+    return (async () => {
+        const response = await inventoryAPI.useStimulator(playerId, stimulatorId)
         if (response.resultCode === 0) updateWS()
     })
 }

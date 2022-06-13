@@ -45,6 +45,27 @@ const playersAPI = {
         )
     },
 
+    locationEnter(playerId: number) {
+        return (
+            instance.post(`/location/enter?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    locationOut(playerId: number) {
+        return (
+            instance.post(`/location/out?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    locationMove(playerId: number, level: number, position: number) {
+        return (
+            instance.post(`/location/set-position?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
 }
 
 export default playersAPI

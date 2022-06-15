@@ -56,7 +56,7 @@ const Weapon = ({isWeapon, toggleWeapon, myPlayer, grenadesPosition, setGrenades
                 </div>
             </div>
             <button className={styles.toggleWeaponButton} onClick={() => toggleWeapon()}>{""}</button>
-            {!isWeapon
+            {!isWeapon && myPlayer.inventory.grenades[grenadesPosition]
                 ? <div>
                     <button className={styles.rightButton} onClick={() => setGrenadesPosition(1)}>{">"}</button>
                     <button className={styles.leftButton} onClick={() => setGrenadesPosition(-1)}>{"<"}</button>

@@ -127,6 +127,20 @@ const inventoryAPI = {
                 .then((response) => response.data)
         )
     },
+
+    getArtifact(playerId: number) {
+        return (
+            instance.post(`/items/get-artifact?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
+    getDetail(playerId: number) {
+        return (
+            instance.post(`/items/get-detail?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
 }
 
 export default inventoryAPI

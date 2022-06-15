@@ -25,7 +25,14 @@ const Hex = (props: IProps) => {
             availableMoveStatus = true
             difficulty = hex.difficulty
         }
-        if (props.myPlayer.states.eventComplete && (props.myPlayer.states.inEvent && props.currentEvent.type === "moveCard") && (hex.moveId === item.hexId && hex.locationId === item.locationId) && hex.side === getSideByCoords({playerCoords: {hexId: props.myPlayer.coordinates.hexId, locationId: props.myPlayer.coordinates.locationId}, finishCoords: {hexId: props.currentEvent.hexId, locationId: props.currentEvent.locationId}})) {
+        if (props.myPlayer.states.eventComplete && (props.myPlayer.numberOfMoves !== 0) &&
+            (props.myPlayer.states.inEvent && props.currentEvent.type === "moveCard") &&
+            (hex.moveId === item.hexId && hex.locationId === item.locationId) &&
+            hex.side === getSideByCoords({playerCoords: {hexId: props.myPlayer.coordinates.hexId, locationId: props.myPlayer.coordinates.locationId}, finishCoords: {hexId: props.currentEvent.hexId, locationId: props.currentEvent.locationId}})) {
+            availableMoveStatus = true
+            difficulty = 0
+        }
+        if ((props.myPlayer.numberOfMoves !== 0) && (props.data.hexId === hex.moveId && props.data.locationId === hex.locationId) && (props.currentEvent.hexId === 0 && props.currentEvent.locationId === 0)) {
             availableMoveStatus = true
             difficulty = 0
         }

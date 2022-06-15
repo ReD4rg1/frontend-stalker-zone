@@ -28,6 +28,10 @@ const RightPanel = ({myPlayer}: Props) => {
                     <span>{`Реп.`}</span>
                     <span>{myPlayer.reputation}</span>
                 </div>
+                <div className={styles.subContainer}>
+                    <span>{`Ком.`}</span>
+                    <span>{myPlayer.inventory.compassDetail}</span>
+                </div>
             </section>
             <section className={styles.orderContainer}>
                 <div className={styles.order}>

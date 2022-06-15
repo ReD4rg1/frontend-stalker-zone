@@ -7,9 +7,10 @@ interface Props {
     passMove: (eventType: EventsType) => void
     eventRoll: (playerId: number) => void
     event: CurrentEvent
+    startFight: (level: number, playerId: number, eventId: number) => void
 }
 
-const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event}: Props) => {
+const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event, startFight}: Props) => {
 
     if (!myPlayer.states.inEvent) return null
 
@@ -118,14 +119,15 @@ const EventButtons = ({myPlayer, applyEvent, eventRoll, passMove, event}: Props)
                         {"Завершить событие"}
                     </button>
                 )
-                : (
-                    <button onClick={() => applyEvent(
-                        myPlayer.id,
-                        event.id,
-                        event.type
-                    )}>
-                        {"Принять бой"}
-                    </button>
+                : (myPlayer.states.inFight
+                        ? <div>{"Завершите бой"}</div>
+                        : <button onClick={() => startFight(
+                            event.monsterLevel,
+                            myPlayer.id,
+                            event.id,
+                        )}>
+                            {"Принять бой"}
+                        </button>
                 )
             }
         </div>

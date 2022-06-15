@@ -11,12 +11,14 @@ interface Props {
     setAvailableHexes: (hexes: AvailableHexes) => void
     setEvents: (event: CurrentEvent) => void
     setMonster: (monster: any) => void
+    setFightEffect: (effect: any) => void
+    setFightQueue: (queue: any) => void
     auth: AuthInitialState
 }
 
 let stompClient: any = null
 
-export function connectWS({setConnected, setPlayers, setAvailableHexes, setEvents, setMonster, auth}: Props) {
+export function connectWS({setConnected, setPlayers, setAvailableHexes, setEvents, setMonster, auth, setFightEffect, setFightQueue}: Props) {
     const socket = new SockJS('http://localhost:8080/player-ws')
     stompClient = Stomp.over(socket)
     stompClient.connect({}, () => {
@@ -32,6 +34,12 @@ export function connectWS({setConnected, setPlayers, setAvailableHexes, setEvent
         })
         stompClient.subscribe('/monster', (monster: any) => {
             setMonster(JSON.parse(monster.body))
+        })
+        stompClient.subscribe('/monster-effect', (effect: any) => {
+            setFightEffect(JSON.parse(effect.body))
+        })
+        stompClient.subscribe('/monster-queue', (queue: any) => {
+            setFightQueue(JSON.parse(queue.body))
         })
     })
 }
@@ -58,16 +66,22 @@ export function getMonster() {
     stompClient.send("/app/get-monster", {})
 }
 
-export function getFightQueue() {
-    stompClient.send("/app/get-fight-queue", {})
+function getFightEffect() {
+    stompClient.send("/app/get-fight-effect", {})
 }
 
-export function getFightEffect() {
-    stompClient.send("/app/get-fight-effect", {})
+function getFightQueue() {
+    stompClient.send("/app/get-fight-queue", {})
 }
 
 export function updateWS() {
     getPlayers()
     getCoords()
     getEvents()
+}
+
+export function updateFight() {
+    getMonster()
+    getFightEffect()
+    getFightQueue()
 }

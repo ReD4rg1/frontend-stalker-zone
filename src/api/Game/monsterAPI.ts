@@ -10,9 +10,9 @@ const instance = axios.create({
 
 const monsterAPI = {
 
-    setMonster(level: number) {
+    setMonster(level: number, eventId: number) {
         return (
-            instance.post(`/monster/set?level=${level}`, {})
+            instance.post(`/monster/set?level=${level}&eventId=${eventId}`, {})
                 .then((response) => response.data)
         )
     },
@@ -58,7 +58,6 @@ const monsterAPI = {
                 .then((response) => response.data)
         )
     },
-
 }
 
 export default monsterAPI

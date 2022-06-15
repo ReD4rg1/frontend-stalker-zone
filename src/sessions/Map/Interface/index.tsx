@@ -21,6 +21,8 @@ interface Props {
     medkitsPosition: number
     stimsPosition: number
     grenadesPosition: number
+    isWeapon: boolean
+    toggleWeapon: () => void
     useMedkit: (playerId: number, medkitId: number) => void
     useStimulator: (playerId: number, stimulatorId: number) => void
     setGrenadesPosition: (position: number) => void
@@ -41,10 +43,10 @@ const Interface = ({
     useStimulator,
     grenadesPosition,
     setGrenadesPosition,
-    toggleShowInventory
+    toggleShowInventory,
+    isWeapon,
+    toggleWeapon,
 }: Props) => {
-
-    const [isWeapon, setIsWeapon] = useState(true)
 
     return (
         <div className={styles.container}>
@@ -64,7 +66,7 @@ const Interface = ({
                 showEvent={showEvent}
                 toggleShowInventory={toggleShowInventory}
                 isWeapon={isWeapon}
-                toggleWeapon={() => setIsWeapon(!isWeapon)}
+                toggleWeapon={toggleWeapon}
                 openStore={openStore}
                 medkitsPosition={medkitsPosition}
                 stimsPosition={stimsPosition}

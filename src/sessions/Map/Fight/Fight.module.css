@@ -1,0 +1,183 @@
+.container {
+    position: fixed;
+    top: 110px;
+    right: 124px;
+    width: 956px;
+    height: 580px;
+    z-index: 10000;
+}
+
+.imageContainer {
+    position: fixed;
+    top: 100px;
+    right: 100px;
+}
+
+.imageContainer img {
+
+}
+
+.monsterSection {
+    font-family: "perfoc_bold", sans-serif;
+    color: #99ff00ff;
+    position: fixed;
+    top: 162px;
+    right: 785px;
+    width: 260px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    animation-name: monitor;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+}
+
+.playerSection {
+    font-family: "perfoc_bold", sans-serif;
+    color: #99ff00ff;
+    position: fixed;
+    top: 162px;
+    right: 160px;
+    width: 260px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    animation-name: monitor;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+}
+
+@keyframes monitor {
+    0% {
+        color: #99ff0060;
+    }
+    1% {
+        color: #99ff0040;
+    }
+    2% {
+        color: #99ff00ff;
+    }
+    40% {
+        color: #99ff0060;
+    }
+    41% {
+        color: #99ff0040;
+    }
+    42% {
+        color: #99ff00ff;
+    }
+    43% {
+        color: #99ff0040;
+    }
+    44% {
+        color: #99ff00ff;
+    }
+    100% {
+        color: #99ff0060;
+    }
+}
+
+.mainTitle {
+    margin: 5px 0;
+}
+
+.statsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.statItem {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*-----------------------------------*/
+
+.buttonSection {
+    font-family: "Boycott", sans-serif;
+    position: fixed;
+    top: 550px;
+    right: 400px;
+    width: 400px;
+    height: 100px;
+    background-color: #00000090;
+    border-radius: 15px;
+    color: white;
+    font-size: 24px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.buttonContainer button {
+    cursor: pointer;
+    background-color: #ff000090;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 30px;
+    transition: all 0.15s ease 0s;
+}
+
+.buttonContainer button:hover {
+    background-color: #ff000030;
+}
+
+/*-----------------------------------*/
+
+.fightShowButton {
+    position: fixed;
+    top: 200px;
+    left: 10px;
+    z-index: 20000;
+    cursor: pointer;
+    background-color: #ff000090;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 30px;
+    transition: all 0.15s ease 0s;
+    animation-name: apply;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.fightShowButton:hover {
+    background-color: #ffffff;
+}
+
+@keyframes apply {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.closeButton {
+    position: fixed;
+    top: 115px;
+    right: 950px;
+    z-index: 20000;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #ffffff90;
+    transition: all 0.15s ease 0s;
+}
+
+.closeButton:hover {
+    background-color: #ffffff;
+}

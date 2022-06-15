@@ -19,6 +19,7 @@ export interface PlayersInitialState {
     currentEvent: CurrentEvent
     shop: Shop
     shopLoaded: boolean
+    endGameAlerted: boolean
 }
 
 export interface CurrentEvent {
@@ -80,6 +81,7 @@ interface States {
     alreadyThrowCube: boolean
     eventComplete: boolean
     paralyze: boolean
+    endGame: boolean
 }
 
 type CoordinatesType = {
@@ -262,6 +264,7 @@ let initialPlayer: Player = {
         alreadyThrowCube: false,
         eventComplete: false,
         paralyze: false,
+        endGame: false,
     },
     effects: {
         healBoost: 0,
@@ -361,11 +364,23 @@ let initialState: PlayersInitialState = {
         grenade: [],
     },
     shopLoaded: false,
+    endGameAlerted: false,
 }
 
 const playersReducer = (state = initialState, action: ActionsType): PlayersInitialState => {
     switch (action.type) {
         case SET_PLAYERS:
+            action.players.forEach((player) => {
+                if (player.states.endGame) {
+                    alert(`Игрок ${player.name} победил!`)
+                    return {
+                        ...state,
+                        players: action.players,
+                        myPlayer: findMyPlayer(action.players, action.userId),
+                        endGameAlerted: true,
+                    }
+                }
+            })
             return {
                 ...state,
                 players: action.players,
@@ -563,6 +578,15 @@ export const passOrder = (playerId: number, place: "base" | "village" | "laborat
         if (response.resultCode === 0) {
             updateWS()
             alert("Вы сдали заказ!")
+        }
+    })
+}
+
+export const endGame = (playerId: number): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.endGame(playerId)
+        if (response.resultCode === 0) {
+            updateWS()
         }
     })
 }

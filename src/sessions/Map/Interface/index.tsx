@@ -26,6 +26,9 @@ interface Props {
     useMedkit: (playerId: number, medkitId: number) => void
     useStimulator: (playerId: number, stimulatorId: number) => void
     setGrenadesPosition: (position: number) => void
+
+    setOrder: (playerId: number) => void
+    passOrder: (playerId: number, place: "base" | "village" | "laboratory") => void
 }
 
 const Interface = ({
@@ -46,6 +49,8 @@ const Interface = ({
     toggleShowInventory,
     isWeapon,
     toggleWeapon,
+    setOrder,
+    passOrder,
 }: Props) => {
 
     return (
@@ -79,6 +84,8 @@ const Interface = ({
             />
             <RightPanel
                 myPlayer={players.myPlayer}
+                setOrder={setOrder}
+                passOrder={passOrder}
             />
             <Scanner
                 myPlayer={players.myPlayer}

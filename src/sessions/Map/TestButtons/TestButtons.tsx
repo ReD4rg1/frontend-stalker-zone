@@ -8,10 +8,9 @@ interface Props {
     toggleShowCoords: () => void
     showCoords: boolean
     passMove: (eventType: EventsType) => void
-    requestMonster: (level: number) => void
 }
 
-const TestButtons = ({toggleShowCoords, showCoords, event, passMove, requestMonster}: Props) => {
+const TestButtons = ({toggleShowCoords, showCoords, event, passMove}: Props) => {
     return (
         <section className={styles.testContainer}>
             <button onClick={toggleShowCoords}>
@@ -22,9 +21,6 @@ const TestButtons = ({toggleShowCoords, showCoords, event, passMove, requestMons
             </button>
             <button onClick={() => passMove(event.type)}>
                 {"Передать ход"}
-            </button>
-            <button onClick={() => requestMonster(1)}>
-                {"Получить монстра"}
             </button>
         </section>
     )

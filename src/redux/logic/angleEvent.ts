@@ -50,9 +50,11 @@ const getSideByCoords = ({playerCoords, finishCoords}: Props):sidesType | null =
     if (angle > 330 || angle < 30) return "top"
     if (angle > 300) return "topLeft"
     if (angle > 0 && angle < 90) return "topRight"
-    if (angle > 240 && angle < 300) return "bottom"
-    if (angle > 210 && angle < 270) return "bottomLeft"
+    if (angle >= 150 && angle < 210) return "bottom"
+    if (angle >= 210 && angle < 270) return "bottomLeft"
     if (angle > 180) return "bottomRight"
+
+    console.log("angle: ", angle)
 
     return null
 }

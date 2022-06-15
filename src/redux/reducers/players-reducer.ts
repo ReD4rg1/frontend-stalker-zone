@@ -31,6 +31,7 @@ export interface CurrentEvent {
     locationId: number
     hexId: number
     rollCube: number
+    monsterLevel: number
 }
 
 export type EventsType = "simpleCard" | "throwCard" | "moveCard" | "monsterCard"
@@ -64,6 +65,7 @@ export interface Player {
     inventory: Inventory
     backpack: Backpack
     coordinates: CoordinatesType
+    locationCoordinate: LocationCoordinatesType
 }
 
 interface States {
@@ -73,6 +75,7 @@ interface States {
     rollCube: boolean
     alreadyMove: boolean
     inEvent: boolean
+    inLocation: boolean
     anotherMove: boolean
     alreadyThrowCube: boolean
     eventComplete: boolean
@@ -84,6 +87,13 @@ type CoordinatesType = {
     hexId: number
     locationName: string
     locationLevel: number
+}
+
+type LocationCoordinatesType = {
+    id: number
+    playerId: number
+    level: number
+    position: number
 }
 
 interface Inventory {
@@ -102,6 +112,7 @@ interface Inventory {
     locationModifier: OtherItemType | null
     trapModifier: OtherItemType | null
     stealthModifier: OtherItemType | null
+    compassDetail: number
 }
 
 interface Backpack {
@@ -243,6 +254,7 @@ let initialPlayer: Player = {
         rollCube: false,
         alreadyMove: false,
         inEvent: false,
+        inLocation: false,
         anotherMove: false,
         alreadyThrowCube: false,
         eventComplete: false,
@@ -274,6 +286,7 @@ let initialPlayer: Player = {
         locationModifier: null,
         trapModifier: null,
         stealthModifier: null,
+        compassDetail: 0,
     },
     backpack: {
         helmets: [],
@@ -298,6 +311,12 @@ let initialPlayer: Player = {
         locationName: '',
         locationLevel: 0,
     },
+    locationCoordinate: {
+        id: 0,
+        playerId: 0,
+        level: 0,
+        position: 0,
+    }
 }
 
 let initialState: PlayersInitialState = {
@@ -329,6 +348,7 @@ let initialState: PlayersInitialState = {
         locationId: 0,
         hexId: 0,
         rollCube: 2,
+        monsterLevel: 1,
     },
     shop: {
         armors: [],
@@ -504,6 +524,22 @@ export const useGrenade = (playerId: number, grenadeId: number): ThunkType => {
         if (response.resultCode === 0) {
             updateWS()
             alert("Вы использовали гранату")
+        }
+    })
+}
+
+export const getArtifact = (playerId: number): ThunkType => {
+    return (async () => {
+        const responseDetail = await inventoryAPI.getDetail(playerId)
+        if (responseDetail.resultCode === 0) {
+            updateWS()
+            alert("Вы получили деталь компаса!")
+        } else if (responseDetail.resultCode === 1) {
+            const responseArtifact = await inventoryAPI.getDetail(playerId)
+            if (responseArtifact.resultCode === 0) {
+                updateWS()
+                alert("Вы получили артефакт!")
+            }
         }
     })
 }

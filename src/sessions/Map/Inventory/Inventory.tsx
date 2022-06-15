@@ -220,7 +220,7 @@ const Inventory = ({
                             <div>{myPlayer.inventory.medkits[medkitsPosition]?.effect}</div>
                             <div>{myPlayer.inventory.medkits[medkitsPosition]?.price+"$"}</div>
                             <div className={styles.buttonContainer}>
-                                <button onClick={() => sellItem(myPlayer.id, myPlayer.inventory.medkits[medkitsPosition]?.id ?? 0, (myPlayer.inventory.medkits[medkitsPosition]?.price / 2), "stimulator")}>{"Убрать"}</button>
+                                <button onClick={() => sellItem(myPlayer.id, myPlayer.inventory.medkits[medkitsPosition]?.id ?? 0, (myPlayer.inventory.medkits[medkitsPosition]?.price / 2), "medkit")}>{"Продать"}</button>
                             </div>
                         </section>
                         : <div/>

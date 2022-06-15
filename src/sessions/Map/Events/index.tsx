@@ -11,9 +11,10 @@ interface Props {
     eventRoll: (playerId: number) => void
     showEvent: boolean
     toggleShowEvent: () => void
+    startFight: (level: number, playerId: number, eventId: number) => void
 }
 
-const Event = ({players, applyEvent, passMove, eventRoll, showEvent, toggleShowEvent}:Props) => {
+const Event = ({players, applyEvent, passMove, eventRoll, showEvent, toggleShowEvent, startFight}:Props) => {
 
     const inEvent = (player: Player) => {
         return player.states.inEvent
@@ -43,6 +44,7 @@ const Event = ({players, applyEvent, passMove, eventRoll, showEvent, toggleShowE
                     passMove={passMove}
                     eventRoll={eventRoll}
                     event={players.currentEvent}
+                    startFight={startFight}
                 />
             </div>
             <div className={styles.closeButton} onClick={() => toggleShowEvent()}>

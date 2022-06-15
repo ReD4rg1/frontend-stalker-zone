@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     bindUser,
     connect,
@@ -15,6 +15,7 @@ import UserComponent from "./UserComponent";
 import styles from "./index.module.css";
 import CharInfo from "./CharInfo";
 import {CheckStartGame} from "../../../redux/logic/startGame/startGame";
+import backgroundImage from "../../../assets/img/main-menu/main-menu-background.gif";
 
 interface ExitRoomProps {
     getChars: (id: number) => void
@@ -55,6 +56,9 @@ const MenuContainer = ({auth, rooms, SetCharacters, SetUsers, SetRoomUsers, Exit
 
     return (
         <div className={styles.mainContainer}>
+            <section className={styles.imageContainer}>
+                <img src={backgroundImage} alt={'#'}/>
+            </section>
             <section className={styles.mainContainerSection}>
                 <h3>{"Персонажи"}</h3>
                 {rooms.currentRoom.charactersList.map((char) =>

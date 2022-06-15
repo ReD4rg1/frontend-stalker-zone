@@ -25,16 +25,24 @@ const CharInfo = ({chars, users, userId}: Props) => {
         if (char.id === currentCharId) currentCharInfo = char
     })
 
+    if (currentCharInfo.id === 0) return (
+        <div>
+            <section className={styles.effectsContainer}>
+                <h3>{"Выберите персонажа"}</h3>
+            </section>
+        </div>
+    )
+
     return (
         <div>
             <section className={styles.effectsContainer}>
-                <h3>{"Кличка игрока"}</h3>
+                <h3>{"Позывной: "}</h3>
                 <h3>{currentCharInfo.name}</h3>
             </section>
             <section>
                 {currentCharInfo.effectsList.map((effect) => (
                     <div className={styles.effect} key={effect.id}>
-                        <h4>{effect.name}</h4>
+                        <h4>{`${effect.name}: `}</h4>
                         <h4>{effect.value}</h4>
                     </div>
                 ))}

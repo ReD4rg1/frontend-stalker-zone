@@ -217,6 +217,7 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                 updateWS()
             }
         }
+        if (!this.props.players.myPlayer.states.endGame && this.props.players.myPlayer.coordinates.locationName === "Эпицентр" && this.props.players.myPlayer.inventory.compassDetail >= 6) this.props.endGame(this.props.players.myPlayer.id)
     }
 
     componentWillUnmount() {

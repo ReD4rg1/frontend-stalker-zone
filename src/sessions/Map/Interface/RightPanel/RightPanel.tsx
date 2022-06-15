@@ -30,11 +30,6 @@ const RightPanel = ({myPlayer, setOrder, passOrder}: Props) => {
             }
         } else if (myPlayer.order && (myPlayer.order.progress === myPlayer.order.maxProgress) && ((myPlayer.coordinates.locationName === "Посёлок") || (myPlayer.coordinates.locationName === "Военная база") || (myPlayer.coordinates.locationName === "Лаборатория"))) {
             passOrder(myPlayer.id, location)
-        }   else if (myPlayer.order) {
-            alert("Ваш текущий заказ: " + myPlayer.order.title)
-            alert("Описание заказа: " + myPlayer.order.text)
-            alert("Что нужно сделать?" + myPlayer.order.description)
-            alert("Места: " + `${myPlayer.order.firstPlace}${myPlayer.order.secondPlace ? ", " + myPlayer.order.secondPlace : ""}`)
         }
     }
 

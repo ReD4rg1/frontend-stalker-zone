@@ -39,6 +39,7 @@ import Store from "./Store/Store";
 import Fight from "./Fight/Fight";
 import Inventory from "./Inventory/Inventory";
 import MapLocation from "./MapLocation/MapLocation";
+import Order from "./Order/Order";
 
 interface GenerateMapProps {
     players: Player[]
@@ -304,6 +305,11 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     medkitsPosition={this.state.medkitsPosition}
                     stimsPosition={this.state.stimsPosition}
                     grenadesPosition={this.state.grenadesPosition}
+                />
+                <Order
+                    showOrder={this.state.showOrder}
+                    toggleShowOrder={this.toggleShowOrder}
+                    myPlayer={this.props.players.myPlayer}
                 />
             </div>
         )

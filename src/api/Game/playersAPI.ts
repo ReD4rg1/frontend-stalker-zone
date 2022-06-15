@@ -66,6 +66,13 @@ const playersAPI = {
         )
     },
 
+    endGame(playerId: number) {
+        return (
+            instance.post(`/players/end-game?playerId=${playerId}`, {})
+                .then((response) => response.data)
+        )
+    },
+
 }
 
 export default playersAPI

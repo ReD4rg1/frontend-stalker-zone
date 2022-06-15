@@ -22,9 +22,11 @@ const RightPanel = ({myPlayer, setOrder, passOrder}: Props) => {
 
     const order = () => {
         if (!myPlayer.order) {
-            let confirmOrder = window.confirm("Хотите взять заказ?")
-            if (confirmOrder) {
-                setOrder(myPlayer.id)
+            if ((myPlayer.coordinates.locationName === "Посёлок") || (myPlayer.coordinates.locationName === "Военная база") || (myPlayer.coordinates.locationName === "Лаборатория")) {
+                let confirmOrder = window.confirm("Хотите взять заказ?")
+                if (confirmOrder) {
+                    setOrder(myPlayer.id)
+                }
             }
         } else if (myPlayer.order && (myPlayer.order.progress === myPlayer.order.maxProgress) && ((myPlayer.coordinates.locationName === "Посёлок") || (myPlayer.coordinates.locationName === "Военная база") || (myPlayer.coordinates.locationName === "Лаборатория"))) {
             passOrder(myPlayer.id, location)

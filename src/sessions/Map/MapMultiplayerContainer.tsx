@@ -11,8 +11,8 @@ import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
 import {
-    applyEvent, CurrentEvent, eventRoll,
-    EventsType, getShop,
+    applyEvent, CurrentEvent, endGame, eventRoll,
+    EventsType, getArtifact, getShop,
     makeRoll,
     moveTo,
     passMove, passOrder,
@@ -86,6 +86,9 @@ interface MapProps {
 
     setOrder: (playerId: number) => void
     passOrder: (playerId: number, place: "base" | "village" | "laboratory") => void
+
+    endGame: (playerId: number) => void
+    getArtifact: (playerId: number) => void
 }
 
 interface State {
@@ -348,6 +351,8 @@ export default compose(
         playerDied,
         setOrder,
         passOrder,
+        endGame,
+        getArtifact,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

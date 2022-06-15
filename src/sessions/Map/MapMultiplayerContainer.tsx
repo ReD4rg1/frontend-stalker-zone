@@ -15,9 +15,9 @@ import {
     EventsType, getShop,
     makeRoll,
     moveTo,
-    passMove,
+    passMove, passOrder,
     Player,
-    PlayersInitialState, removeItem, sellItem, setEvents, setItem, setItemFromBackpack,
+    PlayersInitialState, removeItem, sellItem, setEvents, setItem, setItemFromBackpack, setOrder,
     setPlayers, showEvent, useGrenade, useMedkit, useStimulator
 } from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
@@ -83,6 +83,9 @@ interface MapProps {
     removeItem: (playerId: number, itemId: number, price: number,type: ItemTypes) => void
     sellItem: (playerId: number, itemId: number, price: number, type: ItemTypes) => void
     setItemFromBackpack: (playerId: number, itemId: number, type: ItemTypes) => void
+
+    setOrder: (playerId: number) => void
+    passOrder: (playerId: number, place: "base" | "village" | "laboratory") => void
 }
 
 interface State {
@@ -261,6 +264,8 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     setGrenadesPosition={this.setGrenadesPosition}
                     useMedkit={this.props.useMedkit}
                     useStimulator={this.props.useStimulator}
+                    setOrder={this.props.setOrder}
+                    passOrder={this.props.passOrder}
                 />
                 <Store
                     players={this.props.players}
@@ -341,6 +346,8 @@ export default compose(
         nextMember,
         endFight,
         playerDied,
+        setOrder,
+        passOrder,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

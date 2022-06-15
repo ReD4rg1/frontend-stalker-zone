@@ -145,13 +145,16 @@ type PlayerEffectsType = {
 }
 type OrderType = {
     id: number
-    name: string
+    title: string
+    text: string
     description: string
-    targetLocations: string[]
-    receptionPlace: string
-    isCompleted: boolean
-    reward: number
-    orderEffect: PlayerEffectsType
+    firstPlace: string
+    secondPlace: string | 0
+    base: number
+    laboratory: number
+    village: number
+    progress: number
+    maxProgress: number
 }
 type ActiveArtifactType = {
     id: number
@@ -540,6 +543,26 @@ export const getArtifact = (playerId: number): ThunkType => {
                 updateWS()
                 alert("Вы получили артефакт!")
             }
+        }
+    })
+}
+
+export const setOrder = (playerId: number): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.setOrder(playerId)
+        if (response.resultCode === 0) {
+            updateWS()
+            alert("Вы взяли заказ!")
+        }
+    })
+}
+
+export const passOrder = (playerId: number, place: "base" | "village" | "laboratory"): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.passOrder(playerId, place)
+        if (response.resultCode === 0) {
+            updateWS()
+            alert("Вы сдали заказ!")
         }
     })
 }

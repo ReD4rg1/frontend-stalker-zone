@@ -3,7 +3,7 @@
     bottom: 200px;
     right: 0;
     width: 400px;
-    height: 300px;
+    height: 650px;
     overflow-y: scroll;
     background-color: #000000d0;
     border-radius: 15px;
@@ -52,7 +52,7 @@
 
 .closeButton {
     position: fixed;
-    bottom: 495px;
+    bottom: 845px;
     right: 325px;
 }
 

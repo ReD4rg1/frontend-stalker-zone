@@ -371,8 +371,7 @@ const playersReducer = (state = initialState, action: ActionsType): PlayersIniti
     switch (action.type) {
         case SET_PLAYERS:
             action.players.forEach((player) => {
-                if (!player.states.endGame && player.coordinates.locationName === "Эпицентр" && player.inventory.compassDetail >= 6) endGame(player.id)
-                if (player.states.endGame) {
+                if (player.states.endGame && !state.endGameAlerted) {
                     alert(`Игрок ${player.name} победил!`)
                     return {
                         ...state,

@@ -61,7 +61,7 @@ const playersAPI = {
 
     locationMove(playerId: number, level: number, position: number) {
         return (
-            instance.post(`/location/set-position?playerId=${playerId}`, {})
+            instance.post(`/location/set-position?playerId=${playerId}&level=${level}&position=${position}`, {})
                 .then((response) => response.data)
         )
     },

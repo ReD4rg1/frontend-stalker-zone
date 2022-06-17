@@ -58,6 +58,13 @@ const monsterAPI = {
                 .then((response) => response.data)
         )
     },
+
+    escapeFromFight(playerId: number, rep: number) {
+        return (
+            instance.post(`/fight/escape?playerId=${playerId}&rep=${rep}`, {})
+                .then((response) => response.data)
+        )
+    },
 }
 
 export default monsterAPI

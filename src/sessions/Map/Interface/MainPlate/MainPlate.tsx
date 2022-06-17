@@ -2,7 +2,7 @@ import styles from "./MainPlate.module.css";
 import React from "react";
 import '../../../../fonts/Boycott.otf';
 import '../../../../fonts/perfoc_bold.otf';
-import {CurrentEvent, EventsType, Player, PlayersInitialState} from "../../../../redux/reducers/players-reducer";
+import {CurrentEvent, EventsType, PlayersInitialState} from "../../../../redux/reducers/players-reducer";
 import MovesCount from "./MovesCount";
 import Weapon from "./ItemsOnPanel/Weapon";
 import Medkits from "./ItemsOnPanel/Medkits";
@@ -25,6 +25,8 @@ interface Props {
     useStimulator: (playerId: number, stimulatorId: number) => void
     grenadesPosition: number
     setGrenadesPosition: (position: number) => void
+
+    locationEnter: (playerId: number, level: number, position: number) => void
 }
 
 const MainPlate = ({
@@ -45,6 +47,7 @@ const MainPlate = ({
     grenadesPosition,
     setGrenadesPosition,
     toggleShowInventory,
+    locationEnter,
 }: Props) => {
 
     let currentMove = "Ваша очередь ходить"
@@ -54,8 +57,12 @@ const MainPlate = ({
         if (player.states.move && player.name !== myPlayer.name) currentMove = `Очередь ходить: ${player.name}`
     })
 
-    let buttonIsAvailable = (myPlayer: Player): boolean => {
+    let buttonIsAvailable = (): boolean => {
+        if (myPlayer.coordinates.locationName !== "") return true
+        return false
+    }
 
+    const availableShop = (): boolean => {
         if (myPlayer.coordinates.locationName === "Посёлок") return true
         else if (myPlayer.coordinates.locationName === "Военная база" && myPlayer.reputation > 2) return true
         else if (myPlayer.coordinates.locationName === "Лаборатория" && myPlayer.reputation > 5) return true
@@ -76,7 +83,7 @@ const MainPlate = ({
             <section className={styles.passMove}>
                 {(myPlayer.states.move && !myPlayer.states.inEvent)
                     ? <button onClick={
-                        () => myPlayer.states.alreadyMove && !buttonIsAvailable(myPlayer)
+                        () => myPlayer.states.alreadyMove && !buttonIsAvailable()
                             ? showEvent(myPlayer.id)
                             : passMove(event.type)
                     }
@@ -141,8 +148,11 @@ const MainPlate = ({
                 stimulatorUse={useStimulator}
                 medkitUse={useMedkit}
             />
-            <button style={{display: `${buttonIsAvailable(myPlayer) ? "block" : "none"}`}} className={styles.store} onClick={() => openStore()}>
-                {"МАГАЗИН"}
+            <button style={{display: `${buttonIsAvailable() ? "block" : "none"}`}} className={styles.store} onClick={() => {
+                if (availableShop()) openStore()
+                if (!availableShop()) locationEnter(myPlayer.id, myPlayer.coordinates.locationLevel, 0)
+            }}>
+                {availableShop() ? "МАГАЗИН" : myPlayer.coordinates.locationName}
             </button>
             <button className={styles.inventory} onClick={() => toggleShowInventory()}>{""}</button>
         </section>

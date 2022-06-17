@@ -3,25 +3,26 @@ import background from "../../../assets/img/monsters/fight.png";
 import {FightType, MonsterInitialState} from "../../../redux/reducers/monster-reducer";
 import {Player, PlayersInitialState} from "../../../redux/reducers/players-reducer";
 import {updateFight} from "../../../api/Game/ws/gameWS";
+import FightButtons from "./FightButtons";
 
 interface Props {
     monster: MonsterInitialState
     players: PlayersInitialState
     showFight: boolean
     toggleShowFight: () => void
-    useGrenade: (playerId: number, grenadeId: number) => void
     playerAttack: FightType
     monsterAttack: FightType
     nextMember: FightType
     playerDied: FightType
-    endFight: FightType
+    endFight: (playerId: number, monsterLevel: number) => void
     isWeapon: boolean
+    escapeFromFight: (playerId: number, rep: number) => void
+    grenadesPosition: number
 }
 
 const Fight = ({
     showFight,
     toggleShowFight,
-    useGrenade,
     monster,
     players,
     isWeapon,
@@ -30,13 +31,11 @@ const Fight = ({
     playerDied,
     monsterAttack,
     nextMember,
+    escapeFromFight,
+    grenadesPosition,
 }:Props) => {
 
     const inFight = (player: Player) => {
-        return player.states.inFight
-    }
-
-    const attacked = (player: Player) => {
         return player.states.inFight
     }
 
@@ -51,8 +50,16 @@ const Fight = ({
         })
 
         let turn: "player" | "monster" = "player"
-        if (monster.fightQueue.length > 0) {
-            turn = monster.fightQueue[0].active ? monster.fightQueue[0].member : monster.fightQueue[1].member
+        let availableAttack = false
+        if (monster.fightQueue[0]) {
+            if (monster.fightQueue[0].active) {
+                turn = monster.fightQueue[0].member
+                availableAttack = monster.fightQueue[0].attack
+            }
+            if (monster.fightQueue[1].active) {
+                turn = monster.fightQueue[1].member
+                availableAttack = monster.fightQueue[1].attack
+            }
         }
 
         return (
@@ -81,7 +88,7 @@ const Fight = ({
                         </div>
                         <div className={styles.statItem}>
                             <div>{"Атака: "}</div>
-                            <div>{monster.damage + "+" + monster.damageModifier}</div>
+                            <div>{monster.damage + `${monster.damageModifier <= 0 ? "" : "+"}` + monster.damageModifier}</div>
                         </div>
                         <div className={styles.statItem}>
                             <div>{"Защита: "}</div>
@@ -154,12 +161,20 @@ const Fight = ({
                     <div>
                         {`Сейчас ходит ${turn === "player" ? "игрок" : "монстр"}`}
                     </div>
-                    <div className={styles.buttonContainer}>
-                        {}
-                        <button>{"Атака"}</button>
-                        {}
-                        <button>{"Сбежать"}</button>
-                    </div>
+                    <FightButtons
+                        turn={turn}
+                        escapeFromFight={escapeFromFight}
+                        endFight={endFight}
+                        monster={monster}
+                        monsterAttack={monsterAttack}
+                        myPlayer={players.myPlayer}
+                        availableAttack={availableAttack}
+                        grenadesPosition={grenadesPosition}
+                        isWeapon={isWeapon}
+                        playerAttack={playerAttack}
+                        playerDied={playerDied}
+                        nextMember={nextMember}
+                    />
                 </section>
                 <div className={styles.closeButton} onClick={() => toggleShowFight()}>
                     {"Свернуть"}

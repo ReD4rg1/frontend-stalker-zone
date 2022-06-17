@@ -12,13 +12,13 @@ import {AppStateType} from "../../redux/redux-store";
 import {RoomInitialState} from "../../redux/reducers/room-reducer";
 import {
     applyEvent, CurrentEvent, endGame, eventRoll,
-    EventsType, getArtifact, getShop,
+    EventsType, getArtifact, getShop, locationEnter, locationMove, locationOut, locationPassMove,
     makeRoll,
     moveTo,
     passMove, passOrder,
     Player,
     PlayersInitialState, removeItem, sellItem, setEvents, setItem, setItemFromBackpack, setOrder,
-    setPlayers, showEvent, useGrenade, useMedkit, useStimulator
+    setPlayers, showEvent, useMedkit, useStimulator
 } from "../../redux/reducers/players-reducer";
 import {withAuthMapRedirect} from "../../redirect/withAuthMapRedirect";
 import Preloader from "../../components/common/Preloader/Preloader";
@@ -32,7 +32,7 @@ import {
     startFight,
     setMonster,
     setFightEffect,
-    playerAttack, monsterAttack, nextMember, endFight, playerDied, setFightQueue, FightType
+    playerAttack, monsterAttack, nextMember, endFight, playerDied, setFightQueue, FightType, escapeFromFight
 } from "../../redux/reducers/monster-reducer";
 import {ItemTypes} from "../../api/Game/inventoryAPI";
 import Store from "./Store/Store";
@@ -67,7 +67,7 @@ interface MapProps {
     monsterAttack: FightType
     nextMember: FightType
     playerDied: FightType
-    endFight: FightType
+    endFight: (playerId: number, monsterLevel: number) => void
 
     makeRoll: (playerId: number) => void
     eventRoll: (playerId: number) => void
@@ -80,7 +80,6 @@ interface MapProps {
     setItem: (playerId: number, itemId: number, price: number, type: ItemTypes) => void
     useMedkit: (playerId: number, medkitId: number) => void
     useStimulator: (playerId: number, stimulatorId: number) => void
-    useGrenade: (playerId: number, grenadeId: number) => void
     removeItem: (playerId: number, itemId: number, price: number,type: ItemTypes) => void
     sellItem: (playerId: number, itemId: number, price: number, type: ItemTypes) => void
     setItemFromBackpack: (playerId: number, itemId: number, type: ItemTypes) => void
@@ -90,6 +89,12 @@ interface MapProps {
 
     endGame: (playerId: number) => void
     getArtifact: (playerId: number) => void
+    escapeFromFight: (playerId: number, rep: number) => void
+
+    locationEnter: (playerId: number) => void
+    locationMove: (playerId: number, level: number, position: number) => void
+    locationOut: (playerId: number, getArtifact: boolean) => void
+    locationPassMove: () => void
 }
 
 interface State {
@@ -271,6 +276,7 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     useStimulator={this.props.useStimulator}
                     setOrder={this.props.setOrder}
                     passOrder={this.props.passOrder}
+                    locationEnter={this.props.locationEnter}
                 />
                 <Store
                     players={this.props.players}
@@ -281,7 +287,6 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                 <Fight
                     showFight={this.state.showFight}
                     toggleShowFight={this.toggleShowFight}
-                    useGrenade={this.props.useGrenade}
                     monster={this.props.monster}
                     players={this.props.players}
                     playerAttack={this.props.playerAttack}
@@ -290,11 +295,18 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     playerDied={this.props.playerDied}
                     endFight={this.props.endFight}
                     isWeapon={this.state.isWeapon}
+                    escapeFromFight={this.props.escapeFromFight}
+                    grenadesPosition={this.state.grenadesPosition}
                 />
                 <MapLocation
                     myPlayer={this.props.players.myPlayer}
                     showLocation={this.state.showLocation}
                     toggleLocation={this.toggleShowLocation}
+                    locationMove={this.props.locationMove}
+                    locationOut={this.props.locationOut}
+                    makeRoll={this.props.makeRoll}
+                    locationPassMove={this.props.locationPassMove}
+                    startFight={this.props.startFight}
                 />
                 <Inventory
                     showInventory={this.state.showInventory}
@@ -348,7 +360,6 @@ export default compose(
         removeItem,
         sellItem,
         setItemFromBackpack,
-        useGrenade,
         setFightEffect,
         setFightQueue,
         playerAttack,
@@ -360,6 +371,11 @@ export default compose(
         passOrder,
         endGame,
         getArtifact,
+        escapeFromFight,
+        locationEnter,
+        locationMove,
+        locationOut,
+        locationPassMove,
     }),
     withAuthMapRedirect
 )(MapMultiplayerContainer) as React.ComponentType

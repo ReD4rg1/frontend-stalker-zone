@@ -3,7 +3,7 @@ import mainPanelL from "../../../assets/img/interface/mainPanelL.png";
 import mainPanelR from "../../../assets/img/interface/mainPanelR.png";
 import '../../../fonts/Boycott.otf';
 import {CurrentEvent, EventsType, PlayersInitialState} from "../../../redux/reducers/players-reducer";
-import React, { useState } from "react";
+import React  from "react";
 import MainPlate from "./MainPlate/MainPlate";
 import RightPanel from "./RightPanel/RightPanel";
 import Scanner from "./Scanner/Scanner";
@@ -29,6 +29,8 @@ interface Props {
 
     setOrder: (playerId: number) => void
     passOrder: (playerId: number, place: "base" | "village" | "laboratory") => void
+
+    locationEnter: (playerId: number, level: number, position: number) => void
 }
 
 const Interface = ({
@@ -51,6 +53,7 @@ const Interface = ({
     toggleWeapon,
     setOrder,
     passOrder,
+    locationEnter,
 }: Props) => {
 
     return (
@@ -81,6 +84,7 @@ const Interface = ({
                 useMedkit={useMedkit}
                 grenadesPosition={grenadesPosition}
                 setGrenadesPosition={setGrenadesPosition}
+                locationEnter={locationEnter}
             />
             <RightPanel
                 myPlayer={players.myPlayer}

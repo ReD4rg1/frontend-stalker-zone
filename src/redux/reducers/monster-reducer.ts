@@ -3,6 +3,7 @@ import {AppStateType} from "../redux-store";
 import monsterAPI from "../../api/Game/monsterAPI";
 import {updateFight, updateWS} from "../../api/Game/ws/gameWS";
 import playersAPI from "../../api/Game/playersAPI";
+import inventoryAPI from "../../api/Game/inventoryAPI";
 
 const SET_MONSTER = 'SET-MONSTER'
 const SET_EFFECT = 'SET-EFFECT'
@@ -136,10 +137,10 @@ export const setFightQueue = (queue: any): SetFightQueueType => (
 
 export type FightType = (playerId: number) => void
 
-export const startFight = (level: number, playerId: number, eventId: number): ThunkType => {
+export const startFight = (level: number, playerId: number, eventId: number, type: "eventFight" | "locationFight"): ThunkType => {
 
     return (async () => {
-        const responseSet = await monsterAPI.setMonster(level, eventId)
+        const responseSet = await monsterAPI.setMonster(level, type === "eventFight" ? eventId : 0)
         if (responseSet.resultCode === 0 || 1) {
             const responseStart = await monsterAPI.startFight(playerId)
             if (responseStart.resultCode === 0) {
@@ -150,12 +151,12 @@ export const startFight = (level: number, playerId: number, eventId: number): Th
     })
 }
 
-export const playerAttack = (playerId: number): ThunkType => {
+export const playerAttack = (playerId: number, grenadeId: number, isWeapon: boolean): ThunkType => {
 
     return (async () => {
         const responseSet = await playersAPI.makeRoll(playerId)
         if (responseSet.resultCode === 0) {
-            const responseStart = await monsterAPI.playerAttack(playerId)
+            const responseStart = isWeapon ? await monsterAPI.playerAttack(playerId) : await inventoryAPI.useGrenade(playerId, grenadeId)
             if (responseStart.resultCode === 0) {
                 updateFight()
                 updateWS()
@@ -189,13 +190,26 @@ export const nextMember = (playerId: number): ThunkType => {
     })
 }
 
-export const endFight = (playerId: number): ThunkType => {
+export const endFight = (playerId: number, monsterLevel: number): ThunkType => {
 
     return (async () => {
         const responseSet = await monsterAPI.endFight(playerId)
         if (responseSet.resultCode === 0) {
             updateFight()
             updateWS()
+            if (monsterLevel === 3) {
+                const responseDetail = await inventoryAPI.getDetail(playerId)
+                if (responseDetail.resultCode === 0) {
+                    updateWS()
+                    alert("Вы получили деталь компаса!")
+                } else if (responseDetail.resultCode === 1) {
+                    const responseArtifact = await inventoryAPI.getDetail(playerId)
+                    if (responseArtifact.resultCode === 0) {
+                        updateWS()
+                        alert("Вы получили артефакт!")
+                    }
+                }
+            }
         }
     })
 }
@@ -207,6 +221,27 @@ export const playerDied = (playerId: number): ThunkType => {
         if (responseSet.resultCode === 0) {
             updateFight()
             updateWS()
+        }
+    })
+}
+
+export const escapeFromFight = (playerId: number, rep: number): ThunkType => {
+
+    return (async () => {
+        const responseSet = await playersAPI.makeRoll(playerId)
+        if (responseSet.resultCode === 0) {
+            const responseStart = await monsterAPI.escapeFromFight(playerId, rep)
+            if (responseStart.resultCode === 0) {
+                updateFight()
+                updateWS()
+            }
+            if (responseStart.resultCode === 1) {
+                const responseEscape = await monsterAPI.nextMember(playerId)
+                if (responseEscape.resultCode === 0) {
+                    updateFight()
+                    updateWS()
+                }
+            }
         }
     })
 }

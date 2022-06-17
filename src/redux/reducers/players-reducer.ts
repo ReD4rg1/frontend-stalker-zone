@@ -1,11 +1,12 @@
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../redux-store";
 import playersAPI from "../../api/Game/playersAPI";
-import {updateWS} from "../../api/Game/ws/gameWS";
+import {updateFight, updateWS} from "../../api/Game/ws/gameWS";
 import eventsAPI from "../../api/Game/eventsAPI";
 import inventoryAPI, {ItemTypes, Shop} from "../../api/Game/inventoryAPI";
 import {findMyPlayer} from "../utils";
 import {grenadesNames, medkitsNames, stimsNames, weaponsNames} from "../../consts/multiplayerSession";
+import monsterAPI from "../../api/Game/monsterAPI";
 
 const SET_PLAYERS = "SET-PLAYERS"
 const SET_EVENTS = "SET-EVENTS"
@@ -536,16 +537,6 @@ export const useStimulator = (playerId: number, stimulatorId: number): ThunkType
     })
 }
 
-export const useGrenade = (playerId: number, grenadeId: number): ThunkType => {
-    return (async () => {
-        const response = await inventoryAPI.useGrenade(playerId, grenadeId)
-        if (response.resultCode === 0) {
-            updateWS()
-            alert("Вы использовали гранату")
-        }
-    })
-}
-
 export const getArtifact = (playerId: number): ThunkType => {
     return (async () => {
         const responseDetail = await inventoryAPI.getDetail(playerId)
@@ -587,6 +578,69 @@ export const endGame = (playerId: number): ThunkType => {
         const response = await playersAPI.endGame(playerId)
         if (response.resultCode === 0) {
             updateWS()
+        }
+    })
+}
+
+export const locationEnter = (playerId: number, level: number, position: number): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.locationEnter(playerId)
+        if (response.resultCode === 0) {
+            updateWS()
+            const responseMove = await playersAPI.locationMove(playerId, level, position)
+            if (responseMove.resultCode === 0) {
+                updateWS()
+            }
+        }
+    })
+}
+
+export const locationMove = (playerId: number, level: number, position: number): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.locationMove(playerId, level, position)
+        if (response.resultCode === 0) {
+            updateWS()
+            if (position < 8) {
+                const responseSet = await monsterAPI.setMonster(level, 0)
+                if (responseSet.resultCode === 0 || 1) {
+                    const responseStart = await monsterAPI.startFight(playerId)
+                    if (responseStart.resultCode === 0) {
+                        updateFight()
+                        updateWS()
+                    }
+                }
+            }
+        }
+    })
+}
+
+export const locationPassMove = (): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.passMove()
+        if (response.resultCode === 0) {
+            updateWS()
+        }
+    })
+}
+
+export const locationOut = (playerId: number, getArtifact: boolean): ThunkType => {
+    return (async () => {
+        const response = await playersAPI.locationOut(playerId)
+        if (response.resultCode === 0) {
+            updateWS()
+            if (getArtifact) {
+                const responseDetail = await inventoryAPI.getDetail(playerId)
+                if (responseDetail.resultCode === 0) {
+                    updateWS()
+                    alert("Вы получили деталь компаса!")
+                } else if (responseDetail.resultCode === 1) {
+                    const responseArtifact = await inventoryAPI.getDetail(playerId)
+                    if (responseArtifact.resultCode === 0) {
+                        updateWS()
+                        alert("Вы получили артефакт!")
+                    }
+                }
+            }
         }
     })
 }

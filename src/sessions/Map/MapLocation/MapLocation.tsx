@@ -6,9 +6,14 @@ interface Props {
     myPlayer: Player
     showLocation: boolean
     toggleLocation: () => void
+    makeRoll: (playerId: number) => void
+    locationMove: (playerId: number, level: number, position: number) => void
+    startFight: (level: number, playerId: number, eventId: number) => void
+    locationOut: (playerId: number, getArtifact: boolean) => void
+    locationPassMove: () => void
 }
 
-const MapLocation = ({myPlayer, toggleLocation, showLocation}:Props) => {
+const MapLocation = ({myPlayer, toggleLocation, showLocation, locationMove, locationOut, makeRoll, locationPassMove, startFight}:Props) => {
 
     let locationSectors = []
     for (let i = 1; i <= myPlayer.locationCoordinate.position; i++) {
@@ -17,7 +22,7 @@ const MapLocation = ({myPlayer, toggleLocation, showLocation}:Props) => {
         )
     }
 
-    if (!myPlayer.states.inLocation && showLocation) {
+    if (myPlayer.states.inLocation && showLocation) {
         return (
             <div className={styles.container}>
                 <div className={styles.imageContainer}>
@@ -34,9 +39,21 @@ const MapLocation = ({myPlayer, toggleLocation, showLocation}:Props) => {
                             <div>{myPlayer.coordinates.locationLevel}</div>
                         </div>
                     </div>
-                    <div className={styles.locationButton}>
-                        <button>{"Сделать ход"}</button>
-                    </div>
+                    {myPlayer.states.move
+                        ? <div className={styles.locationButton}>
+                            {myPlayer.locationCoordinate.position < 8
+                                ? ((myPlayer.states.rollCube)
+                                        ? <button onClick={() => makeRoll(myPlayer.id)}>{"Кинуть кубик"}</button>
+                                        : (myPlayer.states.alreadyMove && !myPlayer.states.inFight
+                                                ? <button onClick={() => locationPassMove()}>{"Передать ход"}</button>
+                                                : <button onClick={() => locationMove(myPlayer.id, myPlayer.coordinates.locationLevel, myPlayer.numberOfMoves)}>{"Сделать ход"}</button>
+                                        )
+                                )
+                                : <button onClick={() => locationOut(myPlayer.id, ((myPlayer.order?.firstPlace === myPlayer.coordinates.locationName) || (myPlayer.order?.secondPlace === myPlayer.coordinates.locationName)))}>{"Выйти из локации"}</button>
+                            }
+                        </div>
+                        : null
+                    }
                     <div className={styles.locationSector}>
                         {locationSectors}
                     </div>
@@ -48,7 +65,7 @@ const MapLocation = ({myPlayer, toggleLocation, showLocation}:Props) => {
         )
     }
 
-    if (!myPlayer.states.inLocation) return (
+    if (myPlayer.states.inLocation) return (
         <div className={styles.locationShowButton} onClick={() => toggleLocation()}>
             {"Локация"}
         </div>

@@ -32,7 +32,7 @@ const Hex = (props: IProps) => {
             availableMoveStatus = true
             difficulty = 0
         }
-        if (!props.myPlayer.states.inFight && (props.myPlayer.numberOfMoves !== 0) && (props.data.hexId === hex.moveId && props.data.locationId === hex.locationId) && (props.currentEvent.hexId === 0 && props.currentEvent.locationId === 0)) {
+        if (props.myPlayer.states.inEvent && !props.myPlayer.states.inFight && (props.myPlayer.numberOfMoves !== 0) && (props.data.hexId === hex.moveId && props.data.locationId === hex.locationId) && (props.currentEvent.hexId === 0 && props.currentEvent.locationId === 0)) {
             availableMoveStatus = true
             difficulty = 0
         }

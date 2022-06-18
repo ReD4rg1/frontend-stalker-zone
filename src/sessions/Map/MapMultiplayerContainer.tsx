@@ -306,7 +306,6 @@ class MapMultiplayerContainer extends React.Component<MapProps, State>{
                     locationOut={this.props.locationOut}
                     makeRoll={this.props.makeRoll}
                     locationPassMove={this.props.locationPassMove}
-                    startFight={this.props.startFight}
                 />
                 <Inventory
                     showInventory={this.state.showInventory}

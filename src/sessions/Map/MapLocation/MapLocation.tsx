@@ -8,12 +8,11 @@ interface Props {
     toggleLocation: () => void
     makeRoll: (playerId: number) => void
     locationMove: (playerId: number, level: number, position: number) => void
-    startFight: (level: number, playerId: number, eventId: number) => void
     locationOut: (playerId: number, getArtifact: boolean) => void
     locationPassMove: () => void
 }
 
-const MapLocation = ({myPlayer, toggleLocation, showLocation, locationMove, locationOut, makeRoll, locationPassMove, startFight}:Props) => {
+const MapLocation = ({myPlayer, toggleLocation, showLocation, locationMove, locationOut, makeRoll, locationPassMove}:Props) => {
 
     let locationSectors = []
     for (let i = 1; i <= myPlayer.locationCoordinate.position; i++) {
@@ -46,7 +45,10 @@ const MapLocation = ({myPlayer, toggleLocation, showLocation, locationMove, loca
                                         ? <button onClick={() => makeRoll(myPlayer.id)}>{"Кинуть кубик"}</button>
                                         : (myPlayer.states.alreadyMove && !myPlayer.states.inFight
                                                 ? <button onClick={() => locationPassMove()}>{"Передать ход"}</button>
-                                                : <button onClick={() => locationMove(myPlayer.id, myPlayer.coordinates.locationLevel, myPlayer.numberOfMoves)}>{"Сделать ход"}</button>
+                                                : (myPlayer.states.inFight
+                                                        ? null
+                                                        : <button onClick={() => locationMove(myPlayer.id, myPlayer.coordinates.locationLevel, myPlayer.numberOfMoves)}>{"Сделать ход"}</button>
+                                                )
                                         )
                                 )
                                 : <button onClick={() => locationOut(myPlayer.id, ((myPlayer.order?.firstPlace === myPlayer.coordinates.locationName) || (myPlayer.order?.secondPlace === myPlayer.coordinates.locationName)))}>{"Выйти из локации"}</button>

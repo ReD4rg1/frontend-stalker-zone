@@ -248,6 +248,11 @@ export const escapeFromFight = (playerId: number, rep: number): ThunkType => {
                     updateWS()
                 }
             }
+            const responsePass = await playersAPI.passMove()
+            if (responsePass.resultCode === 0) {
+                updateWS()
+                updateFight()
+            }
         }
     })
 }

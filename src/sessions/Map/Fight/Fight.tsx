@@ -88,7 +88,7 @@ const Fight = ({
                         </div>
                         <div className={styles.statItem}>
                             <div>{"Атака: "}</div>
-                            <div>{monster.damage + `${monster.damageModifier <= 0 ? "" : "+"}` + monster.damageModifier}</div>
+                            <div>{monster.damage + `${monster.damageModifier < 0 ? "" : "+"}` + monster.damageModifier}</div>
                         </div>
                         <div className={styles.statItem}>
                             <div>{"Защита: "}</div>

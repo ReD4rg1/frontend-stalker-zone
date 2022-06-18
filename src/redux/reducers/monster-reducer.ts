@@ -4,6 +4,7 @@ import monsterAPI from "../../api/Game/monsterAPI";
 import {updateFight, updateWS} from "../../api/Game/ws/gameWS";
 import playersAPI from "../../api/Game/playersAPI";
 import inventoryAPI from "../../api/Game/inventoryAPI";
+import eventsAPI from "../../api/Game/eventsAPI";
 
 const SET_MONSTER = 'SET-MONSTER'
 const SET_EFFECT = 'SET-EFFECT'
@@ -154,7 +155,7 @@ export const startFight = (level: number, playerId: number, eventId: number, typ
 export const playerAttack = (playerId: number, grenadeId: number, isWeapon: boolean): ThunkType => {
 
     return (async () => {
-        const responseSet = await playersAPI.makeRoll(playerId)
+        const responseSet = await eventsAPI.eventRoll(playerId)
         if (responseSet.resultCode === 0) {
             const responseStart = isWeapon ? await monsterAPI.playerAttack(playerId) : await inventoryAPI.useGrenade(playerId, grenadeId)
             if (responseStart.resultCode === 0) {
@@ -168,7 +169,7 @@ export const playerAttack = (playerId: number, grenadeId: number, isWeapon: bool
 export const monsterAttack = (playerId: number): ThunkType => {
 
     return (async () => {
-        const responseSet = await playersAPI.makeRoll(playerId)
+        const responseSet = await eventsAPI.eventRoll(playerId)
         if (responseSet.resultCode === 0) {
             const responseStart = await monsterAPI.monsterAttack(playerId)
             if (responseStart.resultCode === 0) {
@@ -210,6 +211,11 @@ export const endFight = (playerId: number, monsterLevel: number): ThunkType => {
                     }
                 }
             }
+            const responsePass = await playersAPI.passMove()
+            if (responsePass.resultCode === 0) {
+                updateWS()
+                updateFight()
+            }
         }
     })
 }
@@ -228,7 +234,7 @@ export const playerDied = (playerId: number): ThunkType => {
 export const escapeFromFight = (playerId: number, rep: number): ThunkType => {
 
     return (async () => {
-        const responseSet = await playersAPI.makeRoll(playerId)
+        const responseSet = await eventsAPI.eventRoll(playerId)
         if (responseSet.resultCode === 0) {
             const responseStart = await monsterAPI.escapeFromFight(playerId, rep)
             if (responseStart.resultCode === 0) {

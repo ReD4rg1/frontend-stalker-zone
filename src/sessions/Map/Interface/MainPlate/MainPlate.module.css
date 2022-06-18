@@ -189,6 +189,10 @@
     animation-direction: alternate;
 }
 
+.storeDisabled {
+    display: none;
+}
+
 .store:hover {
     animation-name: storeHover;
     animation-duration: 0.5s;

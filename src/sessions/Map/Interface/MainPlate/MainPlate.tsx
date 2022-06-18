@@ -58,8 +58,7 @@ const MainPlate = ({
     })
 
     let buttonIsAvailable = (): boolean => {
-        if (myPlayer.coordinates.locationName !== "") return true
-        return false
+        return myPlayer.coordinates.locationName !== "";
     }
 
     const availableShop = (): boolean => {
@@ -70,10 +69,18 @@ const MainPlate = ({
         return false
     }
 
+    const availableLocation = (): boolean => {
+        if (myPlayer.coordinates.locationName === "Посёлок") return false
+        else if (myPlayer.coordinates.locationName === "Военная база") return false
+        else if (myPlayer.coordinates.locationName === "Лаборатория") return false
+
+        return true
+    }
+
     return (
         <section className={styles.actions}>
             <section className={styles.rollCube}>
-                {myPlayer.states.rollCube
+                {myPlayer.states.rollCube && !myPlayer.states.inLocation && !myPlayer.states.inFight
                     ? <button onClick={() => makeRoll(myPlayer.id)}
                               className={styles.rollCubeActiveBt}
                     >{"Ход"}</button>
@@ -148,11 +155,11 @@ const MainPlate = ({
                 stimulatorUse={useStimulator}
                 medkitUse={useMedkit}
             />
-            <button style={{display: `${buttonIsAvailable() ? "block" : "none"}`}} className={styles.store} onClick={() => {
+            <button className={buttonIsAvailable() ? styles.store : styles.storeDisabled} onClick={() => {
                 if (availableShop()) openStore()
-                if (!availableShop()) locationEnter(myPlayer.id, myPlayer.coordinates.locationLevel, 0)
+                if (availableLocation()) locationEnter(myPlayer.id, myPlayer.coordinates.locationLevel, 0)
             }}>
-                {availableShop() ? "МАГАЗИН" : myPlayer.coordinates.locationName}
+                {availableShop() ? "МАГАЗИН" : (availableLocation() ? myPlayer.coordinates.locationName : "Недоступно")}
             </button>
             <button className={styles.inventory} onClick={() => toggleShowInventory()}>{""}</button>
         </section>

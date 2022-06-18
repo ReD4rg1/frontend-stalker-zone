@@ -204,7 +204,7 @@ export const endFight = (playerId: number, monsterLevel: number): ThunkType => {
                     updateWS()
                     alert("Вы получили деталь компаса!")
                 } else if (responseDetail.resultCode === 1) {
-                    const responseArtifact = await inventoryAPI.getDetail(playerId)
+                    const responseArtifact = await inventoryAPI.getArtifact(playerId)
                     if (responseArtifact.resultCode === 0) {
                         updateWS()
                         alert("Вы получили артефакт!")

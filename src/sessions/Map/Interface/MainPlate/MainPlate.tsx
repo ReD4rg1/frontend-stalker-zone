@@ -58,7 +58,7 @@ const MainPlate = ({
     })
 
     let buttonIsAvailable = (): boolean => {
-        return myPlayer.coordinates.locationName !== "";
+        return (myPlayer.coordinates.locationName !== "" && !myPlayer.states.inLocation);
     }
 
     const availableShop = (): boolean => {

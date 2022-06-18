@@ -68,7 +68,10 @@ const RightPanel = ({myPlayer, setOrder, passOrder}: Props) => {
                                 )
                                 : `Заказ: ${myPlayer.order.title}`
                         )
-                        : `Нет активного заказа`
+                        : (((myPlayer.coordinates.locationName === "Посёлок") || (myPlayer.coordinates.locationName === "Военная база") || (myPlayer.coordinates.locationName === "Лаборатория"))
+                            ? "Взять заказ"
+                            : `Нет активного заказа`
+                        )
                     }
                 </div>
             </section>

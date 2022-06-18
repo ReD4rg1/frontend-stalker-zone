@@ -60,7 +60,7 @@ const FightButtons = ({
                 : <button onClick={() => nextMember(myPlayer.id)}>{"Завершить ход"}</button>
             }
             <button
-                disabled={availableAttack || turn === "monster"}
+                disabled={availableAttack || turn === "monster" || monster.fightEffect.noEscape}
                 onClick={() => escapeFromFight(myPlayer.id, myPlayer.reputation)}
             >
                 {"Сбежать"}

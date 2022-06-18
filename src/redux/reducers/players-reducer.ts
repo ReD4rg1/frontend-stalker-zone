@@ -591,6 +591,11 @@ export const locationEnter = (playerId: number, level: number, position: number)
             if (responseMove.resultCode === 0) {
                 updateWS()
             }
+            const responsePass = await playersAPI.passMove()
+            if (responsePass.resultCode === 0) {
+                updateWS()
+                updateFight()
+            }
         }
     })
 }
@@ -640,6 +645,11 @@ export const locationOut = (playerId: number, getArtifact: boolean): ThunkType =
                         alert("Вы получили артефакт!")
                     }
                 }
+            }
+            const responsePass = await playersAPI.passMove()
+            if (responsePass.resultCode === 0) {
+                updateWS()
+                updateFight()
             }
         }
     })

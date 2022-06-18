@@ -45,7 +45,9 @@ const Medkits = ({
         <div>
             {myPlayer.inventory.medkits[medkitsPosition]
                 ? <div className={styles.medkitsContainer}>
-                    <div onClick={() => medkitUse(myPlayer.id, myPlayer.inventory.medkits[medkitsPosition].id)} className={styles.medkitsImgContainer}>
+                    <div onClick={() => {
+                        if (!myPlayer.states.inFight) medkitUse(myPlayer.id, myPlayer.inventory.medkits[medkitsPosition].id)
+                    }} className={styles.medkitsImgContainer}>
                         <img src={imgMed} alt={""}/>
                     </div>
                     <div className={styles.medkitsInfoBlock}>
